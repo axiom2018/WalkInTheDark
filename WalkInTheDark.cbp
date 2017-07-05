@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="WalkInTheDark" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/WalkInTheDark" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/WalkInTheDark" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="ArrayOperations.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ArrayOperations.h" />
+		<Unit filename="Banshee.h" />
+		<Unit filename="Battery.h" />
+		<Unit filename="Boolean.h" />
+		<Unit filename="DarkMovement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="DarkMovement.h" />
+		<Unit filename="Definitions.h" />
+		<Unit filename="Door.h" />
+		<Unit filename="EnemyFactory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyFactory.h" />
+		<Unit filename="EnemyInfo.h" />
+		<Unit filename="EnemyMoveData.h" />
+		<Unit filename="EnemyMoveStrategy.h" />
+		<Unit filename="EnemyProcedure.h" />
+		<Unit filename="EnemyStrategyCheck.h" />
+		<Unit filename="Flashlight.h" />
+		<Unit filename="HealthPack.h" />
+		<Unit filename="Items.h" />
+		<Unit filename="LevelInfo.h" />
+		<Unit filename="LevelManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LevelManagement.h" />
+		<Unit filename="LightMovement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="LightMovement.h" />
+		<Unit filename="LightMovementDirections.h" />
+		<Unit filename="LightMovementEnums.h" />
+		<Unit filename="MediatorPattern.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="MediatorPattern.h" />
+		<Unit filename="Player.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Player.h" />
+		<Unit filename="Point.h" />
+		<Unit filename="SelectMovementStrategy.h" />
+		<Unit filename="SelectMovementStrategyAssistance.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="SelectMovementStrategyAssistance.h" />
+		<Unit filename="StrategyCheck.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="StrategyCheck.h" />
+		<Unit filename="UniversalMovementFunctions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="UniversalMovementFunctions.h" />
+		<Unit filename="Werewolf.h" />
+		<Unit filename="Witch.h" />
+		<Unit filename="World.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="World.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
