@@ -8,6 +8,13 @@
 #include <stdio.h>
 #include <windows.h>
 
+/*Questions about mediator.
+
+1) Who signs up for the mediator pattern?
+EnemyFactory and the World. Kind of makes sense. The world would like to benefit from a factory pattern but the direct communication is decoupled.
+
+2) */
+
 typedef struct
 {
     void *m_pSubs[SUBSCRIBERS];

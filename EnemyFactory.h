@@ -10,6 +10,7 @@
 void EnemyFactoryInit();
 void *EnemyCreate(int type, int levelAssignment);
 void EnemyReceiveData(Point mainCoordinates[], Point flPoints[]);
+/// void MessageData(Point mainCoordinates[], Point flPoints[]);
 void EnemyFactoryCleanMemory();
 
 #endif // MONSTERFACTORY_H_INCLUDED
