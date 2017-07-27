@@ -278,7 +278,7 @@ static void DisplayInstructions()
         printf("\nNavigate the area with the w/a/s/d keys.\n\n");
         printf("Items are indicated by H - health pack, B - Battery, F - Flashlight.\n\n");
         printf("You CANNOT fight monsters. If they spot you, run!\n\n");
-        printf("Find the door %c to go to next level.\n\n", GetDoor());
+        printf("Find the door %c to go to next level.\n\n", GetDoor()->m_symbol);
         printf("Press -q- to return to game.\n\n");
 
         char input = _getch();

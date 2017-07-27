@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "LevelManagement.h"
 #include "ArrayOperations.h"
-#include "Door.h"
 #include "Flashlight.h"
 #include "HealthPack.h"
 #include "Battery.h"
@@ -14,9 +13,11 @@
 #include "Banshee.h"
 #include "EnemyMoveData.h"
 #include "EnemyProcedure.h"
+#include "ItemManagement.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+
 
 typedef struct
 {
@@ -26,12 +27,12 @@ typedef struct
     Point m_flashLightPoints[SIZE_OF_FL_POINTS];
     Door *m_pDoor;
 
-    void *m_pLevelItems[MAX_ITEMS];
-    int m_levelItemTypes[MAX_ITEMS];
-    Point m_generatedItemPoints[MAX_ITEMS];
+//    void *m_pLevelItems[MAX_ITEMS];
+//    int m_levelItemTypes[MAX_ITEMS];
+//    Point m_generatedItemPoints[MAX_ITEMS];
     Point m_enemyFactoryMainCoordinates[COORDINATES_TO_SEND];
-    int m_itemGeneration;
-    int m_itemGenerationAssistance;
+//    int m_itemGeneration;
+//    int m_itemGenerationAssistance;
 
     void *m_pEnemies[MAX_ENEMIES];
     int m_enemyTypes[MAX_ENEMIES];
@@ -47,7 +48,7 @@ EMData *pMessageData;
 */
 
 /// Using the windows api to change color of text because system() calls are unbelievably slow.
-static void AdjustTextColor(int value)
+void AdjustTextColor(int value)
 {
     WORD colorToAdjust;
     HANDLE hdle = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -130,15 +131,17 @@ static void UpdateEnemyData()
         }
     }
 
-    for(i = 0; i < MAX_ITEMS; ++i)
-    {
-        if(s_pWorld->m_pLevelItems[i] != NULL)
-        {
-            pMessageData->m_pItemsArr[i] = s_pWorld->m_pLevelItems[i];
-            pMessageData->m_itemTypes[i] = s_pWorld->m_levelItemTypes[i];
-            pMessageData->m_maxItems += 1;
-        }
-    }
+    //UpdateEnemyItemData(pMessageData);
+
+//    for(i = 0; i < MAX_ITEMS; ++i)
+//    {
+//        if(s_pWorld->m_pLevelItems[i] != NULL)
+//        {
+//            pMessageData->m_pItemsArr[i] = s_pWorld->m_pLevelItems[i];
+//            pMessageData->m_itemTypes[i] = s_pWorld->m_levelItemTypes[i];
+//            pMessageData->m_maxItems += 1;
+//        }
+//    }
 
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
@@ -340,31 +343,31 @@ static int UpdateEnemies(EnemyUpdateProcedure EUP)
     return FALSE;
 }
 
-/// Depending on the range of the players flashlight, they will get a high or low steps required before the battery needs a recharge.
-static void AssignStepsBeforeRecharge(Flashlight *pFL)
-{
-    switch(pFL->m_range)
-    {
-    case 2:
-        pFL->m_stepsBeforeRecharge = rand() % (200 + 1 - 130) + 130;
-        break;
-    case 3:
-        pFL->m_stepsBeforeRecharge = rand() % (200 + 1 - 130) + 130;
-        break;
-    case 4:
-        pFL->m_stepsBeforeRecharge = rand() % (210 + 1 - 150) + 150;
-        break;
-    case 5:
-        pFL->m_stepsBeforeRecharge = rand() % (190 + 1 - 130) + 130;
-        break;
-    case 6:
-        pFL->m_stepsBeforeRecharge = rand() % (180 + 1 - 120) + 120;
-        break;
-    default:
-        printf("Default case in GivePlayerFlashlight!\n");
-        break;
-    }
-}
+///// Depending on the range of the players flashlight, they will get a high or low steps required before the battery needs a recharge.
+//static void AssignStepsBeforeRecharge(Flashlight *pFL)
+//{
+//    switch(pFL->m_range)
+//    {
+//    case 2:
+//        pFL->m_stepsBeforeRecharge = rand() % (200 + 1 - 130) + 130;
+//        break;
+//    case 3:
+//        pFL->m_stepsBeforeRecharge = rand() % (200 + 1 - 130) + 130;
+//        break;
+//    case 4:
+//        pFL->m_stepsBeforeRecharge = rand() % (210 + 1 - 150) + 150;
+//        break;
+//    case 5:
+//        pFL->m_stepsBeforeRecharge = rand() % (190 + 1 - 130) + 130;
+//        break;
+//    case 6:
+//        pFL->m_stepsBeforeRecharge = rand() % (180 + 1 - 120) + 120;
+//        break;
+//    default:
+//        printf("Default case in GivePlayerFlashlight!\n");
+//        break;
+//    }
+//}
 
 /// Every "level" will have a door you must get to in order to advance the game. Case 0 puts the door top left, case 1, top right, case 2, bottom left.
 static void GenerateDoor()
@@ -393,188 +396,188 @@ static void GenerateDoor()
     }
 }
 
-static void GenerateLevelItems()
-{
-    static int i;
-    int itemType;
-    Point pos;
+//static void GenerateLevelItems()
+//{
+//    static int i;
+//    int itemType;
+//    Point pos;
+//
+//    Flashlight *pFlashlight;
+//    Battery *pBattery;
+//    HealthPack *pHealthPack;
+//
+//    if(i == MAX_ITEMS && s_pWorld->m_itemGeneration == MAX_ITEMS)
+//    {
+//        return; /// Defensive programming. We cannot continue generating past MAX_ITEMS. We however can update previously generated items.
+//    }
+//
+//    for(i = s_pWorld->m_itemGenerationAssistance; i < s_pWorld->m_itemGeneration; ++i)
+//    {
+//        int index = GetPointerArrayPos(s_pWorld->m_pLevelItems, MAX_ITEMS);
+//
+//        if(index == ERROR_INDICATOR)
+//        {
+//            return;
+//        }
+//
+//        int levelItemTypesIndex = GetIntArrayPos(s_pWorld->m_levelItemTypes, MAX_ITEMS);
+//
+//        itemType = rand() % (2 + 1 - 0) + 0;
+//
+//        pos.x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
+//        pos.y = rand() % ((ROWS - 1) + 1 - 0) + 0;
+//
+//        switch(itemType)
+//        {
+//        case 0:
+//            pFlashlight = malloc(sizeof(Flashlight));
+//            pFlashlight->m_item.m_name = "Flashlight";
+//            pFlashlight->m_item.m_color = 5;
+//            pFlashlight->m_item.m_symbol = 'F';
+//            pFlashlight->m_item.m_assignedLevel = GetCurrentLevel();
+//
+//            pFlashlight->m_item.m_pos.x = pos.x;
+//            pFlashlight->m_item.m_pos.y = pos.y;
+//
+//            pFlashlight->m_range = rand() % (6 + 1 - 3) + 3;
+//            AssignStepsBeforeRecharge(pFlashlight);
+//
+//            s_pWorld->m_pLevelItems[index] = pFlashlight;
+//            break;
+//        case 1:
+//            pBattery = malloc(sizeof(Battery));
+//            pBattery->m_item.m_name = "Battery";
+//            pBattery->m_item.m_color = 3;
+//            pBattery->m_item.m_symbol = 'B';
+//            pBattery->m_item.m_assignedLevel = GetCurrentLevel();
+//
+//            pBattery->m_item.m_pos.x = pos.x;
+//            pBattery->m_item.m_pos.y = pos.y;
+//
+//            pBattery->m_rechargeAmount = BATTERY_UPGRADE;
+//            s_pWorld->m_pLevelItems[index] = pBattery;
+//            break;
+//        case 2:
+//            pHealthPack = malloc(sizeof(HealthPack));
+//            pHealthPack->m_item.m_name = "HealthPack";
+//            pHealthPack->m_item.m_color = 12;
+//            pHealthPack->m_item.m_symbol = 'H';
+//            pHealthPack->m_item.m_assignedLevel = GetCurrentLevel();
+//
+//            pHealthPack->m_item.m_pos.x = pos.x;
+//            pHealthPack->m_item.m_pos.y = pos.y;
+//
+//            pHealthPack->m_healthAmount = HEALTH_UPGRADE;
+//            s_pWorld->m_pLevelItems[index] = pHealthPack;
+//            break;
+//        default:
+//            printf("Error! File: World.c. Function: CreateItem(int typeOfItem)\n");
+//            break;
+//        }
+//        s_pWorld->m_generatedItemPoints[index] = pos;
+//        s_pWorld->m_levelItemTypes[levelItemTypesIndex] = itemType;
+//    }
+//    s_pWorld->m_itemGeneration += ITEMS_PER_LEVEL;
+//    s_pWorld->m_itemGenerationAssistance = i;
+//}
 
-    Flashlight *pFlashlight;
-    Battery *pBattery;
-    HealthPack *pHealthPack;
+//static void AssignItemNewPosition(Point *pPrevPos)
+//{
+//    pPrevPos->x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
+//    pPrevPos->y = rand() % ((ROWS - 1) + 1 - 0) + 0;
+//}
 
-    if(i == MAX_ITEMS && s_pWorld->m_itemGeneration == MAX_ITEMS)
-    {
-        return; /// Defensive programming. We cannot continue generating past MAX_ITEMS. We however can update previously generated items.
-    }
-
-    for(i = s_pWorld->m_itemGenerationAssistance; i < s_pWorld->m_itemGeneration; ++i)
-    {
-        int index = GetPointerArrayPos(s_pWorld->m_pLevelItems, MAX_ITEMS);
-
-        if(index == ERROR_INDICATOR)
-        {
-            return;
-        }
-
-        int levelItemTypesIndex = GetIntArrayPos(s_pWorld->m_levelItemTypes, MAX_ITEMS);
-
-        itemType = rand() % (2 + 1 - 0) + 0;
-
-        pos.x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
-        pos.y = rand() % ((ROWS - 1) + 1 - 0) + 0;
-
-        switch(itemType)
-        {
-        case 0:
-            pFlashlight = malloc(sizeof(Flashlight));
-            pFlashlight->m_item.m_name = "Flashlight";
-            pFlashlight->m_item.m_color = 5;
-            pFlashlight->m_item.m_symbol = 'F';
-            pFlashlight->m_item.m_assignedLevel = GetCurrentLevel();
-
-            pFlashlight->m_item.m_pos.x = pos.x;
-            pFlashlight->m_item.m_pos.y = pos.y;
-
-            pFlashlight->m_range = rand() % (6 + 1 - 3) + 3;
-            AssignStepsBeforeRecharge(pFlashlight);
-
-            s_pWorld->m_pLevelItems[index] = pFlashlight;
-            break;
-        case 1:
-            pBattery = malloc(sizeof(Battery));
-            pBattery->m_item.m_name = "Battery";
-            pBattery->m_item.m_color = 3;
-            pBattery->m_item.m_symbol = 'B';
-            pBattery->m_item.m_assignedLevel = GetCurrentLevel();
-
-            pBattery->m_item.m_pos.x = pos.x;
-            pBattery->m_item.m_pos.y = pos.y;
-
-            pBattery->m_rechargeAmount = BATTERY_UPGRADE;
-            s_pWorld->m_pLevelItems[index] = pBattery;
-            break;
-        case 2:
-            pHealthPack = malloc(sizeof(HealthPack));
-            pHealthPack->m_item.m_name = "HealthPack";
-            pHealthPack->m_item.m_color = 12;
-            pHealthPack->m_item.m_symbol = 'H';
-            pHealthPack->m_item.m_assignedLevel = GetCurrentLevel();
-
-            pHealthPack->m_item.m_pos.x = pos.x;
-            pHealthPack->m_item.m_pos.y = pos.y;
-
-            pHealthPack->m_healthAmount = HEALTH_UPGRADE;
-            s_pWorld->m_pLevelItems[index] = pHealthPack;
-            break;
-        default:
-            printf("Error! File: World.c. Function: CreateItem(int typeOfItem)\n");
-            break;
-        }
-        s_pWorld->m_generatedItemPoints[index] = pos;
-        s_pWorld->m_levelItemTypes[levelItemTypesIndex] = itemType;
-    }
-    s_pWorld->m_itemGeneration += ITEMS_PER_LEVEL;
-    s_pWorld->m_itemGenerationAssistance = i;
-}
-
-static void AssignItemNewPosition(Point *pPrevPos)
-{
-    pPrevPos->x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
-    pPrevPos->y = rand() % ((ROWS - 1) + 1 - 0) + 0;
-}
-
-static int FindDuplicate(Point *pPoint, Point pointToCheck)
-{
-    /// Step 1. Check the pointer with the normal point variable. If there is a match give the pointer new values.
-    if(pPoint->x == pointToCheck.x
-       && pPoint->y == pointToCheck.y)
-    {
-        AssignItemNewPosition(pPoint);
-        return TRUE;
-    }
-
-    /// Step 2. Check item with door.
-    else if(pPoint->x == s_pWorld->m_pDoor->m_coord.x
-            && pPoint->y == s_pWorld->m_pDoor->m_coord.y)
-    {
-        AssignItemNewPosition(pPoint);
-        return TRUE;
-    }
-
-    /// Step 3. Check item with player.
-    else if(pPoint->x == GetPlayerPosition().x
-            && pPoint->y == GetPlayerPosition().y)
-    {
-        AssignItemNewPosition(pPoint);
-        return TRUE;
-    }
-
-    /// (Optional Step). Return false if no duplicate was found.
-    return FALSE;
-}
-
-static int CheckGeneratedItemsForDuplicatePositions()
-{
-    int i, t;
-    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
-    {
-        Point *pPoint = &s_pWorld->m_generatedItemPoints[i];
-
-        for(t = 0; t < ITEMS_PER_LEVEL; ++t)
-        {
-            if(i != t)
-            {
-                Point pointToCompare = s_pWorld->m_generatedItemPoints[t];
-
-                if(FindDuplicate(pPoint, pointToCompare))
-                {
-                    return TRUE;
-                }
-            }
-        }
-    }
-    return FALSE;
-}
+//static int FindDuplicate(Point *pPoint, Point pointToCheck)
+//{
+//    /// Step 1. Check the pointer with the normal point variable. If there is a match give the pointer new values.
+//    if(pPoint->x == pointToCheck.x
+//       && pPoint->y == pointToCheck.y)
+//    {
+//        AssignItemNewPosition(pPoint);
+//        return TRUE;
+//    }
+//
+//    /// Step 2. Check item with door.
+//    else if(pPoint->x == s_pWorld->m_pDoor->m_coord.x
+//            && pPoint->y == s_pWorld->m_pDoor->m_coord.y)
+//    {
+//        AssignItemNewPosition(pPoint);
+//        return TRUE;
+//    }
+//
+//    /// Step 3. Check item with player.
+//    else if(pPoint->x == GetPlayerPosition().x
+//            && pPoint->y == GetPlayerPosition().y)
+//    {
+//        AssignItemNewPosition(pPoint);
+//        return TRUE;
+//    }
+//
+//    /// (Optional Step). Return false if no duplicate was found.
+//    return FALSE;
+//}
+//
+//static int CheckGeneratedItemsForDuplicatePositions()
+//{
+//    int i, t;
+//    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
+//    {
+//        Point *pPoint = &s_pWorld->m_generatedItemPoints[i];
+//
+//        for(t = 0; t < ITEMS_PER_LEVEL; ++t)
+//        {
+//            if(i != t)
+//            {
+//                Point pointToCompare = s_pWorld->m_generatedItemPoints[t];
+//
+//                if(FindDuplicate(pPoint, pointToCompare))
+//                {
+//                    return TRUE;
+//                }
+//            }
+//        }
+//    }
+//    return FALSE;
+//}
 
 /// Give the player items they pick up in the level. STRUCT DECLARATIONS HERE.
-static void GivePlayerItem(int itemType)
-{
-    Flashlight *pFlashlight;
-    Battery *pBattery;
-    HealthPack *pHealthPack;
-    void *pItem;
-
-    switch(itemType)
-    {
-    case 0:
-        pFlashlight = malloc(sizeof(Flashlight));
-        pFlashlight->m_item.m_name = "Flashlight";
-        pFlashlight->m_item.m_symbol = 'F';
-        pFlashlight->m_range = rand() % (6 + 1 - 2) + 2;
-        AssignStepsBeforeRecharge(pFlashlight);
-        pItem = pFlashlight;
-        break;
-    case 1:
-        pBattery = malloc(sizeof(Battery));
-        pBattery->m_item.m_name = "Battery";
-        pBattery->m_item.m_symbol = 'B';
-        pBattery->m_rechargeAmount = BATTERY_UPGRADE;
-        pItem = pBattery;
-        break;
-    case 2:
-        pHealthPack = malloc(sizeof(HealthPack));
-        pHealthPack->m_item.m_name = "HealthPack";
-        pHealthPack->m_item.m_symbol = 'H';
-        pHealthPack->m_healthAmount = HEALTH_UPGRADE;
-        pItem = pHealthPack;
-        break;
-    default:
-        printf("Error! File: World.c. Function: GivePlayerItem(int itemType).\n");
-        break;
-    }
-    AddItemToInventory(pItem, itemType);
-}
+//static void GivePlayerItem(int itemType)
+//{
+//    Flashlight *pFlashlight;
+//    Battery *pBattery;
+//    HealthPack *pHealthPack;
+//    void *pItem;
+//
+//    switch(itemType)
+//    {
+//    case 0:
+//        pFlashlight = malloc(sizeof(Flashlight));
+//        pFlashlight->m_item.m_name = "Flashlight";
+//        pFlashlight->m_item.m_symbol = 'F';
+//        pFlashlight->m_range = rand() % (6 + 1 - 2) + 2;
+//        AssignStepsBeforeRecharge(pFlashlight);
+//        pItem = pFlashlight;
+//        break;
+//    case 1:
+//        pBattery = malloc(sizeof(Battery));
+//        pBattery->m_item.m_name = "Battery";
+//        pBattery->m_item.m_symbol = 'B';
+//        pBattery->m_rechargeAmount = BATTERY_UPGRADE;
+//        pItem = pBattery;
+//        break;
+//    case 2:
+//        pHealthPack = malloc(sizeof(HealthPack));
+//        pHealthPack->m_item.m_name = "HealthPack";
+//        pHealthPack->m_item.m_symbol = 'H';
+//        pHealthPack->m_healthAmount = HEALTH_UPGRADE;
+//        pItem = pHealthPack;
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: GivePlayerItem(int itemType).\n");
+//        break;
+//    }
+//    AddItemToInventory(pItem, itemType);
+//}
 
 /// Used in function GatherFlashlightPoints frequently, we must clear out old coordinates. before loading in new ones for the flashlight to work properly.
 static void ClearFlashlightPoints()
@@ -759,59 +762,59 @@ static void GatherFlashlightPoints()
     }
 }
 
-static void SendEnemyFactoryData()
-{
-    /** Step 1. Gather all points. Include
-    a) Generated items.
-    b) Player coordinates.
-    c) Door coordinates. (Use DistributeMessage).
-    d) FL points (When creating enemies, this ensures we don't create them in the players flashlight space.) */
-    GatherFlashlightPoints();
-
-    /// Step 2. min is a bookmark that keeps the place of where generated item points we want data from.
-    int min;
-    switch(GetCurrentLevel())
-    {
-    case 0: /// 0 - 3
-        min = 0;
-        break;
-    case 1: /// 4 - 7
-        min = 4;
-        break;
-    case 2: /// 8 - 11
-        min = 8;
-        break;
-    case 3: /// 12 - 15
-        min = 12;
-        break;
-    case 4: /// 16 - 19
-        min = 16;
-        break;
-    case 5: /// 20 - 23
-        min = 20;
-        break;
-    default:
-        printf("Error! File: World.c. Function: SendMonsterFactoryPoints().\n");
-        break;
-    }
-
-    /// Step 3. Begin assigning values.
-    int i;
-    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
-    {
-        s_pWorld->m_enemyFactoryMainCoordinates[i] = s_pWorld->m_generatedItemPoints[min];
-        ++min;
-    }
-
-    /// Step 4. Save player position.
-    s_pWorld->m_enemyFactoryMainCoordinates[4] = GetPlayerPosition();
-
-    /// Step 5. Save door position.
-    s_pWorld->m_enemyFactoryMainCoordinates[5] = s_pWorld->m_pDoor->m_coord;
-
-    /// Step 6. Send data to the enemy factory so it knows what points to NOT assign enemies.
-    MessageData(s_pWorld->m_enemyFactoryMainCoordinates, s_pWorld->m_flashLightPoints);
-}
+//static void SendEnemyFactoryData()
+//{
+//    /** Step 1. Gather all points. Include
+//    a) Generated items.
+//    b) Player coordinates.
+//    c) Door coordinates. (Use DistributeMessage).
+//    d) FL points (When creating enemies, this ensures we don't create them in the players flashlight space.) */
+//    GatherFlashlightPoints();
+//
+//    /// Step 2. min is a bookmark that keeps the place of where generated item points we want data from.
+//    int min;
+//    switch(GetCurrentLevel())
+//    {
+//    case 0: /// 0 - 3
+//        min = 0;
+//        break;
+//    case 1: /// 4 - 7
+//        min = 4;
+//        break;
+//    case 2: /// 8 - 11
+//        min = 8;
+//        break;
+//    case 3: /// 12 - 15
+//        min = 12;
+//        break;
+//    case 4: /// 16 - 19
+//        min = 16;
+//        break;
+//    case 5: /// 20 - 23
+//        min = 20;
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: SendMonsterFactoryPoints().\n");
+//        break;
+//    }
+//
+//    /// Step 3. Begin assigning values.
+//    int i;
+//    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
+//    {
+//        s_pWorld->m_enemyFactoryMainCoordinates[i] = s_pWorld->m_generatedItemPoints[min];
+//        ++min;
+//    }
+//
+//    /// Step 4. Save player position.
+//    s_pWorld->m_enemyFactoryMainCoordinates[4] = GetPlayerPosition();
+//
+//    /// Step 5. Save door position.
+//    s_pWorld->m_enemyFactoryMainCoordinates[5] = s_pWorld->m_pDoor->m_coord;
+//
+//    /// Step 6. Send data to the enemy factory so it knows what points to NOT assign enemies.
+//    MessageData(s_pWorld->m_enemyFactoryMainCoordinates, s_pWorld->m_flashLightPoints);
+//}
 
 static void GenerateEnemies()
 {
@@ -862,152 +865,152 @@ static int DisplayFlashlight(int x, int y)
     return FALSE;
 }
 
-static int CheckItemLevel(int *pItemLevel)
-{
-    /// Return True if item's assigned level matches current level. Return False if otherwise.
-    switch(*pItemLevel == GetCurrentLevel() ? TRUE : FALSE)
-    {
-    case 1:
-        return TRUE;
-        break;
-    case 0:
-        return FALSE;
-        break;
-    default:
-        printf("Error! File: World.c. Function: CheckItemLevel(int *pItemLevel)\n");
-        break;
-    }
-    return ERROR_INDICATOR;
-}
+//static int CheckItemLevel(int *pItemLevel)
+//{
+//    /// Return True if item's assigned level matches current level. Return False if otherwise.
+//    switch(*pItemLevel == GetCurrentLevel() ? TRUE : FALSE)
+//    {
+//    case 1:
+//        return TRUE;
+//        break;
+//    case 0:
+//        return FALSE;
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: CheckItemLevel(int *pItemLevel)\n");
+//        break;
+//    }
+//    return ERROR_INDICATOR;
+//}
 
-static int UpdateGeneratedItems(int x, int y)
-{
-    Flashlight *pFlashlight;
-    Battery *pBattery;
-    HealthPack *pHealthPack;
-
-    /// Step 1. Go through the item coordinates for matching position.
-    int i;
-    for(i = 0; i < MAX_ITEMS; ++i)
-    {
-        if(x == s_pWorld->m_generatedItemPoints[i].y
-           && y == s_pWorld->m_generatedItemPoints[i].x)
-        {
-            break;
-        }
-    }
-
-    /// Step 2. If i is equal to MAX_ITEMS, no matching item position was found. Exit this function.
-    switch(i == MAX_ITEMS ? TRUE : FALSE)
-    {
-    case 1:
-        return 0;
-        break;
-    case 0:
-        break;
-    default:
-        printf("Error! File: World.c. Function: UpdateGeneratedItems(int x, int y) Part 1.\n");
-        break;
-    }
-
-    /// Step 3. Save type of item we found.
-    int itemType = s_pWorld->m_levelItemTypes[i];
-
-    /// Step 4. Set up other necessary variables.
-    int assignedLevel;
-    int color;
-    char symbol;
-
-    /// Step 5. Get information of matching item.
-    switch(itemType)
-    {
-    case 0:
-        pFlashlight = s_pWorld->m_pLevelItems[i];
-
-        assignedLevel = pFlashlight->m_item.m_assignedLevel;
-        color = pFlashlight->m_item.m_color;
-        symbol = pFlashlight->m_item.m_symbol;
-        break;
-    case 1:
-        pBattery = s_pWorld->m_pLevelItems[i];
-
-        assignedLevel = pBattery->m_item.m_assignedLevel;
-        color = pBattery->m_item.m_color;
-        symbol = pBattery->m_item.m_symbol;
-        break;
-    case 2:
-        pHealthPack = s_pWorld->m_pLevelItems[i];
-
-        assignedLevel = pHealthPack->m_item.m_assignedLevel;
-        color = pHealthPack->m_item.m_color;
-        symbol = pHealthPack->m_item.m_symbol;
-        break;
-    default:
-        printf("Error! File: World.c. Function: UpdateGeneratedItems(int x, int y) Part 2.\n");
-        break;
-    }
-
-    /// Step 6. Possibly the most important step, check if the item is even assigned to the current level.
-    if(!CheckItemLevel(&assignedLevel))
-    {
-        return FALSE;
-    }
-
-    /// Step 7. If step 6 does not fail then  apply text coloring and print out item symbol.
-    AdjustTextColor(color);
-    printf("%c", symbol);
-
-    return TRUE;
-}
+//static int UpdateGeneratedItems(int x, int y)
+//{
+//    Flashlight *pFlashlight;
+//    Battery *pBattery;
+//    HealthPack *pHealthPack;
+//
+//    /// Step 1. Go through the item coordinates for matching position.
+//    int i;
+//    for(i = 0; i < MAX_ITEMS; ++i)
+//    {
+//        if(x == s_pWorld->m_generatedItemPoints[i].y
+//           && y == s_pWorld->m_generatedItemPoints[i].x)
+//        {
+//            break;
+//        }
+//    }
+//
+//    /// Step 2. If i is equal to MAX_ITEMS, no matching item position was found. Exit this function.
+//    switch(i == MAX_ITEMS ? TRUE : FALSE)
+//    {
+//    case 1:
+//        return 0;
+//        break;
+//    case 0:
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: UpdateGeneratedItems(int x, int y) Part 1.\n");
+//        break;
+//    }
+//
+//    /// Step 3. Save type of item we found.
+//    int itemType = s_pWorld->m_levelItemTypes[i];
+//
+//    /// Step 4. Set up other necessary variables.
+//    int assignedLevel;
+//    int color;
+//    char symbol;
+//
+//    /// Step 5. Get information of matching item.
+//    switch(itemType)
+//    {
+//    case 0:
+//        pFlashlight = s_pWorld->m_pLevelItems[i];
+//
+//        assignedLevel = pFlashlight->m_item.m_assignedLevel;
+//        color = pFlashlight->m_item.m_color;
+//        symbol = pFlashlight->m_item.m_symbol;
+//        break;
+//    case 1:
+//        pBattery = s_pWorld->m_pLevelItems[i];
+//
+//        assignedLevel = pBattery->m_item.m_assignedLevel;
+//        color = pBattery->m_item.m_color;
+//        symbol = pBattery->m_item.m_symbol;
+//        break;
+//    case 2:
+//        pHealthPack = s_pWorld->m_pLevelItems[i];
+//
+//        assignedLevel = pHealthPack->m_item.m_assignedLevel;
+//        color = pHealthPack->m_item.m_color;
+//        symbol = pHealthPack->m_item.m_symbol;
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: UpdateGeneratedItems(int x, int y) Part 2.\n");
+//        break;
+//    }
+//
+//    /// Step 6. Possibly the most important step, check if the item is even assigned to the current level.
+//    if(!CheckItemLevel(&assignedLevel))
+//    {
+//        return FALSE;
+//    }
+//
+//    /// Step 7. If step 6 does not fail then  apply text coloring and print out item symbol.
+//    AdjustTextColor(color);
+//    printf("%c", symbol);
+//
+//    return TRUE;
+//}
 
 /// Simple collision detection system for the items on the current level. Runs in O(n).
-static void ItemCollisionDetection()
-{
-    int i;
-    for(i = 0; i < MAX_ITEMS; ++i)
-    {
-        if(GetPlayerPosition().x == s_pWorld->m_generatedItemPoints[i].y &&
-           GetPlayerPosition().y == s_pWorld->m_generatedItemPoints[i].x)
-        {
-            break;
-        }
-    }
-
-    switch(i == MAX_ITEMS ? TRUE : FALSE)
-    {
-    case 1:
-        return;
-        break;
-    case 0:
-        break;
-    default:
-        printf("Error! File: World.c. Function: ItemCollisionDetection().\n");
-        break;
-    }
-
-    int itemType = s_pWorld->m_levelItemTypes[i];
-
-    s_pWorld->m_pLevelItems[i] = NULL;
-    s_pWorld->m_levelItemTypes[i] = ERROR_INDICATOR;
-    s_pWorld->m_generatedItemPoints[i].x = ERROR_INDICATOR;
-    s_pWorld->m_generatedItemPoints[i].y = ERROR_INDICATOR;
-
-    switch(itemType)
-    {
-    case 0:
-        GivePlayerItem(0);
-        break;
-    case 1:
-        GivePlayerItem(1);
-        break;
-    case 2:
-        GivePlayerItem(2);
-        break;
-    default:
-        printf("Error! File: World.c. Function: CollisionDetection().\n");
-        break;
-    }
-}
+//static void ItemCollisionDetection()
+//{
+//    int i;
+//    for(i = 0; i < MAX_ITEMS; ++i)
+//    {
+//        if(GetPlayerPosition().x == s_pWorld->m_generatedItemPoints[i].y &&
+//           GetPlayerPosition().y == s_pWorld->m_generatedItemPoints[i].x)
+//        {
+//            break;
+//        }
+//    }
+//
+//    switch(i == MAX_ITEMS ? TRUE : FALSE)
+//    {
+//    case 1:
+//        return;
+//        break;
+//    case 0:
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: ItemCollisionDetection().\n");
+//        break;
+//    }
+//
+//    int itemType = s_pWorld->m_levelItemTypes[i];
+//
+//    s_pWorld->m_pLevelItems[i] = NULL;
+//    s_pWorld->m_levelItemTypes[i] = ERROR_INDICATOR;
+//    s_pWorld->m_generatedItemPoints[i].x = ERROR_INDICATOR;
+//    s_pWorld->m_generatedItemPoints[i].y = ERROR_INDICATOR;
+//
+//    switch(itemType)
+//    {
+//    case 0:
+//        GivePlayerItem(0);
+//        break;
+//    case 1:
+//        GivePlayerItem(1);
+//        break;
+//    case 2:
+//        GivePlayerItem(2);
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: CollisionDetection().\n");
+//        break;
+//    }
+//}
 
 static void UpdateScreen()
 {
@@ -1029,10 +1032,16 @@ static void UpdateScreen()
             {
                 if(DisplayFlashlight(x, y))
                 {
+                    ///UpdateGeneratedItems(int x, int y)
                     if(UpdateGeneratedItems(x, y))
                     {
                         AdjustTextColor(7);
                     }
+
+//                    if(UpdateGeneratedItems(x, y))
+//                    {
+//                        AdjustTextColor(7);
+//                    }
 
                     else
                     {
@@ -1086,13 +1095,13 @@ static int DoorCollisionDetection()
         ResetPlayerPositionToDefault();
 
         /// d) Generate the next levels items. (Must review the current implementation.)
-        GenerateLevelItems();
+        //GenerateLevelItems();
 
         /// e) Generate a new door.
         GenerateDoor();
 
         /// f) Send factory new information.
-        SendEnemyFactoryData();
+        ///SendEnemyFactoryData();
 
         /// g) Generate the next levels enemies.
         GenerateEnemies();
@@ -1120,8 +1129,8 @@ void WorldInit()
     s_pWorld = malloc(sizeof(WorldManager));
     s_pWorld->m_pDoor = malloc(sizeof(Door));
     s_pWorld->m_gameRunning = TRUE;
-    s_pWorld->m_itemGeneration = ITEMS_PER_LEVEL;
-    s_pWorld->m_itemGenerationAssistance = 0;
+    ///s_pWorld->m_itemGeneration = ITEMS_PER_LEVEL;
+    ///s_pWorld->m_itemGenerationAssistance = 0;
 
     pMessageData = malloc(sizeof(EMData));
 
@@ -1141,13 +1150,13 @@ void WorldInit()
         s_pWorld->m_flashLightPoints[i].y = ERROR_INDICATOR;
     }
 
-    for(i = 0; i < MAX_ITEMS; ++i)
-    {
-        s_pWorld->m_pLevelItems[i] = NULL;
-        s_pWorld->m_levelItemTypes[i] = ERROR_INDICATOR;
-        s_pWorld->m_generatedItemPoints[i].x = ERROR_INDICATOR;
-        s_pWorld->m_generatedItemPoints[i].y = ERROR_INDICATOR;
-    }
+//    for(i = 0; i < MAX_ITEMS; ++i)
+//    {
+//        s_pWorld->m_pLevelItems[i] = NULL;
+//        s_pWorld->m_levelItemTypes[i] = ERROR_INDICATOR;
+//        s_pWorld->m_generatedItemPoints[i].x = ERROR_INDICATOR;
+//        s_pWorld->m_generatedItemPoints[i].y = ERROR_INDICATOR;
+//    }
 
     for(i = 0; i < MAX_ENEMIES; ++i)
     {
@@ -1157,25 +1166,27 @@ void WorldInit()
 
     InitLevelManagement();
 
+    InitItemManagement();
+
     GenerateDoor();
 
-    GenerateLevelItems();
+    ///GenerateLevelItems();
 
     Register(s_pWorld, 1);
 
     GivePlayerItem(0);
 
-    SendEnemyFactoryData(); /// Gathers the flashlight points early to assist enemies in finding valid positions.
+    ///SendEnemyFactoryData(); /// Gathers the flashlight points early to assist enemies in finding valid positions.
 
     GenerateEnemies();
 
-    while(CheckGeneratedItemsForDuplicatePositions())
-        continue;
+    ///while(CheckGeneratedItemsForDuplicatePositions())
+        ///continue;
 }
 
-char GetDoor()
+Door * GetDoor()
 {
-    return s_pWorld->m_pDoor->m_symbol;
+    return s_pWorld->m_pDoor;
 }
 
 void UpdateGame()
@@ -1188,7 +1199,7 @@ void UpdateGame()
 
         UpdateScreen();
 
-        ItemCollisionDetection();
+        ///ItemCollisionDetection();
 
         if(DoorCollisionDetection())
         {
@@ -1220,14 +1231,15 @@ void UpdateGame()
 void WorldCleanMemory()
 {
     int a;
-    for(a = 0; a < MAX_ITEMS; ++a)
-    {
-        if(s_pWorld->m_pLevelItems[a] != NULL)
-        {
-            free(s_pWorld->m_pLevelItems[a]);
-            s_pWorld->m_pLevelItems[a] = 0;
-        }
-    }
+//    int a;
+//    for(a = 0; a < MAX_ITEMS; ++a)
+//    {
+//        if(s_pWorld->m_pLevelItems[a] != NULL)
+//        {
+//            free(s_pWorld->m_pLevelItems[a]);
+//            s_pWorld->m_pLevelItems[a] = 0;
+//        }
+//    }
 
     for(a = 0; a < MAX_ENEMIES; ++a)
     {
