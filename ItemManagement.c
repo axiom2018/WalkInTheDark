@@ -28,12 +28,22 @@ typedef struct
 /// Static manager pointer for re-use.
 static ItemManager *s_pItemManager;
 
-/// Function prototypes.
-//void GenerateLevelItems();
-//static void CreateFlashlight(Flashlight *pFlashlight, int index, Point p);
-//static void AssignStepsBeforeRecharge(Flashlight *pFL);
-//static int CheckItemLevel(int *pItemLevel);
-
+/// __________ Private static functions __________
+static int CheckItemLevel(int *pItemLevel)
+{
+    /// Return True if item's assigned level matches current level. Return False if otherwise.
+    switch(*pItemLevel == GetCurrentLevel() ? TRUE : FALSE)
+    {
+    case 1:
+        return TRUE;
+    case 0:
+        return FALSE;
+    default:
+        printf("Error! File: ItemManagement.c. Function: CheckItemLevel(int *pItemLevel)\n");
+        break;
+    }
+    return ERROR_INDICATOR;
+}
 
 /// Depending on the range of the players flashlight, they will get a high or low steps required before the battery needs a recharge.
 static void AssignStepsBeforeRecharge(Flashlight *pFL)
@@ -61,80 +71,90 @@ static void AssignStepsBeforeRecharge(Flashlight *pFL)
     }
 }
 
-void UpdateEnemyItemData(EMData *pData)
+/// Sometimes items might get assigned the same position, change that.
+static void AssignItemNewPosition(Point *pPrevPos)
 {
-    int i;
-    for(i = 0; i < MAX_ITEMS; ++i)
-    {
-        if(s_pItemManager->m_pLevelItems[i] != NULL)
-        {
-            pData->m_pItemsArr[i] = s_pItemManager->m_pLevelItems[i];
-            pData->m_itemTypes[i] = s_pItemManager->m_levelItemTypes[i];
-            pData->m_maxItems += 1;
-        }
-    }
+    pPrevPos->x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
+    pPrevPos->y = rand() % ((ROWS - 1) + 1 - 0) + 0;
 }
 
-//static void AssignItemNewPosition(Point *pPrevPos)
-//{
-//    pPrevPos->x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
-//    pPrevPos->y = rand() % ((ROWS - 1) + 1 - 0) + 0;
-//}
+/// Check if items position conflicts with any other already established position.
+static int FindDuplicate(Point *pPoint, Point pointToCheck)
+{
+    /// Step 1. Check the pointer with the normal point variable. If there is a match give the pointer new values.
+    if(pPoint->x == pointToCheck.x
+       && pPoint->y == pointToCheck.y)
+    {
+        AssignItemNewPosition(pPoint);
+        return TRUE;
+    }
 
-//static int FindDuplicate(Point *pPoint, Point pointToCheck)
-//{
-//    /// Step 1. Check the pointer with the normal point variable. If there is a match give the pointer new values.
-//    if(pPoint->x == pointToCheck.x
-//       && pPoint->y == pointToCheck.y)
-//    {
-//        AssignItemNewPosition(pPoint);
-//        return TRUE;
-//    }
-//
-//    /// Step 2. Check item with door.
-//    //GetDoor()
-//
-//    else if(pPoint->x == GetDoor()->m_coord.x
-//            && pPoint->y == GetDoor()->m_coord.y)
-//    {
-//        AssignItemNewPosition(pPoint);
-//        return TRUE;
-//    }
-//
-//    /// Step 3. Check item with player.
-//    else if(pPoint->x == GetPlayerPosition().x
-//            && pPoint->y == GetPlayerPosition().y)
-//    {
-//        AssignItemNewPosition(pPoint);
-//        return TRUE;
-//    }
-//
-//    /// (Optional Step). Return false if no duplicate was found.
-//    return FALSE;
-//}
+    /// Step 2. Check item with door.
+    else if(pPoint->x == GetDoor()->m_coord.x
+            && pPoint->y == GetDoor()->m_coord.y)
+    {
+        AssignItemNewPosition(pPoint);
+        return TRUE;
+    }
 
-//static int CheckGeneratedItemsForDuplicatePositions()
-//{
-//    int i, t;
-//    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
-//    {
-//        Point *pPoint = &s_pItemManager->m_generatedItemPoints[i];
-//
-//        for(t = 0; t < ITEMS_PER_LEVEL; ++t)
-//        {
-//            if(i != t)
-//            {
-//                Point pointToCompare = s_pItemManager->m_generatedItemPoints[t];
-//
-//                if(FindDuplicate(pPoint, pointToCompare))
-//                {
-//                    return TRUE;
-//                }
-//            }
-//        }
-//    }
-//    return FALSE;
-//}
+    /// Step 3. Check item with player.
+    else if(pPoint->x == GetPlayerPosition().x
+            && pPoint->y == GetPlayerPosition().y)
+    {
+        AssignItemNewPosition(pPoint);
+        return TRUE;
+    }
+
+    /// (Optional Step). Return false if no duplicate was found.
+    return FALSE;
+}
+/// __________ Private static functions __________
+
+
+/// Clean memory to avoid leaks.
+void ItemManagementCleanMemory()
+{
+    int a;
+    for(a = 0; a < MAX_ITEMS; ++a)
+    {
+        if(s_pItemManager->m_pLevelItems[a] != NULL)
+        {
+            free(s_pItemManager->m_pLevelItems[a]);
+            s_pItemManager->m_pLevelItems[a] = 0;
+        }
+    }
+
+    free(s_pItemManager);
+    s_pItemManager = 0;
+}
+
+int CheckGeneratedItemsForDuplicatePositions()
+{
+    int i, t;
+    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
+    {
+        Point *pPoint = &s_pItemManager->m_generatedItemPoints[i];
+
+        for(t = 0; t < ITEMS_PER_LEVEL; ++t)
+        {
+            if(i != t)
+            {
+                Point pointToCompare = s_pItemManager->m_generatedItemPoints[t];
+
+                if(FindDuplicate(pPoint, pointToCompare))
+                {
+                    return TRUE;
+                }
+            }
+        }
+    }
+    return FALSE;
+}
+
+Point GetItemPoint(int index)
+{
+    return s_pItemManager->m_generatedItemPoints[index];
+}
 
 void GivePlayerItem(int itemType)
 {
@@ -171,35 +191,54 @@ void GivePlayerItem(int itemType)
         printf("Error! File: ItemManagement.c. Function: GivePlayerItem(int itemType).\n");
         break;
     }
+
     AddItemToInventory(pItem, itemType);
 }
 
-static int CheckItemLevel(int *pItemLevel)
+static void AllItemPositions()
 {
-    /// Return True if item's assigned level matches current level. Return False if otherwise.
-    switch(*pItemLevel == GetCurrentLevel() ? TRUE : FALSE)
+    int i;
+    for(i = 0; i < MAX_ITEMS; ++i)
     {
-    case 1:
-        return TRUE;
-        break;
-    case 0:
-        return FALSE;
-        break;
-    default:
-        printf("Error! File: ItemManagement.c. Function: CheckItemLevel(int *pItemLevel)\n");
-        break;
+        if(s_pItemManager->m_generatedItemPoints[i].y != ERROR_INDICATOR &&
+           s_pItemManager->m_generatedItemPoints[i].x != ERROR_INDICATOR)
+        {
+            printf("X: %d , Y: %d\n", s_pItemManager->m_generatedItemPoints[i].x, s_pItemManager->m_generatedItemPoints[i].y);
+        }
     }
-    return ERROR_INDICATOR;
 }
+
+static int
 
 void ItemCollisionDetection()
 {
     int i;
     for(i = 0; i < MAX_ITEMS; ++i)
     {
+        /// Check for error indicator to see if value is meaningful.
+        /// Check the items level.
+        if(s_pItemManager->m_generatedItemPoints[i].y != ERROR_INDICATOR
+           && s_pItemManager->m_generatedItemPoints[i].x != ERROR_INDICATOR
+           && s_pItemManager->)
+        {
+
+        }
+
         if(GetPlayerPosition().x == s_pItemManager->m_generatedItemPoints[i].y &&
            GetPlayerPosition().y == s_pItemManager->m_generatedItemPoints[i].x)
         {
+            printf("\nPlayer X: %d", GetPlayerPosition().y);
+            printf("\nPlayer Y: %d", GetPlayerPosition().x);
+            printf("\nItem X: %d", s_pItemManager->m_generatedItemPoints[i].x);
+            printf("\nItem Y: %d", s_pItemManager->m_generatedItemPoints[i].y);
+
+            /// Issue with item collision detection here. Player clearly isn't on an item.
+            /// But trigger happens.
+            /// List all item coordinates to see if it's an item on a different level?
+
+            /// Triggered 21 18 on level 3, maybe it's not being updated properly.
+            AllItemPositions();
+
             break;
         }
     }
@@ -212,7 +251,7 @@ void ItemCollisionDetection()
     case 0:
         break;
     default:
-        printf("Error! File: World.c. Function: ItemCollisionDetection().\n");
+        printf("Error! File: ItemManagement.c. Function: ItemCollisionDetection().\n");
         break;
     }
 
@@ -235,8 +274,22 @@ void ItemCollisionDetection()
         GivePlayerItem(2);
         break;
     default:
-        printf("Error! File: World.c. Function: CollisionDetection().\n");
+        printf("Error! File: ItemManagement.c. Function: CollisionDetection().\n");
         break;
+    }
+}
+
+void UpdateEnemyItemData(EMData *pData)
+{
+    int i;
+    for(i = 0; i < MAX_ITEMS; ++i)
+    {
+        if(s_pItemManager->m_pLevelItems[i] != NULL)
+        {
+            pData->m_pItemsArr[i] = s_pItemManager->m_pLevelItems[i];
+            pData->m_itemTypes[i] = s_pItemManager->m_levelItemTypes[i];
+            pData->m_maxItems += 1;
+        }
     }
 }
 
@@ -257,7 +310,7 @@ int UpdateGeneratedItems(int x, int y)
         }
     }
 
-    /// Step 2. If i is equal to MAX_ITEMS, no matching item position was found. Exit this function.
+    /// Step 2. If i is equal to MAX_ITEMS, no matching item position was found so exit this function.
     switch(i == MAX_ITEMS ? TRUE : FALSE)
     {
     case 1:
@@ -316,6 +369,7 @@ int UpdateGeneratedItems(int x, int y)
     /// Step 7. If step 6 does not fail then  apply text coloring and print out item symbol.
     AdjustTextColor(color);
     printf("%c", symbol);
+    AdjustTextColor(7); /// Default color.
 
     return TRUE;
 }
@@ -326,6 +380,7 @@ static void CreateFlashlight(Flashlight *pFlashlight, int index, Point p)
     pFlashlight->m_item.m_color = 5;
     pFlashlight->m_item.m_symbol = 'F';
     pFlashlight->m_item.m_assignedLevel = GetCurrentLevel();
+    printf("Assigned level: %d\n", pFlashlight->m_item.m_assignedLevel);
 
     pFlashlight->m_item.m_pos.x = p.x;
     pFlashlight->m_item.m_pos.y = p.y;
@@ -334,6 +389,36 @@ static void CreateFlashlight(Flashlight *pFlashlight, int index, Point p)
     AssignStepsBeforeRecharge(pFlashlight);
 
     s_pItemManager->m_pLevelItems[index] = pFlashlight;
+}
+
+static void CreateBattery(Battery *pBattery, int index, Point p)
+{
+    pBattery->m_item.m_name = "Battery";
+    pBattery->m_item.m_color = 3;
+    pBattery->m_item.m_symbol = 'B';
+    pBattery->m_item.m_assignedLevel = GetCurrentLevel();
+    printf("Assigned level: %d\n", pBattery->m_item.m_assignedLevel);
+
+    pBattery->m_item.m_pos.x = p.x;
+    pBattery->m_item.m_pos.y = p.y;
+
+    pBattery->m_rechargeAmount = BATTERY_UPGRADE;
+    s_pItemManager->m_pLevelItems[index] = pBattery;
+}
+
+static void CreateHealthPack(HealthPack *pHealthPack, int index, Point p)
+{
+    pHealthPack->m_item.m_name = "HealthPack";
+    pHealthPack->m_item.m_color = 12;
+    pHealthPack->m_item.m_symbol = 'H';
+    pHealthPack->m_item.m_assignedLevel = GetCurrentLevel();
+    printf("Assigned level: %d\n", pHealthPack->m_item.m_assignedLevel);
+
+    pHealthPack->m_item.m_pos.x = p.x;
+    pHealthPack->m_item.m_pos.y = p.y;
+
+    pHealthPack->m_healthAmount = HEALTH_UPGRADE;
+    s_pItemManager->m_pLevelItems[index] = pHealthPack;
 }
 
 void GenerateLevelItems()
@@ -372,44 +457,14 @@ void GenerateLevelItems()
         case 0:
             pFlashlight = malloc(sizeof(Flashlight));
             CreateFlashlight(pFlashlight, index, pos);
-//            pFlashlight->m_item.m_name = "Flashlight";
-//            pFlashlight->m_item.m_color = 5;
-//            pFlashlight->m_item.m_symbol = 'F';
-//            pFlashlight->m_item.m_assignedLevel = GetCurrentLevel();
-//
-//            pFlashlight->m_item.m_pos.x = pos.x;
-//            pFlashlight->m_item.m_pos.y = pos.y;
-//
-//            pFlashlight->m_range = rand() % (6 + 1 - 3) + 3;
-//            AssignStepsBeforeRecharge(pFlashlight);
-//
-//            s_pItemManager->m_pLevelItems[index] = pFlashlight;
             break;
         case 1:
             pBattery = malloc(sizeof(Battery));
-            pBattery->m_item.m_name = "Battery";
-            pBattery->m_item.m_color = 3;
-            pBattery->m_item.m_symbol = 'B';
-            pBattery->m_item.m_assignedLevel = GetCurrentLevel();
-
-            pBattery->m_item.m_pos.x = pos.x;
-            pBattery->m_item.m_pos.y = pos.y;
-
-            pBattery->m_rechargeAmount = BATTERY_UPGRADE;
-            s_pItemManager->m_pLevelItems[index] = pBattery;
+            CreateBattery(pBattery, index, pos);
             break;
         case 2:
             pHealthPack = malloc(sizeof(HealthPack));
-            pHealthPack->m_item.m_name = "HealthPack";
-            pHealthPack->m_item.m_color = 12;
-            pHealthPack->m_item.m_symbol = 'H';
-            pHealthPack->m_item.m_assignedLevel = GetCurrentLevel();
-
-            pHealthPack->m_item.m_pos.x = pos.x;
-            pHealthPack->m_item.m_pos.y = pos.y;
-
-            pHealthPack->m_healthAmount = HEALTH_UPGRADE;
-            s_pItemManager->m_pLevelItems[index] = pHealthPack;
+            CreateHealthPack(pHealthPack, index, pos);
             break;
         default:
             printf("Error! File: ItemManagement.c. Function: CreateItem(int typeOfItem)\n");
@@ -421,6 +476,10 @@ void GenerateLevelItems()
 
     s_pItemManager->m_itemGeneration += ITEMS_PER_LEVEL;
     s_pItemManager->m_itemGenerationAssistance = i;
+
+    AllItemPositions();
+
+    system("cls");
 }
 
 void InitItemManagement()
@@ -438,22 +497,4 @@ void InitItemManagement()
         s_pItemManager->m_generatedItemPoints[i].x = ERROR_INDICATOR;
         s_pItemManager->m_generatedItemPoints[i].y = ERROR_INDICATOR;
     }
-
-    GenerateLevelItems();
-}
-
-void ItemManagementCleanMemory()
-{
-    int a;
-    for(a = 0; a < MAX_ITEMS; ++a)
-    {
-        if(s_pItemManager->m_pLevelItems[a] != NULL)
-        {
-            free(s_pItemManager->m_pLevelItems[a]);
-            s_pItemManager->m_pLevelItems[a] = 0;
-        }
-    }
-
-    free(s_pItemManager);
-    s_pItemManager = 0;
 }

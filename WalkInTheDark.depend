@@ -339,7 +339,7 @@
 	"Definitions.h"
 	"Point.h"
 
-1480447322 c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.h
+1501179809 c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.h
 	"Point.h"
 	"EnemyMoveData.h"
 
@@ -444,7 +444,7 @@
 
 1480525981 c:\users\axiom\github projects\walkinthedark\lightmovementdirections.h
 
-1501104033 source:c:\users\axiom\github projects\walkinthedark\player.c
+1501260237 source:c:\users\axiom\github projects\walkinthedark\player.c
 	"Player.h"
 	"World.h"
 	"Point.h"
@@ -515,7 +515,7 @@
 	<stdio.h>
 	<windows.h>
 
-1501103906 source:c:\users\axiom\github projects\walkinthedark\world.c
+1501212246 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
@@ -540,10 +540,11 @@
 
 1480356656 c:\users\axiom\github projects\walkinthedark\enemyprocedure.h
 
-1501087477 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
+1501191554 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
 	"EnemyMoveData.h"
+	"Point.h"
 
-1501112260 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
+1501266059 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
 	"Definitions.h"
 	"Flashlight.h"
 	"HealthPack.h"

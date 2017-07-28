@@ -426,7 +426,8 @@ void PlayerInit()
 void PlayerGUI()
 {
     printf("\nHealth: %d - Steps before battery dies: %d Max inventory space: %d\n", s_pPlayer->m_health, s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge, MAX_INVENTORY_SPACE);
-    printf("Escape before monsters destroy you!\n");
+    ///printf("Escape before monsters destroy you!\n");
+    printf("PX: %d , PY: %d\n", s_pPlayer->m_playerPosition.y, s_pPlayer->m_playerPosition.x);
     printf("[o]Open Inventory [i]Instructions [t]Tips [q]Quit");
 }
 
@@ -483,6 +484,8 @@ void AddItemToInventory(void *pItem, int itemType)
         {
             s_pPlayer->m_pEquippedFlashlight = (Flashlight*)s_pPlayer->m_pInventory[index];
             s_pPlayer->m_pEquippedFlashlight->m_range = 3;
+            /// Remove this 300 boost later! It's for testing purposes only.
+            s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge = 300;
         }
     }
 

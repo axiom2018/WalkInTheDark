@@ -53,6 +53,13 @@
 		<Unit filename="EnemyMoveStrategy.h" />
 		<Unit filename="EnemyProcedure.h" />
 		<Unit filename="EnemyStrategyCheck.h" />
+		<Unit filename="ErrorIndicationStrategy.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="ErrorIndicationStrategy.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="Flashlight.h" />
 		<Unit filename="HealthPack.h" />
 		<Unit filename="ItemManagement.c">
@@ -99,7 +106,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="World.h" />
-		<Unit filename="bin/Release/WalkInTheDark.exe" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
