@@ -62,6 +62,10 @@
 		</Unit>
 		<Unit filename="Flashlight.h" />
 		<Unit filename="HealthPack.h" />
+		<Unit filename="ItemCreation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ItemCreation.h" />
 		<Unit filename="ItemManagement.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -96,6 +100,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="StrategyCheck.h" />
+		<Unit filename="Switch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Switch.h" />
 		<Unit filename="UniversalMovementFunctions.c">
 			<Option compilerVar="CC" />
 		</Unit>

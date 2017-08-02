@@ -1,6 +1,7 @@
 /// ArrayOperations.h
 #ifndef ARRAYOPERATIONS_H_INCLUDED
 #define ARRAYOPERATIONS_H_INCLUDED
+#include "Point.h"
 
 /// ArrayOperations supply different project files with a one stop shop of array manipulation functions. Player, World, Mediator, and more benefit.
 int GetPointerArrayPos(void *arr[], int arrSize);

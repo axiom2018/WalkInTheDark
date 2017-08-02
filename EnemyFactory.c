@@ -11,6 +11,7 @@
 #include "SelectMovementStrategyAssistance.h"
 #include "StrategyCheck.h"
 #include "Definitions.h"
+#include "Switch.h"
 
 /// This is a "poor mans" factory pattern I created. Not as good as the C++ version which obviously is capable of OOP but this one gets the job done.
 typedef struct
@@ -107,18 +108,9 @@ static int FlashlightPointTest(Point *pPos)
 
 static int EnemyCoordinateTest(Point *pPos)
 {
-    /// Step 1. Check for at least 1 other enemy. If we do not have one, return False. No need to continue because we have nothing to compare too.
-    switch(s_pEnemyFactory->m_enemySpecifics[0].m_assignedLevel == ERROR_INDICATOR ? TRUE : FALSE)
-    {
-    case 1:
+    /// Step 1. Check for at least 1 other enemy. If not return False. No need to continue because we have nothing to compare too.
+    if(UseSwitch(s_pEnemyFactory->m_enemySpecifics[0].m_assignedLevel, ERROR_INDICATOR))
         return FALSE;
-        break;
-    case 0:
-        break;
-    default:
-        printf("Error! File: EnemyFactory.c. Function: EnemyCoordinateTest(Point *pPos).\n");
-        break;
-    }
 
     /// Step 2. Begin checking for duplicates.
     int i;

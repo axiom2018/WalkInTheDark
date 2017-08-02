@@ -355,9 +355,10 @@
 1480357478 c:\users\axiom\github projects\walkinthedark\items.h
 	"Point.h"
 
-1501108555 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
+1501621305 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
+	"Point.h"
 
-1480359256 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
+1501646468 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
 	"EnemyFactory.h"
 	"Werewolf.h"
 	"Witch.h"
@@ -370,6 +371,7 @@
 	"SelectMovementStrategyAssistance.h"
 	"StrategyCheck.h"
 	"Definitions.h"
+	"Switch.h"
 
 1499815813 c:\users\axiom\github projects\walkinthedark\enemyfactory.h
 	"Point.h"
@@ -496,7 +498,7 @@
 	<windows.h>
 	<stdio.h>
 
-1480612116 source:c:\users\axiom\github projects\walkinthedark\main.c
+1501628363 source:c:\users\axiom\github projects\walkinthedark\main.c
 	<stdlib.h>
 	<time.h>
 	<conio.h>
@@ -504,6 +506,7 @@
 	"EnemyFactory.h"
 	"World.h"
 	"Player.h"
+	"Boolean.h"
 
 1499287819 source:c:\users\axiom\github projects\walkinthedark\mediatorpattern.c
 	"MediatorPattern.h"
@@ -515,7 +518,7 @@
 	<stdio.h>
 	<windows.h>
 
-1501212246 source:c:\users\axiom\github projects\walkinthedark\world.c
+1501270512 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
@@ -540,16 +543,12 @@
 
 1480356656 c:\users\axiom\github projects\walkinthedark\enemyprocedure.h
 
-1501191554 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
+1501272469 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
 	"EnemyMoveData.h"
 	"Point.h"
 
-1501266059 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
+1501704336 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
 	"Definitions.h"
-	"Flashlight.h"
-	"HealthPack.h"
-	"Battery.h"
-	"Point.h"
 	"ArrayOperations.h"
 	"LevelManagement.h"
 	"Player.h"
@@ -558,6 +557,29 @@
 	"World.h"
 	"EnemyMoveData.h"
 	"Door.h"
+	"ItemCreation.h"
+	"Switch.h"
 	<stdlib.h>
 	<stdio.h>
+
+1501616040 c:\users\axiom\github projects\walkinthedark\itemcreation.h
+	"Flashlight.h"
+	"HealthPack.h"
+	"Battery.h"
+	"Point.h"
+
+1501623953 source:c:\users\axiom\github projects\walkinthedark\itemcreation.c
+	"ItemCreation.h"
+	"LevelManagement.h"
+	"Definitions.h"
+	<stdlib.h>
+	<stdio.h>
+
+1501628898 source:c:\users\axiom\github projects\walkinthedark\switch.c
+	"Switch.h"
+	"Boolean.h"
+	"Definitions.h"
+	<stdio.h>
+
+1501627951 c:\users\axiom\github projects\walkinthedark\switch.h
 

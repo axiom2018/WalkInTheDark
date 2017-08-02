@@ -14,6 +14,23 @@ https://omarscode.wordpress.com/
 #include "EnemyFactory.h"
 #include "World.h"
 #include "Player.h"
+#include "Boolean.h"
+
+void SwitchTest(int first, int second)
+{
+    switch(first == second ? TRUE : FALSE)
+    {
+    case 1:
+        printf("True!\n");
+        break;
+    case 0:
+        printf("False!\n");
+        break;
+    default:
+        printf("Error!\n");
+        break;
+    }
+}
 
 int main()
 {
