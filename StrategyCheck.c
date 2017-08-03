@@ -10,5 +10,6 @@ int StrategyCheck(Move *pMoveStrategy)
     {
         return TRUE;
     }
+
     return FALSE;
 }

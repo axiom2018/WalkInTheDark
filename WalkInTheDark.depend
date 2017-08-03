@@ -480,12 +480,12 @@
 	"Boolean.h"
 	<stdio.h>
 
-1480356396 source:c:\users\axiom\github projects\walkinthedark\strategycheck.c
+1501782705 source:c:\users\axiom\github projects\walkinthedark\strategycheck.c
 	"Boolean.h"
 	"LightMovement.h"
 	"EnemyMoveStrategy.h"
 
-1480447218 source:c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.c
+1501782055 source:c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.c
 	"UniversalMovementFunctions.h"
 	"Definitions.h"
 	"Boolean.h"
@@ -498,7 +498,7 @@
 	<windows.h>
 	<stdio.h>
 
-1501706954 source:c:\users\axiom\github projects\walkinthedark\main.c
+1501782511 source:c:\users\axiom\github projects\walkinthedark\main.c
 	<stdlib.h>
 	<time.h>
 	<conio.h>
@@ -507,6 +507,7 @@
 	"World.h"
 	"Player.h"
 	"Boolean.h"
+	"ItemManagement.h"
 
 1499287819 source:c:\users\axiom\github projects\walkinthedark\mediatorpattern.c
 	"MediatorPattern.h"
@@ -518,7 +519,7 @@
 	<stdio.h>
 	<windows.h>
 
-1501270512 source:c:\users\axiom\github projects\walkinthedark\world.c
+1501783236 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"

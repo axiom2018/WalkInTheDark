@@ -61,6 +61,7 @@ static int GetEmptyIndexForFlashlightPoints()
     {
         return ERROR_INDICATOR;
     }
+
     return flPointIndex;
 }
 
@@ -859,9 +860,9 @@ void WorldCleanMemory()
     free(s_pWorld->m_pDoor);
     s_pWorld->m_pDoor = 0;
 
-    free(s_pWorld);
-    s_pWorld = 0;
-
     free(s_pWorld->pMessageData);
     s_pWorld->pMessageData = 0;
+
+    free(s_pWorld);
+    s_pWorld = 0;
 }

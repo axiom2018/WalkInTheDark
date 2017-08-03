@@ -15,6 +15,7 @@ Website: https://omarscode.wordpress.com/
 #include "World.h"
 #include "Player.h"
 #include "Boolean.h"
+#include "ItemManagement.h"
 
 int main()
 {
@@ -27,6 +28,7 @@ int main()
 
     UpdateGame();
 
+    ItemManagementCleanMemory();
     MediatorCleanMemory();
     EnemyFactoryCleanMemory();
     PlayerCleanMemory();

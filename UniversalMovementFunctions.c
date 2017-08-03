@@ -202,6 +202,7 @@ int RunPositionTests(EMData *pData, Point *pDesiredEnemyPos)
             return TRUE;
         }
     }
+
     return FALSE;
 }
 
@@ -213,5 +214,6 @@ int PlayerCollision(Point playerPos, Point enemyPos)
     {
         return TRUE;
     }
+
     return FALSE;
 }
