@@ -1,10 +1,10 @@
 /**
 
-Name: Walk in the Dark. (Version 1)
+Name: Walk in the Dark. (Version 2)
 Author: Omar Moodie.
 Date:
 
-https://omarscode.wordpress.com/
+Website: https://omarscode.wordpress.com/
 */
 
 #include <stdlib.h>
@@ -15,22 +15,6 @@ https://omarscode.wordpress.com/
 #include "World.h"
 #include "Player.h"
 #include "Boolean.h"
-
-void SwitchTest(int first, int second)
-{
-    switch(first == second ? TRUE : FALSE)
-    {
-    case 1:
-        printf("True!\n");
-        break;
-    case 0:
-        printf("False!\n");
-        break;
-    default:
-        printf("Error!\n");
-        break;
-    }
-}
 
 int main()
 {

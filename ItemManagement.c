@@ -26,26 +26,13 @@ typedef struct
 /// Static manager pointer for re-use.
 static ItemManager *s_pItemManager;
 
-/// __________ Private static functions (Begin) __________
 static int CheckItemLevel(int *pItemLevel)
 {
-//    if(UseSwitch(*pItemLevel))
-//        return TRUE;
-//
-//    return false;
-
-    /// Return True if item's assigned level matches current level. Return False if otherwise.
-    switch(*pItemLevel == GetCurrentLevel() ? TRUE : FALSE)
-    {
-    case 1:
+    /// Return True if item's assigned level matches current level.
+    if(UseSwitch(*pItemLevel, GetCurrentLevel()))
         return TRUE;
-    case 0:
-        return FALSE;
-    default:
-        printf("Error! File: ItemManagement.c. Function: CheckItemLevel(int *pItemLevel)\n");
-        break;
-    }
-    return ERROR_INDICATOR;
+
+    return FALSE;
 }
 
 /// Depending on the range of the players flashlight, they will get a high or low steps required before the battery needs a recharge.
@@ -54,22 +41,22 @@ static void AssignStepsBeforeRecharge(Flashlight *pFL)
     switch(pFL->m_range)
     {
     case 2:
-        pFL->m_stepsBeforeRecharge = rand() % (200 + 1 - 130) + 130; /// Too hard coded? Change later.
+        pFL->m_stepsBeforeRecharge = rand() % (MAX_MED + PLUS_ONE - RANGE_MID) + RANGE_MID;
         break;
     case 3:
-        pFL->m_stepsBeforeRecharge = rand() % (200 + 1 - 130) + 130;
+        pFL->m_stepsBeforeRecharge = rand() % (MAX_MED + PLUS_ONE - RANGE_MID) + RANGE_MID;
         break;
     case 4:
-        pFL->m_stepsBeforeRecharge = rand() % (210 + 1 - 150) + 150;
+        pFL->m_stepsBeforeRecharge = rand() % (MAX_RANGE + PLUS_ONE - RANGE_MAX) + RANGE_MAX;
         break;
     case 5:
-        pFL->m_stepsBeforeRecharge = rand() % (190 + 1 - 130) + 130;
+        pFL->m_stepsBeforeRecharge = rand() % (MAX_MIN_PLUS + PLUS_ONE - RANGE_MID) + RANGE_MID;
         break;
     case 6:
-        pFL->m_stepsBeforeRecharge = rand() % (180 + 1 - 120) + 120;
+        pFL->m_stepsBeforeRecharge = rand() % (MAX_MIN + PLUS_ONE - RANGE_MIN) + RANGE_MIN;
         break;
     default:
-        printf("Default case in GivePlayerFlashlight!\n");
+        printf("Error! File: ItemManagement.c. Function: AssignStepsBeforeRecharge().\n");
         break;
     }
 }
@@ -101,8 +88,8 @@ static int FindDuplicate(Point *pPoint, Point pointToCheck)
     }
 
     /// Step 3. Check item with player.
-    else if(pPoint->x == GetPlayerPosition().x
-            && pPoint->y == GetPlayerPosition().y)
+    else if(pPoint->x == GetPlayerPosition().y
+            && pPoint->y == GetPlayerPosition().x)
     {
         AssignItemNewPosition(pPoint);
         return TRUE;
@@ -111,22 +98,6 @@ static int FindDuplicate(Point *pPoint, Point pointToCheck)
     /// (Optional Step). Return false if no duplicate was found.
     return FALSE;
 }
-
-/// Test function. Delete later.
-static void AllItemPositions()
-{
-    int i;
-    for(i = 0; i < MAX_ITEMS; ++i)
-    {
-        if(s_pItemManager->m_generatedItemPoints[i].y != ERROR_INDICATOR &&
-           s_pItemManager->m_generatedItemPoints[i].x != ERROR_INDICATOR)
-        {
-            printf("X: %d , Y: %d\n", s_pItemManager->m_generatedItemPoints[i].x, s_pItemManager->m_generatedItemPoints[i].y);
-        }
-    }
-}
-/// __________ Private static functions (End) __________
-
 
 /// Clean memory to avoid leaks.
 void ItemManagementCleanMemory()
@@ -177,34 +148,31 @@ void GivePlayerItem(int itemType)
     Flashlight *pFlashlight;
     Battery *pBattery;
     HealthPack *pHealthPack;
+    Point pos;
+    pos.x = ERROR_INDICATOR;
+    pos.y = ERROR_INDICATOR;
     void *pItem;
 
     switch(itemType)
     {
     case 0:
         pFlashlight = malloc(sizeof(Flashlight));
-        pFlashlight->m_item.m_name = "Flashlight";
-        pFlashlight->m_item.m_symbol = 'F';
-        pFlashlight->m_range = rand() % (6 + 1 - 2) + 2;
+        CreateFlashlight(pFlashlight, pos);
         AssignStepsBeforeRecharge(pFlashlight);
         pItem = pFlashlight;
         break;
     case 1:
         pBattery = malloc(sizeof(Battery));
-        pBattery->m_item.m_name = "Battery";
-        pBattery->m_item.m_symbol = 'B';
-        pBattery->m_rechargeAmount = BATTERY_UPGRADE;
+        CreateBattery(pBattery, pos);
         pItem = pBattery;
         break;
     case 2:
         pHealthPack = malloc(sizeof(HealthPack));
-        pHealthPack->m_item.m_name = "HealthPack";
-        pHealthPack->m_item.m_symbol = 'H';
-        pHealthPack->m_healthAmount = HEALTH_UPGRADE;
+        CreateHealthPack(pHealthPack, pos);
         pItem = pHealthPack;
         break;
     default:
-        printf("Error! File: ItemManagement.c. Function: GivePlayerItem(int itemType).\n");
+        printf("Error! File: ItemManagement.c. Function: GivePlayerItem().\n");
         break;
     }
 
@@ -220,31 +188,12 @@ void ItemCollisionDetection()
         /// Check the items level. THAT'S ALL WE DO FIRST.
         if(GetPlayerPosition().x == s_pItemManager->m_generatedItemPoints[i].y &&
            GetPlayerPosition().y == s_pItemManager->m_generatedItemPoints[i].x)
-        {
-            break;
-        }
+           break;
     }
 
     printf("i: %d , Max Items: %d\n", i, MAX_ITEMS);
     if(UseSwitch(i, MAX_ITEMS))
         return;
-
-
-    /*
-    /// This switch is found almost everywhere in the code, I wonder if I can generalize it?
-    /// Step 2. If we hit MAX_ITEMS, return, we cycled through the locations of items and found no match.
-    switch(i == MAX_ITEMS ? TRUE : FALSE) /// Here.
-    {
-    case 1:
-        return;
-    case 0:
-        break;
-    default:
-        printf("Error! File: ItemManagement.c. Function: ItemCollisionDetection().\n");
-        break;
-    }
-    */
-
 
     /// Step 3. Declare variables for future use, and grab the type of item for reverse engineering in the following switch statement.
     int itemType = s_pItemManager->m_levelItemTypes[i];
@@ -274,10 +223,6 @@ void ItemCollisionDetection()
         break;
     }
 
-    /// Okay we have the items assigned level, let's check if that level is the current level.
-    /// With another switch? No, we give the item with another switch.
-
-    printf("Assigned level: %d\n", assignedLevel);
     /// Step 5. Crucial step, check if the item found was assigned to this level, if so, continue. If not, return.
     if(!CheckItemLevel(&assignedLevel))
         return;
@@ -306,6 +251,7 @@ void ItemCollisionDetection()
     s_pItemManager->m_generatedItemPoints[i].y = ERROR_INDICATOR;
 }
 
+/// Enemies need item data to move properly.
 void UpdateEnemyItemData(EMData *pData)
 {
     int i;
@@ -333,11 +279,10 @@ int UpdateGeneratedItems(int x, int y)
     {
         if(x == s_pItemManager->m_generatedItemPoints[i].y
            && y == s_pItemManager->m_generatedItemPoints[i].x)
-        {
-            break;
-        }
+           break;
     }
 
+    /// Step 3. If i is equal to MAX_ITEMS, no matching item position was found. Exit this function.
     if(UseSwitch(i, MAX_ITEMS))
         return FALSE;
 
@@ -382,7 +327,7 @@ int UpdateGeneratedItems(int x, int y)
     /// Step 8. If step 6 does not fail then  apply text coloring and print out item symbol.
     AdjustTextColor(color);
     printf("%c", symbol);
-    AdjustTextColor(7); /// Default color.
+    AdjustTextColor(DEFAULT_COLOR);
 
     /// (Optional Step) Return true if everything went through.
     return TRUE;
@@ -400,18 +345,18 @@ static void CreateItem(int index, int itemType, Point pos)
     {
     case 0:
         pFlashlight = malloc(sizeof(Flashlight));
-        CreateFlashlight(pFlashlight, index, pos); /// Delegate to an ItemCreation.h/.c interface.
+        CreateFlashlight(pFlashlight, pos); /// Delegate to an ItemCreation.h/.c interface.
         AssignStepsBeforeRecharge(pFlashlight);
         s_pItemManager->m_pLevelItems[index] = pFlashlight;
         break;
     case 1:
         pBattery = malloc(sizeof(Battery));
-        CreateBattery(pBattery, index, pos);
+        CreateBattery(pBattery, pos);
         s_pItemManager->m_pLevelItems[index] = pBattery;
         break;
     case 2:
         pHealthPack = malloc(sizeof(HealthPack));
-        CreateHealthPack(pHealthPack, index, pos);
+        CreateHealthPack(pHealthPack, pos);
         s_pItemManager->m_pLevelItems[index] = pHealthPack;
         break;
     default:
@@ -455,9 +400,6 @@ void GenerateLevelItems()
 
     s_pItemManager->m_itemGeneration += ITEMS_PER_LEVEL;
     s_pItemManager->m_itemGenerationAssistance = i;
-
-    ///AllItemPositions();
-    ///system("cls");
 }
 
 void InitItemManagement()

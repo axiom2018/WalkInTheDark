@@ -219,9 +219,7 @@ static void ApplyMotion(char key)
 static void IndicatorMotion(char *input)
 {
     if(s_pPlayer->m_itemCount == 1) /// Player cannot select anything else because they only have 1 item in their inventory.
-    {
         return;
-    }
 
     switch(*input)
     {
@@ -425,7 +423,8 @@ void PlayerInit()
 
 void PlayerGUI()
 {
-    printf("\nHealth: %d - Steps before battery dies: %d Max inventory space: %d\n", s_pPlayer->m_health, s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge, MAX_INVENTORY_SPACE);
+    printf("\nHealth: %d - Steps before battery dies: %d Max inventory space: %d\n",
+           s_pPlayer->m_health, s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge, MAX_INVENTORY_SPACE);
     ///printf("Escape before monsters destroy you!\n");
     printf("PX: %d , PY: %d\n", s_pPlayer->m_playerPosition.y, s_pPlayer->m_playerPosition.x);
     printf("[o]Open Inventory [i]Instructions [t]Tips [q]Quit");
@@ -466,10 +465,8 @@ void AddItemToInventory(void *pItem, int itemType)
 {
     int index = GetPointerArrayPos(s_pPlayer->m_pInventory, MAX_INVENTORY_SPACE);
 
-    if(index == ERROR_INDICATOR)
-    {
+    if(UseSwitch(index, ERROR_INDICATOR))
         return;
-    }
 
     int itemTypesIndex = GetIntArrayPos(s_pPlayer->m_itemTypes, MAX_INVENTORY_SPACE);
 
@@ -509,9 +506,8 @@ void AddItemToInventory(void *pItem, int itemType)
 int CheckBatteryPower()
 {
     if(s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge > 0)
-    {
         return TRUE;
-    }
+
     return FALSE;
 }
 

@@ -18,29 +18,21 @@
 #include <stdlib.h>
 #include <conio.h>
 
-
+/// Defined structure that holds all item related variable data needed.
 typedef struct
 {
     char m_area[ROWS][COLUMNS];
     int m_gameRunning;
-
     Point m_flashLightPoints[SIZE_OF_FL_POINTS];
     Door *m_pDoor;
-
-//    void *m_pLevelItems[MAX_ITEMS];
-//    int m_levelItemTypes[MAX_ITEMS];
-//    Point m_generatedItemPoints[MAX_ITEMS];
+    EMData *pMessageData;
     Point m_enemyFactoryMainCoordinates[COORDINATES_TO_SEND];
-//    int m_itemGeneration;
-//    int m_itemGenerationAssistance;
-
     void *m_pEnemies[MAX_ENEMIES];
     int m_enemyTypes[MAX_ENEMIES];
 
 } WorldManager;
 
 static WorldManager *s_pWorld;
-EMData *pMessageData;
 
 /**
                                         THE FOLLOWING STATIC FUNCTIONS ARE C STYLE "PRIVATE" AND
@@ -116,30 +108,30 @@ static Point AmountOfEnemiesToGenerate()
 
 static void UpdateEnemyData()
 {
-    pMessageData->m_maxMonsters = 0;
+    s_pWorld->pMessageData->m_maxMonsters = 0;
 
-    pMessageData->m_maxItems = 0;
+    s_pWorld->pMessageData->m_maxItems = 0;
 
     int i;
     for(i = 0; i < MAX_ENEMIES; ++i)
     {
         if(s_pWorld->m_pEnemies[i] != NULL)
         {
-            pMessageData->m_pMonsterArr[i] = s_pWorld->m_pEnemies[i];
-            pMessageData->m_monsterTypes[i] = s_pWorld->m_enemyTypes[i];
-            pMessageData->m_maxMonsters += 1;
+            s_pWorld->pMessageData->m_pMonsterArr[i] = s_pWorld->m_pEnemies[i];
+            s_pWorld->pMessageData->m_monsterTypes[i] = s_pWorld->m_enemyTypes[i];
+            s_pWorld->pMessageData->m_maxMonsters += 1;
         }
     }
 
-    UpdateEnemyItemData(pMessageData);
+    UpdateEnemyItemData(s_pWorld->pMessageData);
 
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
-        if(pMessageData->m_flashlightPoints[i].x != ERROR_INDICATOR &&
-           pMessageData->m_flashlightPoints[i].y != ERROR_INDICATOR)
+        if(s_pWorld->pMessageData->m_flashlightPoints[i].x != ERROR_INDICATOR &&
+           s_pWorld->pMessageData->m_flashlightPoints[i].y != ERROR_INDICATOR)
         {
-            pMessageData->m_flashlightPoints[i].x = ERROR_INDICATOR;
-            pMessageData->m_flashlightPoints[i].y = ERROR_INDICATOR;
+            s_pWorld->pMessageData->m_flashlightPoints[i].x = ERROR_INDICATOR;
+            s_pWorld->pMessageData->m_flashlightPoints[i].y = ERROR_INDICATOR;
         }
     }
 
@@ -149,18 +141,18 @@ static void UpdateEnemyData()
         if(s_pWorld->m_flashLightPoints[i].x > ERROR_INDICATOR &&
            s_pWorld->m_flashLightPoints[i].y > ERROR_INDICATOR)
         {
-            pMessageData->m_flashlightPoints[i].x = s_pWorld->m_flashLightPoints[i].x;
-            pMessageData->m_flashlightPoints[i].y = s_pWorld->m_flashLightPoints[i].y;
+            s_pWorld->pMessageData->m_flashlightPoints[i].x = s_pWorld->m_flashLightPoints[i].x;
+            s_pWorld->pMessageData->m_flashlightPoints[i].y = s_pWorld->m_flashLightPoints[i].y;
         }
     }
 
-    pMessageData->m_pDoorPos = &s_pWorld->m_pDoor->m_coord;
+    s_pWorld->pMessageData->m_pDoorPos = &s_pWorld->m_pDoor->m_coord;
 
-    pMessageData->m_playerPos = GetPlayerPosition();
+    s_pWorld->pMessageData->m_playerPos = GetPlayerPosition();
 
-    pMessageData->m_playerHealth = GetPlayerHealth();
+    s_pWorld->pMessageData->m_playerHealth = GetPlayerHealth();
 
-    pMessageData->m_saveCurrentLevel = GetCurrentLevel();
+    s_pWorld->pMessageData->m_saveCurrentLevel = GetCurrentLevel();
 }
 
 static int DisplayEnemies(int x, int y, Point *pEnemyPos)
@@ -269,22 +261,22 @@ static int UpdateEnemies(EnemyUpdateProcedure EUP)
                     continue;
 
                 /// Enemy position might be changed and must be given.
-                pMessageData->m_pEnemyPos = &pWerewolf->m_info.m_Pos;
+                s_pWorld->pMessageData->m_pEnemyPos = &pWerewolf->m_info.m_Pos;
                 /// Pass the memory address of the enemies movement delay variable.
-                pMessageData->m_pEnemyMovementDelay = &pWerewolf->m_info.m_movementDelay;
+                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWerewolf->m_info.m_movementDelay;
                 /// In case of collision with player we must have the enemy's damage rate.
-                pMessageData->m_enemyDamageRate = pWerewolf->m_info.m_damage;
+                s_pWorld->pMessageData->m_enemyDamageRate = pWerewolf->m_info.m_damage;
                 /// Also pass the movement delays.
-                pMessageData->m_enemyDefaultMovementDelay = pWerewolf->m_info.m_defaultMovementDelay;
-                pMessageData->m_pEnemyMovementDelay = &pWerewolf->m_info.m_movementDelay;
+                s_pWorld->pMessageData->m_enemyDefaultMovementDelay = pWerewolf->m_info.m_defaultMovementDelay;
+                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWerewolf->m_info.m_movementDelay;
                 /// Update other info.
                 UpdateEnemyData();
 
                 /// Depending on where the enemy is, a certain type of strategy will be selected.
                 if(EUP == UpdateStrategy)
-                    pWerewolf->m_info.m_selectMovementStrategy(pMessageData, &pWerewolf->m_info.m_moveStrategy);
+                    pWerewolf->m_info.m_selectMovementStrategy(s_pWorld->pMessageData, &pWerewolf->m_info.m_moveStrategy);
                 else if(EUP == UpdateMovement)
-                    pWerewolf->m_info.m_moveStrategy(pMessageData);
+                    pWerewolf->m_info.m_moveStrategy(s_pWorld->pMessageData);
                 break;
             case 1:
                 pWitch = s_pWorld->m_pEnemies[i];
@@ -293,17 +285,17 @@ static int UpdateEnemies(EnemyUpdateProcedure EUP)
                 if(!CheckMonstersCurrentLevel(pWitch->m_info.m_assignedLevel))
                     continue;
 
-                pMessageData->m_pEnemyPos = &pWitch->m_info.m_Pos;
-                pMessageData->m_pEnemyMovementDelay = &pWitch->m_info.m_movementDelay;
-                pMessageData->m_enemyDamageRate = pWitch->m_info.m_damage;
-                pMessageData->m_enemyDefaultMovementDelay = pWitch->m_info.m_defaultMovementDelay;
-                pMessageData->m_pEnemyMovementDelay = &pWitch->m_info.m_movementDelay;
+                s_pWorld->pMessageData->m_pEnemyPos = &pWitch->m_info.m_Pos;
+                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWitch->m_info.m_movementDelay;
+                s_pWorld->pMessageData->m_enemyDamageRate = pWitch->m_info.m_damage;
+                s_pWorld->pMessageData->m_enemyDefaultMovementDelay = pWitch->m_info.m_defaultMovementDelay;
+                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWitch->m_info.m_movementDelay;
                 UpdateEnemyData();
 
                 if(EUP == UpdateStrategy)
-                    pWitch->m_info.m_selectMovementStrategy(pMessageData, &pWitch->m_info.m_moveStrategy);
+                    pWitch->m_info.m_selectMovementStrategy(s_pWorld->pMessageData, &pWitch->m_info.m_moveStrategy);
                 else if(EUP == UpdateMovement)
-                    pWitch->m_info.m_moveStrategy(pMessageData);
+                    pWitch->m_info.m_moveStrategy(s_pWorld->pMessageData);
                 break;
             case 2:
                 pBanshee = s_pWorld->m_pEnemies[i];
@@ -312,17 +304,17 @@ static int UpdateEnemies(EnemyUpdateProcedure EUP)
                 if(!CheckMonstersCurrentLevel(pBanshee->m_info.m_assignedLevel))
                     continue;
 
-                pMessageData->m_pEnemyPos = &pBanshee->m_info.m_Pos;
-                pMessageData->m_pEnemyMovementDelay = &pBanshee->m_info.m_movementDelay;
-                pMessageData->m_enemyDamageRate = pBanshee->m_info.m_damage;
-                pMessageData->m_enemyDefaultMovementDelay = pBanshee->m_info.m_defaultMovementDelay;
-                pMessageData->m_pEnemyMovementDelay = &pBanshee->m_info.m_movementDelay;
+                s_pWorld->pMessageData->m_pEnemyPos = &pBanshee->m_info.m_Pos;
+                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pBanshee->m_info.m_movementDelay;
+                s_pWorld->pMessageData->m_enemyDamageRate = pBanshee->m_info.m_damage;
+                s_pWorld->pMessageData->m_enemyDefaultMovementDelay = pBanshee->m_info.m_defaultMovementDelay;
+                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pBanshee->m_info.m_movementDelay;
                 UpdateEnemyData();
 
                 if(EUP == UpdateStrategy)
-                    pBanshee->m_info.m_selectMovementStrategy(pMessageData, &pBanshee->m_info.m_moveStrategy);
+                    pBanshee->m_info.m_selectMovementStrategy(s_pWorld->pMessageData, &pBanshee->m_info.m_moveStrategy);
                 else if(EUP == UpdateMovement)
-                    pBanshee->m_info.m_moveStrategy(pMessageData);
+                    pBanshee->m_info.m_moveStrategy(s_pWorld->pMessageData);
                 break;
             default:
                 printf("Error! File: World.c. Function: UpdateEnemies().\n");
@@ -763,7 +755,7 @@ void WorldInit()
     s_pWorld->m_pDoor = malloc(sizeof(Door));
     s_pWorld->m_gameRunning = TRUE;
 
-    pMessageData = malloc(sizeof(EMData));
+    s_pWorld->pMessageData = malloc(sizeof(EMData));
 
     int x, y;
     for(x = 0; x < ROWS; ++x)
@@ -870,6 +862,6 @@ void WorldCleanMemory()
     free(s_pWorld);
     s_pWorld = 0;
 
-    free(pMessageData);
-    pMessageData = 0;
+    free(s_pWorld->pMessageData);
+    s_pWorld->pMessageData = 0;
 }

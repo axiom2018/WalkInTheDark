@@ -8,8 +8,8 @@
 
 /// Take a bit of work from ItemManager.c and delegate creating items to ItemCreation.c.
 
-void CreateFlashlight(Flashlight *pFlashlight, int index, Point p);
-void CreateBattery(Battery *pBattery, int index, Point p);
-void CreateHealthPack(HealthPack *pHealthPack, int index, Point p);
+void CreateFlashlight(Flashlight *pFlashlight, Point p);
+void CreateBattery(Battery *pBattery, Point p);
+void CreateHealthPack(HealthPack *pHealthPack, Point p);
 
 #endif // ITEMCREATION_H_INCLUDED

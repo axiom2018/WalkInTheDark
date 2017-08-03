@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void CreateFlashlight(Flashlight *pFlashlight, int index, Point p)
+void CreateFlashlight(Flashlight *pFlashlight, Point p)
 {
     pFlashlight->m_item.m_name = "Flashlight";
     pFlashlight->m_item.m_color = 5;
@@ -20,7 +20,7 @@ void CreateFlashlight(Flashlight *pFlashlight, int index, Point p)
     pFlashlight->m_range = rand() % (6 + 1 - 3) + 3;
 }
 
-void CreateBattery(Battery *pBattery, int index, Point p)
+void CreateBattery(Battery *pBattery, Point p)
 {
     pBattery->m_item.m_name = "Battery";
     pBattery->m_item.m_color = 3;
@@ -35,7 +35,7 @@ void CreateBattery(Battery *pBattery, int index, Point p)
     pBattery->m_rechargeAmount = BATTERY_UPGRADE;
 }
 
-void CreateHealthPack(HealthPack *pHealthPack, int index, Point p)
+void CreateHealthPack(HealthPack *pHealthPack, Point p)
 {
     pHealthPack->m_item.m_name = "HealthPack";
     pHealthPack->m_item.m_color = 12;
