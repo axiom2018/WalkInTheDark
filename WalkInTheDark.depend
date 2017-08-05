@@ -519,7 +519,7 @@
 	<stdio.h>
 	<windows.h>
 
-1501783236 source:c:\users\axiom\github projects\walkinthedark\world.c
+1501785900 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
@@ -583,4 +583,9 @@
 	<stdio.h>
 
 1501627951 c:\users\axiom\github projects\walkinthedark\switch.h
+
+1501783873 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
+	"EnemyManagement.h"
+
+1501783804 c:\users\axiom\github projects\walkinthedark\enemymanagement.h
 

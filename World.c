@@ -14,6 +14,7 @@
 #include "EnemyMoveData.h"
 #include "EnemyProcedure.h"
 #include "ItemManagement.h"
+#include "EnemyManagement.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -25,10 +26,6 @@ typedef struct
     int m_gameRunning;
     Point m_flashLightPoints[SIZE_OF_FL_POINTS];
     Door *m_pDoor;
-    EMData *pMessageData;
-    Point m_enemyFactoryMainCoordinates[COORDINATES_TO_SEND];
-    void *m_pEnemies[MAX_ENEMIES];
-    int m_enemyTypes[MAX_ENEMIES];
 
 } WorldManager;
 
@@ -63,267 +60,6 @@ static int GetEmptyIndexForFlashlightPoints()
     }
 
     return flPointIndex;
-}
-
-static Point AmountOfEnemiesToGenerate()
-{
-    /** The enemy generation system will be simple. Based on the level that's the type of enemy will be assigned inside of that level. If it's
-    level one, specifically a werewolf will be generated. Level two, witches.*/
-
-    Point numberOfEnemiesToGenerate;
-    /** numberOfEnemiesToGenerate.x = How MANY enemies we shall be generating.
-    numberOfEnemiesToGenerate.y = The TYPE of enemies to be generated. */
-
-    switch(GetCurrentLevel())
-    {
-    case 0:
-        numberOfEnemiesToGenerate.x = MAX_ENEMIES - (MAX_ENEMIES - 2); /// Get 1 enemy.
-        numberOfEnemiesToGenerate.y = 0;
-        break;
-    case 1:
-        numberOfEnemiesToGenerate.x = MAX_ENEMIES - (MAX_ENEMIES - 2); /// Get 2 enemies.
-        numberOfEnemiesToGenerate.y = 1;
-        break;
-    case 2:
-        numberOfEnemiesToGenerate.x = MAX_ENEMIES - (MAX_ENEMIES - 3); /// Get 3 enemies.
-        numberOfEnemiesToGenerate.y = 1;
-        break;
-    case 3:
-        numberOfEnemiesToGenerate.x = MAX_ENEMIES - (MAX_ENEMIES - 2);
-        numberOfEnemiesToGenerate.y = 2;
-        break;
-    case 4:
-        numberOfEnemiesToGenerate.x = MAX_ENEMIES - (MAX_ENEMIES - 3);
-        numberOfEnemiesToGenerate.y = 2;
-        break;
-    case 5:
-        numberOfEnemiesToGenerate.x = MAX_ENEMIES - (MAX_ENEMIES - 4);
-        numberOfEnemiesToGenerate.y = 2;
-        break;
-    default:
-        printf("Error! File: World.c. Function: AmountOfEnemiesToGenerate().\n");
-        break;
-    }
-    return numberOfEnemiesToGenerate;
-}
-
-static void UpdateEnemyData()
-{
-    s_pWorld->pMessageData->m_maxMonsters = 0;
-
-    s_pWorld->pMessageData->m_maxItems = 0;
-
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        if(s_pWorld->m_pEnemies[i] != NULL)
-        {
-            s_pWorld->pMessageData->m_pMonsterArr[i] = s_pWorld->m_pEnemies[i];
-            s_pWorld->pMessageData->m_monsterTypes[i] = s_pWorld->m_enemyTypes[i];
-            s_pWorld->pMessageData->m_maxMonsters += 1;
-        }
-    }
-
-    UpdateEnemyItemData(s_pWorld->pMessageData);
-
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        if(s_pWorld->pMessageData->m_flashlightPoints[i].x != ERROR_INDICATOR &&
-           s_pWorld->pMessageData->m_flashlightPoints[i].y != ERROR_INDICATOR)
-        {
-            s_pWorld->pMessageData->m_flashlightPoints[i].x = ERROR_INDICATOR;
-            s_pWorld->pMessageData->m_flashlightPoints[i].y = ERROR_INDICATOR;
-        }
-    }
-
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-
-        if(s_pWorld->m_flashLightPoints[i].x > ERROR_INDICATOR &&
-           s_pWorld->m_flashLightPoints[i].y > ERROR_INDICATOR)
-        {
-            s_pWorld->pMessageData->m_flashlightPoints[i].x = s_pWorld->m_flashLightPoints[i].x;
-            s_pWorld->pMessageData->m_flashlightPoints[i].y = s_pWorld->m_flashLightPoints[i].y;
-        }
-    }
-
-    s_pWorld->pMessageData->m_pDoorPos = &s_pWorld->m_pDoor->m_coord;
-
-    s_pWorld->pMessageData->m_playerPos = GetPlayerPosition();
-
-    s_pWorld->pMessageData->m_playerHealth = GetPlayerHealth();
-
-    s_pWorld->pMessageData->m_saveCurrentLevel = GetCurrentLevel();
-}
-
-static int DisplayEnemies(int x, int y, Point *pEnemyPos)
-{
-    if(y == pEnemyPos->x &&
-       x == pEnemyPos->y)
-    {
-        return TRUE;
-    }
-    return FALSE;
-}
-
-static int CheckMonstersCurrentLevel(int monsterCurrentLevel)
-{
-    if(monsterCurrentLevel == GetCurrentLevel())
-    {
-        return TRUE;
-    }
-    return FALSE;
-}
-
-/// Drawing enemies and updating enemies are two different things. The below function will draw, the function immediately following, will update.
-static int DrawEnemies(int x, int y)
-{
-    Werewolf *pWerewolf;
-    Witch *pWitch;
-    Banshee *pBanshee;
-
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        if(s_pWorld->m_pEnemies[i] != NULL)
-        {
-            switch(s_pWorld->m_enemyTypes[i])
-            {
-            case 0:
-                pWerewolf = s_pWorld->m_pEnemies[i];
-
-                if(DisplayEnemies(x, y, &pWerewolf->m_info.m_Pos)
-                   && pWerewolf->m_info.m_strategyCheck(&pWerewolf->m_info.m_moveStrategy))
-                {
-                    /// Don't bother if the enemy in the array isn't assigned to the level we're currently on.
-                    if(!CheckMonstersCurrentLevel(pWerewolf->m_info.m_assignedLevel))
-                        continue;
-
-                    /// Display enemy.
-                    printf("%c", pWerewolf->m_info.m_symbol);
-                    return TRUE;
-                }
-                break;
-            case 1:
-                pWitch = s_pWorld->m_pEnemies[i];
-
-                if(DisplayEnemies(x, y, &pWitch->m_info.m_Pos)
-                   && pWitch->m_info.m_strategyCheck(&pWitch->m_info.m_moveStrategy))
-                {
-                    if(!CheckMonstersCurrentLevel(pWitch->m_info.m_assignedLevel))
-                        continue;
-
-                    printf("%c", pWitch->m_info.m_symbol);
-                    return TRUE;
-                }
-                break;
-            case 2:
-                pBanshee = s_pWorld->m_pEnemies[i];
-
-                if(DisplayEnemies(x, y, &pBanshee->m_info.m_Pos)
-                   && pBanshee->m_info.m_strategyCheck(&pBanshee->m_info.m_moveStrategy))
-                {
-                    if(!CheckMonstersCurrentLevel(pBanshee->m_info.m_assignedLevel))
-                        continue;
-
-                    printf("%c", pBanshee->m_info.m_symbol);
-                    return TRUE;
-                }
-                break;
-            default:
-                printf("Error! File: World.c. Function: DrawEnemies().\n");
-                break;
-            }
-        }
-    }
-    return FALSE;
-}
-
-/** Regardless of the current level the player is in, I will update all enemies. However, the only enemies that will be visually printed is the are the ones
-that are on the same level as the player.*/
-static int UpdateEnemies(EnemyUpdateProcedure EUP)
-{
-    Werewolf *pWerewolf;
-    Witch *pWitch;
-    Banshee *pBanshee;
-
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        if(s_pWorld->m_pEnemies[i] != NULL)
-        {
-            switch(s_pWorld->m_enemyTypes[i])
-            {
-            case 0:
-                pWerewolf = s_pWorld->m_pEnemies[i];
-
-                /// Don't bother if the enemy in the array isn't assigned to the level we're currently on.
-                if(!CheckMonstersCurrentLevel(pWerewolf->m_info.m_assignedLevel))
-                    continue;
-
-                /// Enemy position might be changed and must be given.
-                s_pWorld->pMessageData->m_pEnemyPos = &pWerewolf->m_info.m_Pos;
-                /// Pass the memory address of the enemies movement delay variable.
-                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWerewolf->m_info.m_movementDelay;
-                /// In case of collision with player we must have the enemy's damage rate.
-                s_pWorld->pMessageData->m_enemyDamageRate = pWerewolf->m_info.m_damage;
-                /// Also pass the movement delays.
-                s_pWorld->pMessageData->m_enemyDefaultMovementDelay = pWerewolf->m_info.m_defaultMovementDelay;
-                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWerewolf->m_info.m_movementDelay;
-                /// Update other info.
-                UpdateEnemyData();
-
-                /// Depending on where the enemy is, a certain type of strategy will be selected.
-                if(EUP == UpdateStrategy)
-                    pWerewolf->m_info.m_selectMovementStrategy(s_pWorld->pMessageData, &pWerewolf->m_info.m_moveStrategy);
-                else if(EUP == UpdateMovement)
-                    pWerewolf->m_info.m_moveStrategy(s_pWorld->pMessageData);
-                break;
-            case 1:
-                pWitch = s_pWorld->m_pEnemies[i];
-
-                /// Don't bother if the enemy in the array isn't assigned to the level we're currently on.
-                if(!CheckMonstersCurrentLevel(pWitch->m_info.m_assignedLevel))
-                    continue;
-
-                s_pWorld->pMessageData->m_pEnemyPos = &pWitch->m_info.m_Pos;
-                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWitch->m_info.m_movementDelay;
-                s_pWorld->pMessageData->m_enemyDamageRate = pWitch->m_info.m_damage;
-                s_pWorld->pMessageData->m_enemyDefaultMovementDelay = pWitch->m_info.m_defaultMovementDelay;
-                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pWitch->m_info.m_movementDelay;
-                UpdateEnemyData();
-
-                if(EUP == UpdateStrategy)
-                    pWitch->m_info.m_selectMovementStrategy(s_pWorld->pMessageData, &pWitch->m_info.m_moveStrategy);
-                else if(EUP == UpdateMovement)
-                    pWitch->m_info.m_moveStrategy(s_pWorld->pMessageData);
-                break;
-            case 2:
-                pBanshee = s_pWorld->m_pEnemies[i];
-
-                /// Don't bother if the enemy in the array isn't assigned to the level we're currently on.
-                if(!CheckMonstersCurrentLevel(pBanshee->m_info.m_assignedLevel))
-                    continue;
-
-                s_pWorld->pMessageData->m_pEnemyPos = &pBanshee->m_info.m_Pos;
-                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pBanshee->m_info.m_movementDelay;
-                s_pWorld->pMessageData->m_enemyDamageRate = pBanshee->m_info.m_damage;
-                s_pWorld->pMessageData->m_enemyDefaultMovementDelay = pBanshee->m_info.m_defaultMovementDelay;
-                s_pWorld->pMessageData->m_pEnemyMovementDelay = &pBanshee->m_info.m_movementDelay;
-                UpdateEnemyData();
-
-                if(EUP == UpdateStrategy)
-                    pBanshee->m_info.m_selectMovementStrategy(s_pWorld->pMessageData, &pBanshee->m_info.m_moveStrategy);
-                else if(EUP == UpdateMovement)
-                    pBanshee->m_info.m_moveStrategy(s_pWorld->pMessageData);
-                break;
-            default:
-                printf("Error! File: World.c. Function: UpdateEnemies().\n");
-                break;
-            }
-        }
-    }
-    return FALSE;
 }
 
 /// Every "level" will have a door you must get to in order to advance the game. Case 0 puts the door top left, case 1, top right, case 2, bottom left.
@@ -572,10 +308,6 @@ static void SendEnemyFactoryData()
         break;
     }
 
-    /// Options:
-    /// Make a new public function in the item management interface.
-    ///
-
     /// Step 3. Begin assigning values.
     int i;
     for(i = 0; i < ITEMS_PER_LEVEL; ++i)
@@ -593,31 +325,6 @@ static void SendEnemyFactoryData()
 
     /// Step 6. Send data to the enemy factory so it knows what points to NOT assign enemies.
     MessageData(s_pWorld->m_enemyFactoryMainCoordinates, s_pWorld->m_flashLightPoints);
-}
-
-static void GenerateEnemies()
-{
-    int i;
-    /// Step 1. Receive the amount of enemies to be generated based on the current level.
-    Point enemiesToGenerate = AmountOfEnemiesToGenerate();
-
-    for(i = 0; i < enemiesToGenerate.x; ++i)
-    {
-        /// Step 2. Find an empty position for m_pEnemies.
-        int index = GetPointerArrayPos(s_pWorld->m_pEnemies, MAX_ENEMIES);
-        if(index == ERROR_INDICATOR)
-        {
-            printf("Enemy generation array full!\n");
-            return;
-        }
-
-        /// Step 3. Find an empty position for m_enemyTypes.
-        int enemyTypesIndex = GetIntArrayPos(s_pWorld->m_enemyTypes, MAX_ENEMIES);
-
-        /// Step 4. Save the enemy and it's type in the following arrays.
-        s_pWorld->m_pEnemies[index] = GetEnemy(enemiesToGenerate.y, GetCurrentLevel());
-        s_pWorld->m_enemyTypes[enemyTypesIndex] = enemiesToGenerate.y;
-    }
 }
 
 /// Checks to see if a coordinate being printed in the loop in the update function is a flashlight coordinate, if so, alter color to create the flashlight effect.
@@ -656,9 +363,9 @@ static void UpdateScreen()
                 printf("%c", GetPlayer());
             }
 
-            else if(DrawEnemies(x, y))
-            {
-            }
+//            else if(DrawEnemies(x, y))
+//            {
+//            }
 
             else
             {
@@ -697,6 +404,7 @@ static void UpdateScreen()
         }
         printf("\n");
     }
+
     PlayerGUI();
 }
 
@@ -727,16 +435,16 @@ static int DoorCollisionDetection()
         GenerateDoor();
 
         /// f) Send factory new information.
-        SendEnemyFactoryData();
+        /// SendEnemyFactoryData();
 
         /// g) Generate the next levels enemies.
-        GenerateEnemies();
+        /// GenerateEnemies();(EnemyManagement.c)
 
         /// h) Clear screen.
         system("cls");
 
         /// i) Be sure to give enemies a chance to update their strategies.
-        UpdateEnemies(UpdateStrategy);
+        /// UpdateEnemies(UpdateStrategy); (EnemyManagement.c)
 
         /// j) Update screen (along with player GUI).
         UpdateScreen();
@@ -756,7 +464,7 @@ void WorldInit()
     s_pWorld->m_pDoor = malloc(sizeof(Door));
     s_pWorld->m_gameRunning = TRUE;
 
-    s_pWorld->pMessageData = malloc(sizeof(EMData));
+    //s_pWorld->pMessageData = malloc(sizeof(EMData));
 
     int x, y;
     for(x = 0; x < ROWS; ++x)
@@ -774,12 +482,6 @@ void WorldInit()
         s_pWorld->m_flashLightPoints[i].y = ERROR_INDICATOR;
     }
 
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        s_pWorld->m_pEnemies[i] = NULL;
-        s_pWorld->m_enemyTypes[i] = ERROR_INDICATOR;
-    }
-
     InitLevelManagement();
 
     InitItemManagement(); /// ItemManagement related.
@@ -792,8 +494,9 @@ void WorldInit()
 
     GivePlayerItem(0); /// ItemManagement related.
 
-    SendEnemyFactoryData(); /// Gathers the flashlight points early to assist enemies in finding valid positions.
+    /// SendEnemyFactoryData(); /// Gathers the flashlight points early to assist enemies in finding valid positions.
 
+    /// GenerateEnemies(); (EnemyManagement.c)
     GenerateEnemies();
 
     while(CheckGeneratedItemsForDuplicatePositions())
@@ -811,9 +514,10 @@ void UpdateGame()
     {
         GatherFlashlightPoints();
 
+        /// UpdateEnemies(UpdateStrategy);
         UpdateEnemies(UpdateStrategy);
 
-        UpdateScreen(); /// ItemManagement related.
+        UpdateScreen();
 
         ItemCollisionDetection();
 
@@ -831,6 +535,7 @@ void UpdateGame()
 
             else
             {
+                /// UpdateEnemies(UpdateMovement);
                 UpdateEnemies(UpdateMovement);
                 system("cls");
             }
@@ -846,22 +551,8 @@ void UpdateGame()
 
 void WorldCleanMemory()
 {
-    int a;
-
-    for(a = 0; a < MAX_ENEMIES; ++a)
-    {
-        if(s_pWorld->m_pEnemies[a] != NULL)
-        {
-            free(s_pWorld->m_pEnemies[a]);
-            s_pWorld->m_pEnemies[a] = 0;
-        }
-    }
-
     free(s_pWorld->m_pDoor);
     s_pWorld->m_pDoor = 0;
-
-    free(s_pWorld->pMessageData);
-    s_pWorld->pMessageData = 0;
 
     free(s_pWorld);
     s_pWorld = 0;

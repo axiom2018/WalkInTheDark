@@ -1,4 +1,4 @@
-/// EnemyMoveStrategy.c
+/// EnemyMoveStrategy.h
 #ifndef ENEMYMOVESTRATEGY_H_INCLUDED
 #define ENEMYMOVESTRATEGY_H_INCLUDED
 #include "Point.h"

@@ -44,11 +44,22 @@
 		<Unit filename="DarkMovement.h" />
 		<Unit filename="Definitions.h" />
 		<Unit filename="Door.h" />
+		<Unit filename="DrawEnemy.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="DrawEnemy.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="EnemyFactory.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="EnemyFactory.h" />
 		<Unit filename="EnemyInfo.h" />
+		<Unit filename="EnemyManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyManagement.h" />
 		<Unit filename="EnemyMoveData.h" />
 		<Unit filename="EnemyMoveStrategy.h" />
 		<Unit filename="EnemyProcedure.h" />
@@ -108,6 +119,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="UniversalMovementFunctions.h" />
+		<Unit filename="UpdateEnemy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="UpdateEnemy.h" />
 		<Unit filename="Werewolf.h" />
 		<Unit filename="Witch.h" />
 		<Unit filename="World.c">
