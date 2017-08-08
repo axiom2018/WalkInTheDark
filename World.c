@@ -128,6 +128,7 @@ static int CrossReferencePoint(int x, int y)
             }
         }
     }
+
     return FALSE;
 }
 
@@ -272,60 +273,61 @@ static void GatherFlashlightPoints()
     }
 }
 
-static void SendEnemyFactoryData()
-{
-    /** Step 1. Gather all points. Include
-    a) Generated items.
-    b) Player coordinates.
-    c) Door coordinates. (Use DistributeMessage).
-    d) FL points (When creating enemies, this ensures we don't create them in the players flashlight space.) */
-    GatherFlashlightPoints();
+//static void SendEnemyFactoryData()
+//{
+//    /** Step 1. Gather all points. Include
+//    a) Generated items.
+//    b) Player coordinates.
+//    c) Door coordinates. (Use DistributeMessage).
+//    d) FL points (When creating enemies, this ensures we don't create them in the players flashlight space.) */
+//    GatherFlashlightPoints();
+//
+//    /// Step 2. min is a bookmark that keeps the place of where generated item points we want data from.
+//    int min;
+//    switch(GetCurrentLevel())
+//    {
+//    case 0: /// 0 - 3
+//        min = 0;
+//        break;
+//    case 1: /// 4 - 7
+//        min = 4;
+//        break;
+//    case 2: /// 8 - 11
+//        min = 8;
+//        break;
+//    case 3: /// 12 - 15
+//        min = 12;
+//        break;
+//    case 4: /// 16 - 19
+//        min = 16;
+//        break;
+//    case 5: /// 20 - 23
+//        min = 20;
+//        break;
+//    default:
+//        printf("Error! File: World.c. Function: SendMonsterFactoryPoints().\n");
+//        break;
+//    }
+//
+//    /// Step 3. Begin assigning values.
+//    int i;
+//    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
+//    {
+//        ///s_pWorld->m_enemyFactoryMainCoordinates[i] = s_pWorld->m_generatedItemPoints[min];
+//        s_pWorld->m_enemyFactoryMainCoordinates[i] = GetItemPoint(min);
+//        ++min;
+//    }
+//
+//    /// Step 4. Save player position.
+//    s_pWorld->m_enemyFactoryMainCoordinates[4] = GetPlayerPosition();
+//
+//    /// Step 5. Save door position.
+//    s_pWorld->m_enemyFactoryMainCoordinates[5] = s_pWorld->m_pDoor->m_coord;
+//
+//    /// Step 6. Send data to the enemy factory so it knows what points to NOT assign enemies.
+//    ///MessageData(s_pWorld->m_enemyFactoryMainCoordinates, s_pWorld->m_flashLightPoints);
+//}
 
-    /// Step 2. min is a bookmark that keeps the place of where generated item points we want data from.
-    int min;
-    switch(GetCurrentLevel())
-    {
-    case 0: /// 0 - 3
-        min = 0;
-        break;
-    case 1: /// 4 - 7
-        min = 4;
-        break;
-    case 2: /// 8 - 11
-        min = 8;
-        break;
-    case 3: /// 12 - 15
-        min = 12;
-        break;
-    case 4: /// 16 - 19
-        min = 16;
-        break;
-    case 5: /// 20 - 23
-        min = 20;
-        break;
-    default:
-        printf("Error! File: World.c. Function: SendMonsterFactoryPoints().\n");
-        break;
-    }
-
-    /// Step 3. Begin assigning values.
-    int i;
-    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
-    {
-        ///s_pWorld->m_enemyFactoryMainCoordinates[i] = s_pWorld->m_generatedItemPoints[min];
-        s_pWorld->m_enemyFactoryMainCoordinates[i] = GetItemPoint(min);
-        ++min;
-    }
-
-    /// Step 4. Save player position.
-    s_pWorld->m_enemyFactoryMainCoordinates[4] = GetPlayerPosition();
-
-    /// Step 5. Save door position.
-    s_pWorld->m_enemyFactoryMainCoordinates[5] = s_pWorld->m_pDoor->m_coord;
-
-    /// Step 6. Send data to the enemy factory so it knows what points to NOT assign enemies.
-    MessageData(s_pWorld->m_enemyFactoryMainCoordinates, s_pWorld->m_flashLightPoints);
-}
 
 /// Checks to see if a coordinate being printed in the loop in the update function is a flashlight coordinate, if so, alter color to create the flashlight effect.
 static int DisplayFlashlight(int x, int y)
@@ -445,6 +447,7 @@ static int DoorCollisionDetection()
 
         /// i) Be sure to give enemies a chance to update their strategies.
         /// UpdateEnemies(UpdateStrategy); (EnemyManagement.c)
+        UpdateEnemies(UpdateStrategy);
 
         /// j) Update screen (along with player GUI).
         UpdateScreen();

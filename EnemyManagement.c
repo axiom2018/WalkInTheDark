@@ -12,6 +12,8 @@
 #include "Werewolf.h"
 #include "Banshee.h"
 #include "Witch.h"
+#include "EnemyFsctory.h"
+#include "UpdateEnemy.h"
 #include <stdlib.h>
 #include <World.h>
 
