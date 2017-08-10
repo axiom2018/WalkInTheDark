@@ -46,7 +46,6 @@
 		<Unit filename="Door.h" />
 		<Unit filename="DrawEnemy.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="DrawEnemy.h">
 			<Option target="&lt;{~None~}&gt;" />
@@ -72,6 +71,10 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="Flashlight.h" />
+		<Unit filename="FlashlightManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FlashlightManagement.h" />
 		<Unit filename="HealthPack.h" />
 		<Unit filename="ItemCreation.c">
 			<Option compilerVar="CC" />

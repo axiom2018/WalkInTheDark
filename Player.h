@@ -4,7 +4,7 @@
 #include "Point.h"
 #include "Flashlight.h"
 
-void PlayerInit();
+void InitPlayer();
 void PlayerGUI();
 char GetPlayer();
 Point GetPlayerPosition();

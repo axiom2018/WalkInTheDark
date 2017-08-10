@@ -47,25 +47,25 @@ static int CheckForOtherEnemies(EMData *pData, Point *pDesiredEnemyPos)
 
     /// Step 1. Begin by looping through the enemies.
     int i;
-    for(i = 0; i < pData->m_maxMonsters; ++i)
+    for(i = 0; i < pData->m_maxEnemies; ++i)
     {
-        if(pData->m_pMonsterArr[i] != NULL)
+        if(pData->m_pEnemyArr[i] != NULL)
         {
             /// Step 2. Get the proper type of enemy.
-            switch(pData->m_monsterTypes[i])
+            switch(pData->m_enemyTypes[i])
             {
             case 0:
-                pWerewolf = pData->m_pMonsterArr[i];
+                pWerewolf = pData->m_pEnemyArr[i];
                 saveMonsterAssignedLevel = pWerewolf->m_info.m_assignedLevel;
                 enemyPos = pWerewolf->m_info.m_Pos;
                 break;
             case 1:
-                pWitch = pData->m_pMonsterArr[i];
+                pWitch = pData->m_pEnemyArr[i];
                 saveMonsterAssignedLevel = pWitch->m_info.m_assignedLevel;
                 enemyPos = pWitch->m_info.m_Pos;
                 break;
             case 2:
-                pBanshee = pData->m_pMonsterArr[i];
+                pBanshee = pData->m_pEnemyArr[i];
                 saveMonsterAssignedLevel = pBanshee->m_info.m_assignedLevel;
                 enemyPos = pBanshee->m_info.m_Pos;
                 break;

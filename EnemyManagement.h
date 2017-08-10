@@ -4,7 +4,10 @@
 #include "EnemyProcedure.h"
 
 void InitEnemyManagement();
+void UpdateEnemyFactoryData();
 void GenerateEnemies();
 void UpdateEnemies(EnemyUpdateProcedure updateType);
+int DrawEnemies(int x, int y);
+void EnemyManagementCleanMemory();
 
 #endif // ENEMYMANAGEMENT_H_INCLUDED

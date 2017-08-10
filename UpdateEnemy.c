@@ -6,6 +6,10 @@
 #include "Player.h"
 #include "LevelManagement.h"
 #include "StrategyCheck.h"
+#include "Werewolf.h"
+#include "Banshee.h"
+#include "Witch.h"
+#include <stdio.h>
 
 static void UpdateEnemyData(EMData *pData)
 {
@@ -26,7 +30,7 @@ static void UpdateEnemyData(EMData *pData)
     pData->m_saveCurrentLevel = GetCurrentLevel();
 }
 
-static void ResolveBansheeUpdate(EMData *pData, Banshee *pBanshee)
+static void ResolveBansheeUpdate(EMData *pData, Banshee *pBanshee, EnemyUpdateProcedure updateType)
 {
     /// Step 1. Enemy position might be changed so it must be given.
     pData->m_pEnemyPos = &pBanshee->m_info.m_Pos;
@@ -46,7 +50,7 @@ static void ResolveBansheeUpdate(EMData *pData, Banshee *pBanshee)
         pBanshee->m_info.m_moveStrategy(pData);
 }
 
-static void ResolveWitchUpdate(EMData *pData, Witch *pWitch)
+static void ResolveWitchUpdate(EMData *pData, Witch *pWitch, EnemyUpdateProcedure updateType)
 {
     /// Step 1. Enemy position might be changed so it must be given.
     pData->m_pEnemyPos = &pWitch->m_info.m_Pos;
@@ -55,7 +59,7 @@ static void ResolveWitchUpdate(EMData *pData, Witch *pWitch)
     /// Step 3. In case of collision with player we must have the enemy's damage rate.
     pData->m_enemyDamageRate = pWitch->m_info.m_damage;
     /// Step 4. Also pass the default movement delay amount.
-    pData->m_enemyDefaultMovementDelay = pWitch->m_info.m_defaultMovementDelay
+    pData->m_enemyDefaultMovementDelay = pWitch->m_info.m_defaultMovementDelay;
     /// Step 5. Update remaining info.
     UpdateEnemyData(pData);
 
@@ -66,7 +70,7 @@ static void ResolveWitchUpdate(EMData *pData, Witch *pWitch)
         pWitch->m_info.m_moveStrategy(pData);
 }
 
-static void ResolveWerewolfUpdate(EMData *pData, Werewolf *pWerewolf)
+static void ResolveWerewolfUpdate(EMData *pData, Werewolf *pWerewolf, EnemyUpdateProcedure updateType)
 {
     /// Step 1. Enemy position might be changed so it must be given.
     pData->m_pEnemyPos = &pWerewolf->m_info.m_Pos;
@@ -107,7 +111,7 @@ void ResolveEnemyUpdate(EMData *pData, EnemyUpdateProcedure updateType)
                 if(!UseSwitch(pWerewolf->m_info.m_assignedLevel, GetCurrentLevel()))
                     continue;
 
-                ResolveWerewolfUpdate(pData, pWerewolf);
+                ResolveWerewolfUpdate(pData, pWerewolf, updateType);
                 break;
             case 1:
                 pWitch = pData->m_pEnemyArr[i];
@@ -115,7 +119,7 @@ void ResolveEnemyUpdate(EMData *pData, EnemyUpdateProcedure updateType)
                 if(!UseSwitch(pWitch->m_info.m_assignedLevel, GetCurrentLevel()))
                     continue;
 
-                ResolveWitchUpdate(pData, pWitch);
+                ResolveWitchUpdate(pData, pWitch, updateType);
                 break;
             case 2:
                 pBanshee = pData->m_pEnemyArr[i];
@@ -123,10 +127,10 @@ void ResolveEnemyUpdate(EMData *pData, EnemyUpdateProcedure updateType)
                 if(!UseSwitch(pBanshee->m_info.m_assignedLevel, GetCurrentLevel()))
                     continue;
 
-                ResolveBansheeUpdate(pData, pBanshee);
+                ResolveBansheeUpdate(pData, pBanshee, updateType);
                 break;
             default:
-                printf("Error! File: World.c. Function: UpdateEnemies().\n");
+                printf("Error! File: UpdateEnemy.c. Function: ResolveEnemyUpdate().\n");
                 break;
             }
         }

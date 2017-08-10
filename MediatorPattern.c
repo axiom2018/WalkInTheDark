@@ -8,13 +8,6 @@
 #include <stdio.h>
 #include <windows.h>
 
-/*Questions about mediator.
-
-1) Who signs up for the mediator pattern?
-EnemyFactory and the World. Kind of makes sense. The world would like to benefit from a factory pattern but the direct communication is decoupled.
-
-2) */
-
 typedef struct
 {
     void *m_pSubs[SUBSCRIBERS];
@@ -67,7 +60,7 @@ static int CheckRegistration()
     return TRUE;
 }
 
-void MediatorInit()
+void InitMediator()
 {
     s_pMediate = malloc(sizeof(Mediate));
 
@@ -108,7 +101,9 @@ void MessageData(Point mainCoordinates[], Point flPoints[])
     }
 
     /// Step 2. Send data.
-    EnemyReceiveData(mainCoordinates, flPoints);
+    ///EnemyReceiveData(mainCoordinates, flPoints);
+
+    EnemyUpdateData(mainCoordinates, flPoints);
 }
 
 void *GetEnemy(int typeOfMonster, int levelToAssign)

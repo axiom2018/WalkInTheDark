@@ -8,20 +8,26 @@
 #include "Player.h"
 #include "DrawEnemy.h"
 #include "EnemyProcedure.h"
+#include "Door.h"
 #include "Switch.h"
 #include "Werewolf.h"
 #include "Banshee.h"
 #include "Witch.h"
-#include "EnemyFsctory.h"
 #include "UpdateEnemy.h"
+#include "ArrayOperations.h"
+#include "MediatorPattern.h"
+#include "DrawEnemy.h"
+#include "World.h"
+#include "EnemyFactory.h"
+#include "FlashlightManagement.h"
+#include <stdio.h>
 #include <stdlib.h>
-#include <World.h>
 
 /// Defined structure that holds all item related variable data needed.
 typedef struct
 {
     EMData *pMessageData;
-    Point m_enemyFactoryMainCoordinates[COORDINATES_TO_SEND];
+    Point m_factoryPoints[COORDINATES_TO_SEND];
     void *m_pEnemies[MAX_ENEMIES];
     int m_enemyTypes[MAX_ENEMIES];
 } EnemyManager;
@@ -85,7 +91,7 @@ static void ResolveDrawingEnemy(int type, int x, int y)
     {
         case 0:
             pWerewolf = s_pEnemyManager->m_pEnemies[type];
-            DrawWerewolf(Werewolf, x, y);
+            DrawWerewolf(pWerewolf, x, y);
             break;
         case 1:
             pWitch = s_pEnemyManager->m_pEnemies[type];
@@ -130,6 +136,7 @@ static void AppointDataToEnemyMoveData()
         }
     }
 
+    /**
     /// Step 4. Assign flashlight point values.
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
@@ -140,10 +147,12 @@ static void AppointDataToEnemyMoveData()
             s_pEnemyManager->pMessageData->m_flashlightPoints[i].y = s_pEnemyManager->m_flashLightPoints[i].y;
         }
     }
+    */
 }
 
-static int DrawEnemies(int x, int y)
+int DrawEnemies(int x, int y)
 {
+    int i;
     for(i = 0; i < MAX_ENEMIES; ++i)
     {
         if(s_pEnemyManager->m_pEnemies[i] != NULL)
@@ -165,7 +174,7 @@ void EnemyManagementCleanMemory()
     {
         if(s_pEnemyManager->m_pEnemies[i] != NULL)
         {
-            free(s_pEnemyManager[i]);
+            free(s_pEnemyManager->m_pEnemies[i]);
             s_pEnemyManager->m_pEnemies[i] = 0;
         }
     }
@@ -180,7 +189,7 @@ void UpdateEnemies(EnemyUpdateProcedure updateType)
     AppointDataToEnemyMoveData();
 
     /// Step 2. Begin update.
-    ResolveEnemyUpdate(updateType);
+    ResolveEnemyUpdate(s_pEnemyManager->pMessageData, updateType);
 }
 
 void GenerateEnemies()
@@ -208,18 +217,81 @@ void GenerateEnemies()
     }
 }
 
+static void LocateIndex(int *m)
+{
+    switch(GetCurrentLevel())
+    {
+    case 0: /// 0 - 3
+        *m = 0;
+        break;
+    case 1: /// 4 - 7
+        *m = 4;
+        break;
+    case 2: /// 8 - 11
+        *m = 8;
+        break;
+    case 3: /// 12 - 15
+        *m = 12;
+        break;
+    case 4: /// 16 - 19
+        *m = 16;
+        break;
+    case 5: /// 20 - 23
+        *m = 20;
+        break;
+    default:
+        printf("Error! File: EnemyManagement.c. Function: LocateIndex().\n");
+        break;
+    }
+}
+
+void UpdateEnemyFactoryData()
+{
+    /// Step 1. Declare variable to be used as bookmark and set it.
+    int min;
+    LocateIndex(&min);
+    printf("min: %d\n", min);
+
+    /// Step 2. Assign item points.
+    int i;
+    for(i = 0; i < ITEMS_PER_LEVEL; ++i)
+    {
+        s_pEnemyManager->m_factoryPoints[i] = GetItemPoint(min);
+        printf("Item point. X: %d Y: %d\n", s_pEnemyManager->m_factoryPoints[i].x,
+               s_pEnemyManager->m_factoryPoints[i].y);
+        ++min;
+    }
+
+    /// Step 3. Save player position.
+    s_pEnemyManager->m_factoryPoints[4] = GetPlayerPosition();
+
+    /// Step 5. Save door position.
+    s_pEnemyManager->m_factoryPoints[5] = GetDoor()->m_coord;
+
+    /// Step 6. Pass data to EnemyFactory.
+    EnemyUpdateData(s_pEnemyManager->m_factoryPoints, GetFlashLightPoints());
+}
+
 void InitEnemyManagement()
 {
     /// Step 1. Allocate memory for s_pEnemyManager pointer.
-    s_pEnemyManager = malloc(sizeof(EnemyManagement));
+    s_pEnemyManager = malloc(sizeof(EnemyManager));
 
     /// Step 2. Allocate memory for pMessageData.
     s_pEnemyManager->pMessageData = malloc(sizeof(EMData));
 
     /// Step 3. Set enemy data to default values.
+    int i;
     for(i = 0; i < MAX_ENEMIES; ++i)
     {
         s_pEnemyManager->m_pEnemies[i] = NULL;
         s_pEnemyManager->m_enemyTypes[i] = ERROR_INDICATOR;
+    }
+
+    /// Step 4. Set factory points to error indicator.
+    for(i = 0; i < COORDINATES_TO_SEND; ++i)
+    {
+        s_pEnemyManager->m_factoryPoints[i].x = ERROR_INDICATOR;
+        s_pEnemyManager->m_factoryPoints[i].y = ERROR_INDICATOR;
     }
 }

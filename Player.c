@@ -8,6 +8,7 @@
 #include "Definitions.h"
 #include "Boolean.h"
 #include "ArrayOperations.h"
+#include "Switch.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -396,7 +397,7 @@ static void CheckBounds(char *input)
                                         DECLARED BEFORE THE PRIMARY LIST OF FUNCTIONS IN PLAYER.H
 */
 
-void PlayerInit()
+void InitPlayer()
 {
     int rows = ROWS - 1;
     int columns = COLUMNS - 1;

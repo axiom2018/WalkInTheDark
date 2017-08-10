@@ -5,7 +5,7 @@
 #include "Banshee.h"
 #include "Point.h"
 #include "Boolean.h"
-#include "MediatorPattern.h"
+/// #include "MediatorPattern.h"
 #include "LevelInfo.h"
 #include "DarkMovement.h"
 #include "SelectMovementStrategyAssistance.h"
@@ -13,7 +13,7 @@
 #include "Definitions.h"
 #include "Switch.h"
 
-/// This is a "poor mans" factory pattern I created. Not as good as the C++ version which obviously is capable of OOP but this one gets the job done.
+/// Defined structure that holds all item related variable data needed.
 typedef struct
 {
     int m_initEnemyFactoryTesting;
@@ -21,21 +21,32 @@ typedef struct
     Point m_flPoints[SIZE_OF_FL_POINTS];
     LevelInfo m_enemySpecifics[MAX_ENEMIES];
     int m_levelAssignment;
-    void (*EFReceiveData)(Point mainCoordinates[], Point flPoints[]);
-    void *(*EFCreateEnemy)(int type, int levelAssignment);
+    void (*EFReceiveData)(Point mainCoordinates[], Point flPoints[]); /// Why was using this function pointer necessary?
+    void *(*EFCreateEnemy)(int type, int levelAssignment); /// Why was using this function pointer necessary?
 } EnemyFactory;
 
+/// Static manager pointer for re-use.
 static EnemyFactory *s_pEnemyFactory;
+/// Enemy tests function pointer.
 typedef int (*EnemyFactoryTests)(Point *pPos);
+/// Defined array for enemy tests.
 EnemyFactoryTests EFTests[MAX_ENEMY_FACTORY_TESTS];
 
+/// Check if initialized before use.
 static int IsEnemyFactoryInitialized()
 {
+    if(UseSwitch(s_pEnemyFactory->m_initEnemyFactoryTesting, TRUE))
+        return TRUE;
+
+    return FALSE;
+
+    /**
     if(s_pEnemyFactory->m_initEnemyFactoryTesting)
     {
         return TRUE;
     }
     return FALSE;
+    */
 }
 
 static void EnemyFactoryReceiveData(Point mainCoordinates[], Point flPoints[])
@@ -228,10 +239,12 @@ static void *CreateEnemy(int type, int levelAssignment)
     return pEnemy;
 }
 
-void EnemyFactoryInit()
+void InitEnemyFactory()
 {
+    /// Step 1. Allocate space.
     s_pEnemyFactory = malloc(sizeof(EnemyFactory));
 
+    /// Step 2.
     s_pEnemyFactory->EFReceiveData = EnemyFactoryReceiveData;
 
     s_pEnemyFactory->EFCreateEnemy = CreateEnemy;
@@ -246,7 +259,7 @@ void EnemyFactoryInit()
         s_pEnemyFactory->m_enemySpecifics[i].m_pos.y = ERROR_INDICATOR;
     }
 
-    Register(s_pEnemyFactory, 0);
+    /// Register(s_pEnemyFactory, 0);
 }
 
 void *EnemyCreate(int type, int levelAssignment)
@@ -255,7 +268,7 @@ void *EnemyCreate(int type, int levelAssignment)
     return pEnemy;
 }
 
-void EnemyReceiveData(Point mainCoordinates[], Point flPoints[])
+void EnemyUpdateData(Point mainCoordinates[], Point flPoints[])
 {
     s_pEnemyFactory->EFReceiveData(mainCoordinates, flPoints);
 }

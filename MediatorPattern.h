@@ -5,7 +5,7 @@
 
 /// C style Mediator pattern.
 
-void MediatorInit();
+void InitMediator();
 void Register(void *pMember, int memberShipType);
 void MessageData(Point mainCoordinates[], Point flPoints[]);
 void *GetEnemy(int typeOfMonster, int levelToAssign);

@@ -3,6 +3,7 @@
 #include "Point.h"
 #include "Boolean.h"
 #include "LevelManagement.h"
+#include <stdio.h>
 
 static int DisplayEnemies(int x, int y, Point *pEnemyPos)
 {

@@ -2,10 +2,12 @@
 #include "LevelManagement.h"
 #include "Definitions.h"
 #include "Boolean.h"
+#include "Switch.h"
 #include <stdio.h>
 #include <conio.h>
 #include <windows.h>
 
+/// Levels in enumeration form.
 typedef enum
 {
     One,
@@ -17,19 +19,23 @@ typedef enum
     GameOver
 } Levels;
 
+/// Static Level variable for re-use.
 static Levels s_level = ERROR_INDICATOR;
 
+/// Initialization.
 void InitLevelManagement()
 {
     if(s_level != One)
         s_level = One;
 }
 
+/// Return level to clients.
 int GetCurrentLevel()
 {
     return (int)s_level;
 }
 
+/// Advance game level when the following function is called.
 void NextLevel()
 {
     switch(s_level)
@@ -58,13 +64,15 @@ void NextLevel()
     }
 }
 
+/// Check if game is over.
 int IsGameOver()
 {
-    if(s_level == GameOver)
+    if(UseSwitch(s_level, GameOver))
     {
         system("cls");
         printf("You survived and escaped! Congratulations!\n");
         return TRUE;
     }
+
     return FALSE;
 }

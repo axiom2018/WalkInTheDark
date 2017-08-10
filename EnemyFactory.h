@@ -7,10 +7,9 @@
 
 /// C style Factory pattern".
 
-void EnemyFactoryInit();
+void InitEnemyFactory();
 void *EnemyCreate(int type, int levelAssignment);
-void EnemyReceiveData(Point mainCoordinates[], Point flPoints[]);
-/// void MessageData(Point mainCoordinates[], Point flPoints[]);
+void EnemyUpdateData(Point mainCoordinates[], Point flPoints[]);
 void EnemyFactoryCleanMemory();
 
 #endif // MONSTERFACTORY_H_INCLUDED
