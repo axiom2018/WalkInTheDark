@@ -15,7 +15,6 @@
 #include "Witch.h"
 #include "UpdateEnemy.h"
 #include "ArrayOperations.h"
-#include "MediatorPattern.h"
 #include "DrawEnemy.h"
 #include "World.h"
 #include "EnemyFactory.h"
@@ -49,7 +48,7 @@ static Point AmountOfEnemiesToGenerate()
     switch(GetCurrentLevel())
     {
     case 0:
-        data.x = MAX_ENEMIES - (MAX_ENEMIES - 2); /// Get 1 enemy.
+        data.x = MAX_ENEMIES - (MAX_ENEMIES - 2); /// Get 2 enemies.
         data.y = 0;
         break;
     case 1:
@@ -81,142 +80,6 @@ static Point AmountOfEnemiesToGenerate()
     return data;
 }
 
-static void ResolveDrawingEnemy(int type, int x, int y)
-{
-    Werewolf *pWerewolf;
-    Witch *pWitch;
-    Banshee *pBanshee;
-
-    switch(s_pEnemyManager->m_enemyTypes[type])
-    {
-        case 0:
-            pWerewolf = s_pEnemyManager->m_pEnemies[type];
-            DrawWerewolf(pWerewolf, x, y);
-            break;
-        case 1:
-            pWitch = s_pEnemyManager->m_pEnemies[type];
-            DrawWitch(pWitch, x, y);
-            break;
-        case 2:
-            pBanshee = s_pEnemyManager->m_pEnemies[type];
-            DrawBanshee(pBanshee, x, y);
-            break;
-        default:
-            printf("Error! File: World.c. Function: DrawEnemies().\n");
-            break;
-        }
-}
-
-/** Updates current enemies to the enemy array inside of the pMessageData variable. The reason this must happen here and not inside UpdateEnemy.c
-    where the other major updates are occurring is because UpdateEnemy.h/.c does not have access to the s_pEnemyManager->m_pEnemies array. Adding
-    the array to the argument list for the function "ResolveEnemyUpdate()" will make it look wonky. Making a new data type from a structure, just
-    for this small tedious task does not seem necessary as well. Therefore this operation is done here. */
-static void AppointDataToEnemyMoveData()
-{
-    /// Step 2. Transfer enemy data from Manager to pMessageData.
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        if(s_pEnemyManager->m_pEnemies[i] != NULL)
-        {
-            s_pEnemyManager->pMessageData->m_pEnemyArr[i] = s_pEnemyManager->m_pEnemies[i];
-            s_pEnemyManager->pMessageData->m_enemyTypes[i] = s_pEnemyManager->m_enemyTypes[i];
-            s_pEnemyManager->pMessageData->m_maxEnemies += 1;
-        }
-    }
-
-    /// Step 3. Reset the pMessageData's flashlight points to prevent values stacking.
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        if(s_pEnemyManager->pMessageData->m_flashlightPoints[i].x != ERROR_INDICATOR &&
-           s_pEnemyManager->pMessageData->m_flashlightPoints[i].y != ERROR_INDICATOR)
-        {
-            s_pEnemyManager->pMessageData->m_flashlightPoints[i].x = ERROR_INDICATOR;
-            s_pEnemyManager->pMessageData->m_flashlightPoints[i].y = ERROR_INDICATOR;
-        }
-    }
-
-    /**
-    /// Step 4. Assign flashlight point values.
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        if(s_pEnemyManager->m_flashLightPoints[i].x > ERROR_INDICATOR &&
-           s_pEnemyManager->m_flashLightPoints[i].y > ERROR_INDICATOR)
-        {
-            s_pEnemyManager->pMessageData->m_flashlightPoints[i].x = s_pEnemyManager->m_flashLightPoints[i].x;
-            s_pEnemyManager->pMessageData->m_flashlightPoints[i].y = s_pEnemyManager->m_flashLightPoints[i].y;
-        }
-    }
-    */
-}
-
-int DrawEnemies(int x, int y)
-{
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        if(s_pEnemyManager->m_pEnemies[i] != NULL)
-        {
-            ResolveDrawingEnemy(i, x, y);
-        }
-    }
-
-    return FALSE;
-}
-
-
-
-
-void EnemyManagementCleanMemory()
-{
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        if(s_pEnemyManager->m_pEnemies[i] != NULL)
-        {
-            free(s_pEnemyManager->m_pEnemies[i]);
-            s_pEnemyManager->m_pEnemies[i] = 0;
-        }
-    }
-
-    free(s_pEnemyManager->pMessageData);
-    s_pEnemyManager->pMessageData = 0;
-}
-
-void UpdateEnemies(EnemyUpdateProcedure updateType)
-{
-    /// Step 1. Before we update the enemy, we must update the data it needs to move properly.
-    AppointDataToEnemyMoveData();
-
-    /// Step 2. Begin update.
-    ResolveEnemyUpdate(s_pEnemyManager->pMessageData, updateType);
-}
-
-void GenerateEnemies()
-{
-    int i;
-    /// Step 1. Receive the amount of enemies to be generated based on the current level.
-    Point enemiesToGenerate = AmountOfEnemiesToGenerate();
-
-    for(i = 0; i < enemiesToGenerate.x; ++i)
-    {
-        /// Step 2. Find an empty position for m_pEnemies.
-        int index = GetPointerArrayPos(s_pEnemyManager->m_pEnemies, MAX_ENEMIES);
-        if(index == ERROR_INDICATOR)
-        {
-            printf("Enemy generation array full!\n");
-            return;
-        }
-
-        /// Step 3. Find an empty position for m_enemyTypes.
-        int enemyTypesIndex = GetIntArrayPos(s_pEnemyManager->m_enemyTypes, MAX_ENEMIES);
-
-        /// Step 4. Save the enemy and it's type in the following arrays.
-        s_pEnemyManager->m_pEnemies[index] = GetEnemy(enemiesToGenerate.y, GetCurrentLevel());
-        s_pEnemyManager->m_enemyTypes[enemyTypesIndex] = enemiesToGenerate.y;
-    }
-}
-
 static void LocateIndex(int *m)
 {
     switch(GetCurrentLevel())
@@ -245,20 +108,161 @@ static void LocateIndex(int *m)
     }
 }
 
+static int ResolveDrawingEnemy(int type, int x, int y)
+{
+    Werewolf *pWerewolf;
+    Witch *pWitch;
+    Banshee *pBanshee;
+
+    switch(s_pEnemyManager->m_enemyTypes[type])
+    {
+        case 0:
+            pWerewolf = s_pEnemyManager->m_pEnemies[type];
+            if(DrawWerewolf(pWerewolf, x, y))
+                return TRUE;
+            break;
+        case 1:
+            pWitch = s_pEnemyManager->m_pEnemies[type];
+            if(DrawWitch(pWitch, x, y))
+                return TRUE;
+            break;
+        case 2:
+            pBanshee = s_pEnemyManager->m_pEnemies[type];
+            if(DrawBanshee(pBanshee, x, y))
+                return TRUE;
+            break;
+        default:
+            printf("Error! File: World.c. Function: DrawEnemies().\n");
+            break;
+    }
+
+    return FALSE;
+}
+
+/** Updates current enemies to the enemy array inside of the pMessageData variable. The reason this must happen here and not inside UpdateEnemy.c
+    where the other major updates are occurring is because UpdateEnemy.h/.c does not have access to the s_pEnemyManager->m_pEnemies array. Adding
+    the array to the argument list for the function "ResolveEnemyUpdate()" will make it look wonky. Making a new data type from a structure, just
+    for this small tedious task does not seem necessary as well. Therefore this operation is done here. */
+static void AppointDataToEnemyMoveData()
+{
+    /// Step 2. Transfer enemy data from Manager to pMessageData.
+    int i;
+    for(i = 0; i < MAX_ENEMIES; ++i)
+    {
+        if(s_pEnemyManager->m_pEnemies[i] != NULL)
+        {
+            s_pEnemyManager->pMessageData->m_pEnemyArr[i] = s_pEnemyManager->m_pEnemies[i]; /// Assign the enemies damit!
+            s_pEnemyManager->pMessageData->m_enemyTypes[i] = s_pEnemyManager->m_enemyTypes[i];
+            s_pEnemyManager->pMessageData->m_maxEnemies += 1;
+        }
+    }
+
+    /// Step 3. Reset the pMessageData's flashlight points to prevent values stacking.
+    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
+    {
+        if(s_pEnemyManager->pMessageData->m_flashlightPoints[i].x != ERROR_INDICATOR &&
+           s_pEnemyManager->pMessageData->m_flashlightPoints[i].y != ERROR_INDICATOR)
+        {
+            s_pEnemyManager->pMessageData->m_flashlightPoints[i].x = ERROR_INDICATOR;
+            s_pEnemyManager->pMessageData->m_flashlightPoints[i].y = ERROR_INDICATOR;
+        }
+    }
+
+    /// Step 4. Assign flashlight values.
+    Point *pArr = GetFlashLightPoints();
+    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
+    {
+        if(pArr[i].x != ERROR_INDICATOR
+           && pArr[i].y != ERROR_INDICATOR)
+        {
+            s_pEnemyManager->pMessageData->m_flashlightPoints[i].x = pArr[i].x;
+            s_pEnemyManager->pMessageData->m_flashlightPoints[i].y = pArr[i].y;
+        }
+    }
+}
+
+void EnemyManagementCleanMemory()
+{
+    int i;
+    for(i = 0; i < MAX_ENEMIES; ++i)
+    {
+        if(s_pEnemyManager->m_pEnemies[i] != NULL)
+        {
+            free(s_pEnemyManager->m_pEnemies[i]);
+            s_pEnemyManager->m_pEnemies[i] = 0;
+        }
+    }
+
+    free(s_pEnemyManager->pMessageData);
+    s_pEnemyManager->pMessageData = 0;
+}
+
+int DrawEnemies(int x, int y)
+{
+    int i;
+    for(i = 0; i < MAX_ENEMIES; ++i)
+    {
+        if(s_pEnemyManager->m_pEnemies[i] != NULL)
+        {
+            if(ResolveDrawingEnemy(i, x, y))
+                return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+void UpdateEnemies(EnemyUpdateProcedure updateType)
+{
+    /// Step 1. Before we update the enemy, we must update the data it needs to move properly.
+    AppointDataToEnemyMoveData();
+
+    /// Step 2. Begin update.
+    ResolveEnemyUpdate(s_pEnemyManager->pMessageData, updateType);
+}
+
+void GenerateEnemies()
+{
+    int i;
+    /// Step 1. Receive the amount of enemies to be generated based on the current level.
+    Point enemiesToGenerate = AmountOfEnemiesToGenerate();
+    printf("Amount to generate: %d\n", enemiesToGenerate.x);
+
+    for(i = 0; i < enemiesToGenerate.x; ++i)
+    {
+        /// Step 2. Find an empty position for m_pEnemies.
+        int index = GetPointerArrayPos(s_pEnemyManager->m_pEnemies, MAX_ENEMIES);
+        printf("EnemyManagement.c index: %d\n", index);
+        if(index == ERROR_INDICATOR)
+        {
+            printf("Enemy generation array full!\n");
+            return;
+        }
+
+        /// Step 3. Find an empty position for m_enemyTypes.
+        int enemyTypesIndex = GetIntArrayPos(s_pEnemyManager->m_enemyTypes, MAX_ENEMIES);
+        printf("EnemyManagement.c typesIndex: %d\n", enemyTypesIndex);
+
+        /// Step 4. Save the enemy and it's type in the following arrays.
+        s_pEnemyManager->m_pEnemies[index] = CreateEnemy(enemiesToGenerate.y, GetCurrentLevel());
+        s_pEnemyManager->m_enemyTypes[enemyTypesIndex] = enemiesToGenerate.y;
+    }
+}
+
+
+
 void UpdateEnemyFactoryData()
 {
     /// Step 1. Declare variable to be used as bookmark and set it.
     int min;
     LocateIndex(&min);
-    printf("min: %d\n", min);
 
     /// Step 2. Assign item points.
     int i;
     for(i = 0; i < ITEMS_PER_LEVEL; ++i)
     {
+        printf("min: %d\n", min);
         s_pEnemyManager->m_factoryPoints[i] = GetItemPoint(min);
-        printf("Item point. X: %d Y: %d\n", s_pEnemyManager->m_factoryPoints[i].x,
-               s_pEnemyManager->m_factoryPoints[i].y);
         ++min;
     }
 
@@ -269,7 +273,7 @@ void UpdateEnemyFactoryData()
     s_pEnemyManager->m_factoryPoints[5] = GetDoor()->m_coord;
 
     /// Step 6. Pass data to EnemyFactory.
-    EnemyUpdateData(s_pEnemyManager->m_factoryPoints, GetFlashLightPoints());
+    UpdateFactoryData(s_pEnemyManager->m_factoryPoints, GetFlashLightPoints());
 }
 
 void InitEnemyManagement()
@@ -286,9 +290,16 @@ void InitEnemyManagement()
     {
         s_pEnemyManager->m_pEnemies[i] = NULL;
         s_pEnemyManager->m_enemyTypes[i] = ERROR_INDICATOR;
+        s_pEnemyManager->pMessageData->m_pEnemyArr[i] = NULL;
     }
 
-    /// Step 4. Set factory points to error indicator.
+    /// Step 4. Assign pMessageData's items array to NULL.
+    for(i = 0; i < MAX_ITEMS; ++i)
+    {
+        s_pEnemyManager->pMessageData->m_pItemsArr[i] = NULL;
+    }
+
+    /// Step 5. Set factory points to error indicator.
     for(i = 0; i < COORDINATES_TO_SEND; ++i)
     {
         s_pEnemyManager->m_factoryPoints[i].x = ERROR_INDICATOR;

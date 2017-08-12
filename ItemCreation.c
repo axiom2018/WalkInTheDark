@@ -11,8 +11,8 @@ void CreateFlashlight(Flashlight *pFlashlight, Point p)
     pFlashlight->m_item.m_color = 5;
     pFlashlight->m_item.m_symbol = 'F';
     pFlashlight->m_item.m_assignedLevel = GetCurrentLevel();
-    printf("Item: %s, Assigned level: %d\n", pFlashlight->m_item.m_name,
-            pFlashlight->m_item.m_assignedLevel);
+//    printf("Item: %s, Assigned level: %d\n", pFlashlight->m_item.m_name,
+//            pFlashlight->m_item.m_assignedLevel);
 
     pFlashlight->m_item.m_pos.x = p.x;
     pFlashlight->m_item.m_pos.y = p.y;
@@ -26,8 +26,8 @@ void CreateBattery(Battery *pBattery, Point p)
     pBattery->m_item.m_color = 3;
     pBattery->m_item.m_symbol = 'B';
     pBattery->m_item.m_assignedLevel = GetCurrentLevel();
-    printf("Item: %s, Assigned level: %d\n", pBattery->m_item.m_name,
-            pBattery->m_item.m_assignedLevel);
+//    printf("Item: %s, Assigned level: %d\n", pBattery->m_item.m_name,
+//            pBattery->m_item.m_assignedLevel);
 
     pBattery->m_item.m_pos.x = p.x;
     pBattery->m_item.m_pos.y = p.y;
@@ -41,8 +41,8 @@ void CreateHealthPack(HealthPack *pHealthPack, Point p)
     pHealthPack->m_item.m_color = 12;
     pHealthPack->m_item.m_symbol = 'H';
     pHealthPack->m_item.m_assignedLevel = GetCurrentLevel();
-    printf("Item: %s, Assigned level: %d\n", pHealthPack->m_item.m_name,
-            pHealthPack->m_item.m_assignedLevel);
+//    printf("Item: %s, Assigned level: %d\n", pHealthPack->m_item.m_name,
+//            pHealthPack->m_item.m_assignedLevel);
 
     pHealthPack->m_item.m_pos.x = p.x;
     pHealthPack->m_item.m_pos.y = p.y;

@@ -10,6 +10,7 @@
 #include "Banshee.h"
 #include "Witch.h"
 #include <stdio.h>
+#include <windows.h>
 
 static void UpdateEnemyData(EMData *pData)
 {
@@ -133,6 +134,11 @@ void ResolveEnemyUpdate(EMData *pData, EnemyUpdateProcedure updateType)
                 printf("Error! File: UpdateEnemy.c. Function: ResolveEnemyUpdate().\n");
                 break;
             }
+        }
+
+        else
+        {
+            break;
         }
     }
 }

@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <conio.h>
 
+/// Defined structure that holds all item related variable data needed.
 typedef struct
 {
     char m_symbol;
@@ -27,6 +28,7 @@ typedef struct
     int m_itemTypes[MAX_INVENTORY_SPACE];
 } Player;
 
+/// Static Player pointer for re-use.
 static Player *s_pPlayer;
 
 /**
@@ -36,6 +38,7 @@ static Player *s_pPlayer;
                                         Make several generic array functions for use tomorrow.
 */
 
+/// Every step the player takes, remove 1 step before the equipped flashlight needs a new battery.
 static void DecreaseStepsBeforeRecharge()
 {
     if(s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge <= 0)
@@ -50,38 +53,32 @@ static void DecreaseStepsBeforeRecharge()
 
 static void AddHealth(int amount)
 {
-    int addedHealth = s_pPlayer->m_health + amount;
-    if(addedHealth > 100)
-    {
-        s_pPlayer->m_health = 100;
-    }
-
-    else
-    {
-        s_pPlayer->m_health += amount;
-    }
+    s_pPlayer->m_health += amount;
 }
 
+/// INVENTORY FUNCTION!
+/// Find index of currently equipped flashlight.
 static int LocateEquippedFlashlightInInventory()
 {
     /// Step 1. Loop through inventory focusing just on flashlights.
-    int indexOfEquippedFlashlight;
     int i;
     for(i = 0; i < MAX_INVENTORY_SPACE; ++i)
     {
-        if(s_pPlayer->m_pInventory[i] != NULL
-           && s_pPlayer->m_itemTypes[i] == 0)
+        if(s_pPlayer->m_pInventory[i] != NULL)
         {
             if(s_pPlayer->m_pInventory[i] == s_pPlayer->m_pEquippedFlashlight)
             {
-                indexOfEquippedFlashlight = i;
-                break;
+                /// Step 2. Return i
+                return i;
             }
         }
     }
-    return indexOfEquippedFlashlight;
+
+    return i;
 }
 
+/// INVENTORY FUNCTION!
+/// Equip player with selected flashlight.
 static void EquipFlashlight()
 {
     if(s_pPlayer->m_pEquippedFlashlight == s_pPlayer->m_pInventory[s_pPlayer->m_index])
@@ -107,6 +104,7 @@ static void EquipFlashlight()
     }
 }
 
+/// INVENTORY FUNCTION!
 static void UseBattery()
 {
     /// Step 1. Take the battery out of the inventory.
@@ -123,6 +121,7 @@ static void UseBattery()
     s_pPlayer->m_index = 0;
 }
 
+/// INVENTORY FUNCTION!
 static void UseHealthpack()
 {
     /// Step 1. Take the health pack out of the inventory.
@@ -139,6 +138,7 @@ static void UseHealthpack()
     s_pPlayer->m_index = 0;
 }
 
+/// INVENTORY FUNCTION!
 static void SelectItem()
 {
     switch(s_pPlayer->m_itemTypes[s_pPlayer->m_index])
@@ -158,6 +158,7 @@ static void SelectItem()
     }
 }
 
+/// INVENTORY FUNCTION!
 static void Ascend()
 {
     /// Step 1. In the function Ascend() we safely know the search for the previous non-null index will be going "upward" or a decreasing linear search.
@@ -181,6 +182,7 @@ static void Ascend()
     }
 }
 
+/// INVENTORY FUNCTION!
 static void Descend()
 {
     /// Step 1. In the function Descend() we safely know the search for the next non-null index will be going "downward" or an increasing linear search.
@@ -204,6 +206,8 @@ static void Descend()
     }
 }
 
+/// INVENTORY FUNCTION!
+/// Part of the GUI navigation system.
 static void ApplyMotion(char key)
 {
     if(key == 's')
@@ -217,6 +221,7 @@ static void ApplyMotion(char key)
     }
 }
 
+/// INVENTORY FUNCTION!
 static void IndicatorMotion(char *input)
 {
     if(s_pPlayer->m_itemCount == 1) /// Player cannot select anything else because they only have 1 item in their inventory.
@@ -239,6 +244,7 @@ static void IndicatorMotion(char *input)
     }
 }
 
+/// INVENTORY FUNCTION
 static char ReturnIndicator(int currentIndex)
 {
     /// If index 0 is the current index we're checking in the inventory (currentIndex), and m_index is 0, we must return the selection variable.
@@ -282,24 +288,25 @@ static void DisplayInstructions()
 
         char input = _getch();
         if(input == 'q')
-        {
             break;
-        }
     }
 }
 
+/// INVENTORY FUNCTION.
 static void DisplayInventory()
 {
     while(TRUE)
     {
         system("cls");
-        s_pPlayer->m_itemCount = 0;
+        s_pPlayer->m_itemCount = 0; /// Pass
         printf("__________INVENTORY__________\n");
         int i;
         for(i = 0; i < MAX_INVENTORY_SPACE; ++i)
         {
+               /// Pass inventory array.
             if(s_pPlayer->m_pInventory[i] != NULL)
             {
+                /// Pass types array.
                 if(s_pPlayer->m_itemTypes[i] == 0)
                 {
                     Flashlight *pFlashlight = (Flashlight*)s_pPlayer->m_pInventory[i];
@@ -338,42 +345,41 @@ static void DisplayInventory()
     }
 }
 
+/// When the player moves, make sure it's not "off the level".
 static void CheckBounds(char *input)
 {
+    /// Step 1. Initialize variables.
     int rows = ROWS - 1;
     int columns = COLUMNS - 1;
 
+    /// Step 2. Process input.
     switch(*input)
     {
     case 'a':
         if(s_pPlayer->m_playerPosition.y - 1 < 0)
-        {
             return;
-        }
+
         DecreaseStepsBeforeRecharge();
         s_pPlayer->m_playerPosition.y -= 1;
         break;
     case 'd':
         if(s_pPlayer->m_playerPosition.y + 1 > columns)
-        {
             return;
-        }
+
         DecreaseStepsBeforeRecharge();
         s_pPlayer->m_playerPosition.y += 1;
         break;
     case 'w':
         if(s_pPlayer->m_playerPosition.x - 1 < 0)
-        {
             return;
-        }
+
         DecreaseStepsBeforeRecharge();
         s_pPlayer->m_playerPosition.x -= 1;
         break;
     case 's':
         if(s_pPlayer->m_playerPosition.x + 1 > rows)
-        {
             return;
-        }
+
         DecreaseStepsBeforeRecharge();
         s_pPlayer->m_playerPosition.x += 1;
         break;
@@ -387,7 +393,6 @@ static void CheckBounds(char *input)
         DisplayTips();
         break;
     default:
-        /// No need for error message here.
         break;
     }
 }
@@ -399,14 +404,12 @@ static void CheckBounds(char *input)
 
 void InitPlayer()
 {
-    int rows = ROWS - 1;
-    int columns = COLUMNS - 1;
-
+    /// Step 1. Set up and initialize all variables.
     s_pPlayer = malloc(sizeof(Player));
     s_pPlayer->m_symbol = '$';
-    s_pPlayer->m_health = 100;
-    s_pPlayer->m_playerPosition.x = rows;
-    s_pPlayer->m_playerPosition.y = columns;
+    s_pPlayer->m_health = DEFAULT_PLAYER_HEALTH;
+    s_pPlayer->m_playerPosition.x = ROWS - 1;
+    s_pPlayer->m_playerPosition.y = COLUMNS - 1;
     s_pPlayer->m_pEquippedFlashlight = malloc(sizeof(Flashlight));
     s_pPlayer->m_pEquippedFlashlight = NULL;
     s_pPlayer->m_selection = 'S';
@@ -414,6 +417,7 @@ void InitPlayer()
     s_pPlayer->m_index = 0;
     s_pPlayer->m_itemCount = 0;
 
+    /// Step 2. Set arrays to default value.
     int i;
     for(i = 0; i < MAX_INVENTORY_SPACE; ++i)
     {
@@ -422,41 +426,46 @@ void InitPlayer()
     }
 }
 
+/// Simple GUI for player to know the controls.
 void PlayerGUI()
 {
     printf("\nHealth: %d - Steps before battery dies: %d Max inventory space: %d\n",
            s_pPlayer->m_health, s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge, MAX_INVENTORY_SPACE);
-    ///printf("Escape before monsters destroy you!\n");
-    printf("PX: %d , PY: %d\n", s_pPlayer->m_playerPosition.y, s_pPlayer->m_playerPosition.x);
     printf("[o]Open Inventory [i]Instructions [t]Tips [q]Quit");
 }
 
+/// Referenced in World.c.
 char GetPlayer()
 {
     return s_pPlayer->m_symbol;
 }
 
+/// Multiple other files reference this function.
 Point GetPlayerPosition()
 {
     return s_pPlayer->m_playerPosition;
 }
 
+/// After advancing to a new level, reset the players position. Referenced in World.c.
 void ResetPlayerPositionToDefault()
 {
     s_pPlayer->m_playerPosition.x = ROWS - 1;
     s_pPlayer->m_playerPosition.y = COLUMNS - 1;
 }
 
+/// Referenced in DarkMovement.c and LightMovement.c.
 void AdjustHealth(int x)
 {
     s_pPlayer->m_health = x;
 }
 
+/// Referenced in UpdateEnemy.c and World.c.
 int GetPlayerHealth()
 {
     return s_pPlayer->m_health;
 }
 
+/// Referenced in FlashlightManagement.c
 Flashlight *GetFlashLight()
 {
     return s_pPlayer->m_pEquippedFlashlight;
@@ -504,6 +513,7 @@ void AddItemToInventory(void *pItem, int itemType)
     }
 }
 
+/// Referenced in FlashlightManagement.c
 int CheckBatteryPower()
 {
     if(s_pPlayer->m_pEquippedFlashlight->m_stepsBeforeRecharge > 0)
@@ -519,10 +529,19 @@ char UpdatePlayer()
     return input;
 }
 
+/// Free memory.
 void PlayerCleanMemory()
 {
-    free(s_pPlayer->m_pEquippedFlashlight);
-    s_pPlayer->m_pEquippedFlashlight = 0;
+    int i;
+    for(i = 0; i < MAX_INVENTORY_SPACE; ++i)
+    {
+        if(s_pPlayer->m_pInventory[i] != NULL)
+        {
+            free(s_pPlayer->m_pInventory[i]);
+            s_pPlayer->m_pInventory[i] = 0;
+        }
+    }
+
     free(s_pPlayer);
     s_pPlayer = 0;
 }

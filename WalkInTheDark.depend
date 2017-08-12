@@ -318,7 +318,7 @@
 	"Point.h"
 	<windows.h>
 
-1501718904 c:\users\axiom\github projects\walkinthedark\definitions.h
+1502484052 c:\users\axiom\github projects\walkinthedark\definitions.h
 
 1500420765 c:\users\axiom\github projects\walkinthedark\point.h
 
@@ -355,10 +355,10 @@
 1480357478 c:\users\axiom\github projects\walkinthedark\items.h
 	"Point.h"
 
-1501621305 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
+1502400043 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
 	"Point.h"
 
-1502331281 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
+1502472456 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
 	"EnemyFactory.h"
 	"Werewolf.h"
 	"Witch.h"
@@ -371,8 +371,9 @@
 	"StrategyCheck.h"
 	"Definitions.h"
 	"Switch.h"
+	"EnemyCreation.h"
 
-1502331010 c:\users\axiom\github projects\walkinthedark\enemyfactory.h
+1502471122 c:\users\axiom\github projects\walkinthedark\enemyfactory.h
 	"Point.h"
 	<stdio.h>
 	<stdlib.h>
@@ -446,7 +447,7 @@
 
 1480525981 c:\users\axiom\github projects\walkinthedark\lightmovementdirections.h
 
-1502327290 source:c:\users\axiom\github projects\walkinthedark\player.c
+1502398942 source:c:\users\axiom\github projects\walkinthedark\player.c
 	"Player.h"
 	"World.h"
 	"Point.h"
@@ -515,7 +516,7 @@
 	<stdio.h>
 	<windows.h>
 
-1502331228 source:c:\users\axiom\github projects\walkinthedark\world.c
+1502482060 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
@@ -523,7 +524,6 @@
 	"Flashlight.h"
 	"HealthPack.h"
 	"Battery.h"
-	"MediatorPattern.h"
 	"Definitions.h"
 	"Werewolf.h"
 	"Witch.h"
@@ -547,7 +547,7 @@
 	"EnemyMoveData.h"
 	"Point.h"
 
-1501719658 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
+1502482524 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
 	"Definitions.h"
 	"ArrayOperations.h"
 	"LevelManagement.h"
@@ -568,7 +568,7 @@
 	"Battery.h"
 	"Point.h"
 
-1501716331 source:c:\users\axiom\github projects\walkinthedark\itemcreation.c
+1502392012 source:c:\users\axiom\github projects\walkinthedark\itemcreation.c
 	"ItemCreation.h"
 	"LevelManagement.h"
 	"Definitions.h"
@@ -583,7 +583,7 @@
 
 1501627951 c:\users\axiom\github projects\walkinthedark\switch.h
 
-1502330989 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
+1502484396 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
 	"EnemyManagement.h"
 	"Definitions.h"
 	"EnemyMoveData.h"
@@ -600,7 +600,6 @@
 	"Witch.h"
 	"UpdateEnemy.h"
 	"ArrayOperations.h"
-	"MediatorPattern.h"
 	"DrawEnemy.h"
 	"World.h"
 	"EnemyFactory.h"
@@ -611,7 +610,7 @@
 1502330411 c:\users\axiom\github projects\walkinthedark\enemymanagement.h
 	"EnemyProcedure.h"
 
-1502312023 c:\users\axiom\github projects\walkinthedark\drawenemy.h
+1502481762 c:\users\axiom\github projects\walkinthedark\drawenemy.h
 	"Werewolf.h"
 	"Banshee.h"
 	"Witch.h"
@@ -620,18 +619,19 @@
 	"EnemyMoveData.h"
 	"EnemyProcedure.h"
 
-1502309193 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
+1502381045 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
 	"FlashlightManagement.h"
 	"Definitions.h"
 	"ArrayOperations.h"
 	"Switch.h"
 	"Player.h"
 	"Boolean.h"
+	<stdio.h>
 
-1502309143 c:\users\axiom\github projects\walkinthedark\flashlightmanagement.h
+1502380747 c:\users\axiom\github projects\walkinthedark\flashlightmanagement.h
 	"Point.h"
 
-1502311441 source:c:\users\axiom\github projects\walkinthedark\updateenemy.c
+1502391440 source:c:\users\axiom\github projects\walkinthedark\updateenemy.c
 	"UpdateEnemy.h"
 	"Switch.h"
 	"ItemManagement.h"
@@ -643,11 +643,25 @@
 	"Banshee.h"
 	"Witch.h"
 	<stdio.h>
+	<windows.h>
 
-1502238990 source:c:\users\axiom\github projects\walkinthedark\drawenemy.c
+1502481784 source:c:\users\axiom\github projects\walkinthedark\drawenemy.c
 	"DrawEnemy.h"
 	"Point.h"
 	"Boolean.h"
 	"LevelManagement.h"
 	<stdio.h>
+
+1502470097 c:\users\axiom\github projects\walkinthedark\enemycreation.h
+	"Point.h"
+
+1502470799 source:c:\users\axiom\github projects\walkinthedark\enemycreation.c
+	"EnemyCreation.h"
+	"Werewolf.h"
+	"Witch.h"
+	"Banshee.h"
+	"SelectMovementStrategyAssistance.h"
+	"StrategyCheck.h"
+	"DarkMovement.h"
+	<stdlib.h>
 

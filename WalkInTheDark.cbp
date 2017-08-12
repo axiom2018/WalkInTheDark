@@ -50,6 +50,10 @@
 		<Unit filename="DrawEnemy.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="EnemyCreation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyCreation.h" />
 		<Unit filename="EnemyFactory.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -76,6 +80,10 @@
 		</Unit>
 		<Unit filename="FlashlightManagement.h" />
 		<Unit filename="HealthPack.h" />
+		<Unit filename="InventoryManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="InventoryManagement.h" />
 		<Unit filename="ItemCreation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -96,10 +104,6 @@
 		<Unit filename="LightMovement.h" />
 		<Unit filename="LightMovementDirections.h" />
 		<Unit filename="LightMovementEnums.h" />
-		<Unit filename="MediatorPattern.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="MediatorPattern.h" />
 		<Unit filename="Player.c">
 			<Option compilerVar="CC" />
 		</Unit>

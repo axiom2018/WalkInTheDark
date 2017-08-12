@@ -41,4 +41,10 @@
 #define MAX_RANGE 210
 #define DEFAULT_COLOR 7
 
+/// World.c
+#define DOOR_SYMBOL 178
+
+/// Player.c
+#define DEFAULT_PLAYER_HEALTH 100
+
 #endif // SHAREDBEHAVIOR_H_INCLUDED

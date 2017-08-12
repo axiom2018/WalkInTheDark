@@ -6,7 +6,6 @@
 #include "Flashlight.h"
 #include "HealthPack.h"
 #include "Battery.h"
-#include "MediatorPattern.h"
 #include "Definitions.h"
 #include "Werewolf.h"
 #include "Witch.h"
@@ -50,7 +49,7 @@ void AdjustTextColor(int value)
 /// Every "level" will have a door you must get to in order to advance the game. Case 0 puts the door top left, case 1, top right, case 2, bottom left.
 static void GenerateDoor()
 {
-    s_pWorld->m_pDoor->m_symbol = 178;
+    s_pWorld->m_pDoor->m_symbol = DOOR_SYMBOL;
 
     int pos = rand() % (2 + 1 - 0) + 0;
 
@@ -88,6 +87,7 @@ static void UpdateScreen()
 
             else if(DrawEnemies(x, y))
             {
+                continue;
             }
 
             else
@@ -158,8 +158,6 @@ static int DoorCollisionDetection()
         GenerateDoor();
 
         /// f) Send factory new information.
-        /// UpdateEnemyFactoryData();
-        /// SendEnemyFactoryData();
         UpdateEnemyFactoryData();
 
         /// g) Generate the next levels enemies.
@@ -195,11 +193,11 @@ void WorldInit()
 
     InitItemManagement();
 
-    /// InitMediator();
-
     InitEnemyFactory();
 
     InitPlayer();
+
+    InitFlashlightManagement();
 
     InitEnemyManagement();
 
@@ -213,7 +211,6 @@ void WorldInit()
 
     GivePlayerItem(0);
 
-    /// UpdateEnemyFactoryData();
     UpdateEnemyFactoryData();
 
     GenerateEnemies();
@@ -266,19 +263,16 @@ void UpdateGame()
     }
 }
 
+/// Call memory cleaning functions.
 void WorldCleanMemory()
 {
     ItemManagementCleanMemory();
-
-    /// MediatorCleanMemory();
 
     EnemyFactoryCleanMemory();
 
     PlayerCleanMemory();
 
     EnemyManagementCleanMemory();
-
-    ItemManagementCleanMemory();
 
     free(s_pWorld->m_pDoor);
     s_pWorld->m_pDoor = 0;

@@ -26,9 +26,9 @@ typedef struct
 /// Static manager pointer for re-use.
 static ItemManager *s_pItemManager;
 
+/// Return True if item's assigned level matches current level.
 static int CheckItemLevel(int *pItemLevel)
 {
-    /// Return True if item's assigned level matches current level.
     if(UseSwitch(*pItemLevel, GetCurrentLevel()))
         return TRUE;
 
@@ -116,6 +116,7 @@ void ItemManagementCleanMemory()
     s_pItemManager = 0;
 }
 
+/// Ensure that an item won't share a position with a different item.
 int CheckGeneratedItemsForDuplicatePositions()
 {
     int i, t;
@@ -138,6 +139,7 @@ int CheckGeneratedItemsForDuplicatePositions()
     return FALSE;
 }
 
+/// Return item position.
 Point GetItemPoint(int index)
 {
     return s_pItemManager->m_generatedItemPoints[index];

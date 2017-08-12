@@ -5,11 +5,25 @@
 #include "Switch.h"
 #include "Player.h"
 #include "Boolean.h"
+#include <stdio.h>
 
 /// No need to declare structure like other interfaces, just a static array with points.
 static Point s_flashLightPoints[SIZE_OF_FL_POINTS];
-/// Initialization variable.
-static int s_init = FALSE;
+
+/// Print flash light points.
+void PrintFlashlightPoints()
+{
+    int i;
+    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
+    {
+        if(s_flashLightPoints[i].x != ERROR_INDICATOR
+           && s_flashLightPoints[i].y != ERROR_INDICATOR)
+        {
+            printf("Management. X: %d Y: %d\n", s_flashLightPoints[i].x,
+                   s_flashLightPoints[i].y);
+        }
+    }
+}
 
 void InitFlashlightManagement()
 {
@@ -20,8 +34,6 @@ void InitFlashlightManagement()
         s_flashLightPoints[i].x = ERROR_INDICATOR;
         s_flashLightPoints[i].y = ERROR_INDICATOR;
     }
-
-    s_init = TRUE;
 }
 
 /// Assist with setting flashlight points.
@@ -47,9 +59,6 @@ static int GetEmptyIndexForFlashlightPoints()
 /// Empty flashlight points to ensure no values stack. Use in GatherFlashlightPoints() frequently.
 void ClearFlashlightPoints()
 {
-    if(!s_init)
-        InitFlashlightManagement();
-
     int i;
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
@@ -109,9 +118,6 @@ static void SetFlashLightPoint(int x, int y)
 /// Very important algorithm, key to making the flashlight effect work.
 void GatherFlashlightPoints()
 {
-    if(!s_init)
-        InitFlashlightManagement();
-
     /// Step 1. This equals 0, return. Players flashlight has no more battery left. Clear all points and exit.
     if(!CheckBatteryPower())
     {
@@ -236,9 +242,6 @@ Point * GetFlashLightPoints()
 /// Check if coordinate being printed in the loop in the update function is a flashlight coordinate.
 int DisplayFlashlight(int x, int y)
 {
-    if(!s_init)
-        InitFlashlightManagement();
-
     int i;
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
