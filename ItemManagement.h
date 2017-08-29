@@ -4,7 +4,8 @@
 #include "EnemyMoveData.h"
 #include "Point.h"
 
-/// Handles all item related activities.
+/// Interface to item management.
+
 void InitItemManagement();
 void GenerateLevelItems();
 int UpdateGeneratedItems(int x, int y);

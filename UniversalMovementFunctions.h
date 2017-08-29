@@ -8,8 +8,8 @@
 There are some functions in which both types of movement will need to have access too. An example would be checking if the desired
 position is in bounds of the maximum rows and columns, aka, not falling off the edge of the world. */
 
-int RunMovementDelayTest(EMData *pData);
 int RunPositionTests(EMData *pData, Point *pDesiredEnemyPos);
+int RunMovementDelayTest(EMData *pData);
 int PlayerCollision(Point pPlayerPos, Point pEnemyPos);
 
 #endif // UNIVERSALMOVEMENTFUNCTIONS_H_INCLUDED

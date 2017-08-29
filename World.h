@@ -8,8 +8,8 @@
 
 void WorldInit();
 Door * GetDoor();
-void AdjustTextColor(int value);
 void UpdateGame();
+void AdjustTextColor(int value);
 void WorldCleanMemory();
 
 #endif // WORLD_H_INCLUDED

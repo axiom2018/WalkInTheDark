@@ -80,6 +80,7 @@ static Point AmountOfEnemiesToGenerate()
     return data;
 }
 
+/// Get proper index to update enemy factory data.
 static void LocateIndex(int *m)
 {
     switch(GetCurrentLevel())
@@ -108,6 +109,7 @@ static void LocateIndex(int *m)
     }
 }
 
+/// Finish drawing the enemy.
 static int ResolveDrawingEnemy(int type, int x, int y)
 {
     Werewolf *pWerewolf;
@@ -212,27 +214,16 @@ int DrawEnemies(int x, int y)
     return FALSE;
 }
 
-void UpdateEnemies(EnemyUpdateProcedure updateType)
-{
-    /// Step 1. Before we update the enemy, we must update the data it needs to move properly.
-    AppointDataToEnemyMoveData();
-
-    /// Step 2. Begin update.
-    ResolveEnemyUpdate(s_pEnemyManager->pMessageData, updateType);
-}
-
 void GenerateEnemies()
 {
     int i;
     /// Step 1. Receive the amount of enemies to be generated based on the current level.
     Point enemiesToGenerate = AmountOfEnemiesToGenerate();
-    printf("Amount to generate: %d\n", enemiesToGenerate.x);
 
     for(i = 0; i < enemiesToGenerate.x; ++i)
     {
         /// Step 2. Find an empty position for m_pEnemies.
         int index = GetPointerArrayPos(s_pEnemyManager->m_pEnemies, MAX_ENEMIES);
-        printf("EnemyManagement.c index: %d\n", index);
         if(index == ERROR_INDICATOR)
         {
             printf("Enemy generation array full!\n");
@@ -241,7 +232,6 @@ void GenerateEnemies()
 
         /// Step 3. Find an empty position for m_enemyTypes.
         int enemyTypesIndex = GetIntArrayPos(s_pEnemyManager->m_enemyTypes, MAX_ENEMIES);
-        printf("EnemyManagement.c typesIndex: %d\n", enemyTypesIndex);
 
         /// Step 4. Save the enemy and it's type in the following arrays.
         s_pEnemyManager->m_pEnemies[index] = CreateEnemy(enemiesToGenerate.y, GetCurrentLevel());
@@ -249,8 +239,17 @@ void GenerateEnemies()
     }
 }
 
+/// Updating strategies for enemies keeps them functioning properly.
+void UpdateEnemyStrategy(EnemyUpdateProcedure updateType)
+{
+    /// Step 1. Before we update the enemy, we must update the data it needs to move properly.
+    AppointDataToEnemyMoveData();
 
+    /// Step 2. Begin update.
+    ResolveEnemyUpdate(s_pEnemyManager->pMessageData, updateType);
+}
 
+/// Update vital data for the enemy.
 void UpdateEnemyFactoryData()
 {
     /// Step 1. Declare variable to be used as bookmark and set it.
@@ -261,7 +260,6 @@ void UpdateEnemyFactoryData()
     int i;
     for(i = 0; i < ITEMS_PER_LEVEL; ++i)
     {
-        printf("min: %d\n", min);
         s_pEnemyManager->m_factoryPoints[i] = GetItemPoint(min);
         ++min;
     }

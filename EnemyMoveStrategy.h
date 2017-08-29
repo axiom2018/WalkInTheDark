@@ -4,6 +4,8 @@
 #include "Point.h"
 #include "EnemyMoveData.h"
 
+/// Part of strategy pattern.
+
 typedef void (*Move)(EMData *pData);
 
 #endif // MONSTERMOVESTRATEGY_C_INCLUDED

@@ -14,6 +14,7 @@ int GetPointerArrayPos(void *arr[], int arrSize)
             return i;
         }
     }
+
     return ERROR_INDICATOR;
 }
 
@@ -28,6 +29,7 @@ int GetIntArrayPos(int arr[], int arrSize)
             return i;
         }
     }
+
     return ERROR_INDICATOR;
 }
 
@@ -43,5 +45,6 @@ int GetPointArrayPos(Point arr[], int arrSize)
            return i;
         }
     }
+
     return ERROR_INDICATOR;
 }

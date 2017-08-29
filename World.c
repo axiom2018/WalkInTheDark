@@ -32,20 +32,6 @@ typedef struct
 /// Static manager pointer for re-use.
 static WorldManager *s_pWorld;
 
-/// Using the windows api to change color of text because system() calls are unbelievably slow.
-void AdjustTextColor(int value)
-{
-    WORD colorToAdjust;
-    HANDLE hdle = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO saveInfo;
-
-    if(GetConsoleScreenBufferInfo(hdle, &saveInfo))
-    {
-        colorToAdjust = (saveInfo.wAttributes & 0xF0) + (value & 0x0F);
-        SetConsoleTextAttribute(hdle, colorToAdjust);
-    }
-}
-
 /// Every "level" will have a door you must get to in order to advance the game. Case 0 puts the door top left, case 1, top right, case 2, bottom left.
 static void GenerateDoor()
 {
@@ -167,7 +153,7 @@ static int DoorCollisionDetection()
         system("cls");
 
         /// i) Be sure to give enemies a chance to update their strategies.
-        UpdateEnemies(UpdateStrategy);
+        UpdateEnemyStrategy(UpdateStrategy);
 
         /// j) Update screen (along with player GUI).
         UpdateScreen();
@@ -176,52 +162,36 @@ static int DoorCollisionDetection()
     return FALSE;
 }
 
-void WorldInit()
+/// Call memory cleaning functions.
+void WorldCleanMemory()
 {
-    s_pWorld = malloc(sizeof(WorldManager));
-    s_pWorld->m_pDoor = malloc(sizeof(Door));
-    s_pWorld->m_gameRunning = TRUE;
+    ItemManagementCleanMemory();
 
-    int x, y;
-    for(x = 0; x < ROWS; ++x)
-    {
-        for(y = 0; y < COLUMNS; ++y)
-        {
-            s_pWorld->m_area[x][y] = '.';
-        }
-    }
+    EnemyFactoryCleanMemory();
 
-    InitItemManagement();
+    PlayerCleanMemory();
 
-    InitEnemyFactory();
+    EnemyManagementCleanMemory();
 
-    InitPlayer();
+    free(s_pWorld->m_pDoor);
+    s_pWorld->m_pDoor = 0;
 
-    InitFlashlightManagement();
-
-    InitEnemyManagement();
-
-    InitItemManagement();
-
-    InitLevelManagement(); ///
-
-    GenerateDoor();
-
-    GenerateLevelItems();
-
-    GivePlayerItem(0);
-
-    UpdateEnemyFactoryData();
-
-    GenerateEnemies();
-
-    while(CheckGeneratedItemsForDuplicatePositions())
-        continue;
+    free(s_pWorld);
+    s_pWorld = 0;
 }
 
-Door * GetDoor()
+/// Using the windows api to change color of text because system() calls are unbelievably slow.
+void AdjustTextColor(int value)
 {
-    return s_pWorld->m_pDoor;
+    WORD colorToAdjust;
+    HANDLE hdle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO saveInfo;
+
+    if(GetConsoleScreenBufferInfo(hdle, &saveInfo))
+    {
+        colorToAdjust = (saveInfo.wAttributes & 0xF0) + (value & 0x0F);
+        SetConsoleTextAttribute(hdle, colorToAdjust);
+    }
 }
 
 void UpdateGame()
@@ -230,7 +200,7 @@ void UpdateGame()
     {
         GatherFlashlightPoints();
 
-        UpdateEnemies(UpdateStrategy);
+        UpdateEnemyStrategy(UpdateStrategy);
 
         UpdateScreen();
 
@@ -250,7 +220,7 @@ void UpdateGame()
 
             else
             {
-                UpdateEnemies(UpdateMovement);
+                UpdateEnemyStrategy(UpdateMovement);
                 system("cls");
             }
         }
@@ -263,20 +233,55 @@ void UpdateGame()
     }
 }
 
-/// Call memory cleaning functions.
-void WorldCleanMemory()
+/// Referenced in EnemyManagement.c, ItemManagement.c, Player.c, and UpdateEnemy.c.
+Door * GetDoor()
 {
-    ItemManagementCleanMemory();
+    return s_pWorld->m_pDoor;
+}
 
-    EnemyFactoryCleanMemory();
+void WorldInit()
+{
+    /// Step 1. Initialize variables.
+    s_pWorld = malloc(sizeof(WorldManager));
+    s_pWorld->m_pDoor = malloc(sizeof(Door));
+    s_pWorld->m_gameRunning = TRUE;
 
-    PlayerCleanMemory();
+    /// Step 2. Decorate game board.
+    int x, y;
+    for(x = 0; x < ROWS; ++x)
+    {
+        for(y = 0; y < COLUMNS; ++y)
+        {
+            s_pWorld->m_area[x][y] = '.';
+        }
+    }
 
-    EnemyManagementCleanMemory();
+    /// Step 3. Initialize other entities.
 
-    free(s_pWorld->m_pDoor);
-    s_pWorld->m_pDoor = 0;
+    InitItemManagement();
 
-    free(s_pWorld);
-    s_pWorld = 0;
+    InitEnemyFactory();
+
+    InitPlayer();
+
+    InitFlashlightManagement();
+
+    InitEnemyManagement();
+
+    InitLevelManagement();
+
+    /// Step 4. Set up rest of game.
+
+    GenerateDoor();
+
+    GenerateLevelItems();
+
+    GivePlayerItem(0);
+
+    UpdateEnemyFactoryData();
+
+    GenerateEnemies();
+
+    while(CheckGeneratedItemsForDuplicatePositions())
+        continue;
 }

@@ -5,36 +5,11 @@
 #include "Switch.h"
 #include "Player.h"
 #include "Boolean.h"
+#include "Player.h"
 #include <stdio.h>
 
 /// No need to declare structure like other interfaces, just a static array with points.
 static Point s_flashLightPoints[SIZE_OF_FL_POINTS];
-
-/// Print flash light points.
-void PrintFlashlightPoints()
-{
-    int i;
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        if(s_flashLightPoints[i].x != ERROR_INDICATOR
-           && s_flashLightPoints[i].y != ERROR_INDICATOR)
-        {
-            printf("Management. X: %d Y: %d\n", s_flashLightPoints[i].x,
-                   s_flashLightPoints[i].y);
-        }
-    }
-}
-
-void InitFlashlightManagement()
-{
-    /// Step 1. Set all values to -1.
-    int i;
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        s_flashLightPoints[i].x = ERROR_INDICATOR;
-        s_flashLightPoints[i].y = ERROR_INDICATOR;
-    }
-}
 
 /// Assist with setting flashlight points.
 static int GetEmptyIndexForFlashlightPoints()
@@ -45,30 +20,6 @@ static int GetEmptyIndexForFlashlightPoints()
         return ERROR_INDICATOR;
 
     return flPointIndex;
-
-    /**
-    if(flPointIndex == ERROR_INDICATOR)
-    {
-        return ERROR_INDICATOR;
-    }
-
-    return flPointIndex;
-    */
-}
-
-/// Empty flashlight points to ensure no values stack. Use in GatherFlashlightPoints() frequently.
-void ClearFlashlightPoints()
-{
-    int i;
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        if(s_flashLightPoints[i].x != ERROR_INDICATOR &&
-           s_flashLightPoints[i].y != ERROR_INDICATOR)
-        {
-            s_flashLightPoints[i].x = ERROR_INDICATOR;
-            s_flashLightPoints[i].y = ERROR_INDICATOR;
-        }
-    }
 }
 
 /// Prevent from adding duplicate values.
@@ -112,6 +63,21 @@ static void SetFlashLightPoint(int x, int y)
     {
         s_flashLightPoints[index].x = x;
         s_flashLightPoints[index].y = y;
+    }
+}
+
+/// Empty flashlight points to ensure no values stack. Use in GatherFlashlightPoints() frequently.
+void ClearFlashlightPoints()
+{
+    int i;
+    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
+    {
+        if(s_flashLightPoints[i].x != ERROR_INDICATOR &&
+           s_flashLightPoints[i].y != ERROR_INDICATOR)
+        {
+            s_flashLightPoints[i].x = ERROR_INDICATOR;
+            s_flashLightPoints[i].y = ERROR_INDICATOR;
+        }
     }
 }
 
@@ -262,4 +228,15 @@ int DisplayFlashlight(int x, int y)
     }
 
     return FALSE;
+}
+
+/// Initialize and set all values to -1.
+void InitFlashlightManagement()
+{
+    int i;
+    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
+    {
+        s_flashLightPoints[i].x = ERROR_INDICATOR;
+        s_flashLightPoints[i].y = ERROR_INDICATOR;
+    }
 }

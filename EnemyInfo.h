@@ -6,7 +6,7 @@
 #include "SelectMovementStrategy.h"
 #include "EnemyStrategyCheck.h"
 
-/// Each enemy will have an EnemyInfo variable.
+/// Each enemy will have a generic EnemyInfo variable since enemies will use  the same data.
 typedef struct
 {
     char m_symbol;

@@ -147,6 +147,7 @@ Point GetItemPoint(int index)
 
 void GivePlayerItem(int itemType)
 {
+    /// Step 1. Set up variables.
     Flashlight *pFlashlight;
     Battery *pBattery;
     HealthPack *pHealthPack;
@@ -155,6 +156,7 @@ void GivePlayerItem(int itemType)
     pos.y = ERROR_INDICATOR;
     void *pItem;
 
+    /// Step 2. Use switch to determine what item to assign.
     switch(itemType)
     {
     case 0:
@@ -178,6 +180,7 @@ void GivePlayerItem(int itemType)
         break;
     }
 
+    /// Step 3. Give player item.
     AddItemToInventory(pItem, itemType);
 }
 
@@ -406,8 +409,10 @@ void GenerateLevelItems()
 
 void InitItemManagement()
 {
+    /// Step 1. Set up and initialize structure.
     s_pItemManager = malloc(sizeof(ItemManager));
 
+    /// Step 2. Initialize variables.
     s_pItemManager->m_itemGeneration = ITEMS_PER_LEVEL;
     s_pItemManager->m_itemGenerationAssistance = 0;
 

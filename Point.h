@@ -3,6 +3,7 @@
 #define POINT_H_INCLUDED
 
 /// Used for positions of Items, Enemies, etc.
+
 typedef struct
 {
     int x;

@@ -4,6 +4,7 @@
 #include "Point.h"
 
 /// Primary used in EnemyFactory.c for saving important enemy info for the sake of only updating the correct enemies.
+
 typedef struct
 {
     Point m_pos;

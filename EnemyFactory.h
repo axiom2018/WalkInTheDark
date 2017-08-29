@@ -5,10 +5,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/// C style Factory pattern".
+/// Created an unorthodox factory pattern to pump out enemies.
+
 void InitEnemyFactory();
 void UpdateFactoryData(Point mainCoordinates[], Point flPoints[]);
-void *CreateEnemy(int type, int levelAssignment);
+void * CreateEnemy(int type, int levelAssignment);
 void EnemyFactoryCleanMemory();
 
 #endif // MONSTERFACTORY_H_INCLUDED

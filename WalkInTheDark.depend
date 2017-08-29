@@ -318,7 +318,7 @@
 	"Point.h"
 	<windows.h>
 
-1502484052 c:\users\axiom\github projects\walkinthedark\definitions.h
+1502488396 c:\users\axiom\github projects\walkinthedark\definitions.h
 
 1500420765 c:\users\axiom\github projects\walkinthedark\point.h
 
@@ -345,7 +345,7 @@
 
 1473405834 c:\users\axiom\github projects\walkinthedark\boolean.h
 
-1502327276 c:\users\axiom\github projects\walkinthedark\player.h
+1503440841 c:\users\axiom\github projects\walkinthedark\player.h
 	"Point.h"
 	"Flashlight.h"
 
@@ -358,7 +358,7 @@
 1502400043 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
 	"Point.h"
 
-1502472456 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
+1502484832 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
 	"EnemyFactory.h"
 	"Werewolf.h"
 	"Witch.h"
@@ -447,7 +447,7 @@
 
 1480525981 c:\users\axiom\github projects\walkinthedark\lightmovementdirections.h
 
-1502398942 source:c:\users\axiom\github projects\walkinthedark\player.c
+1503441149 source:c:\users\axiom\github projects\walkinthedark\player.c
 	"Player.h"
 	"World.h"
 	"Point.h"
@@ -458,6 +458,7 @@
 	"Boolean.h"
 	"ArrayOperations.h"
 	"Switch.h"
+	"InventoryManagement.h"
 	<stdio.h>
 	<stdlib.h>
 	<conio.h>
@@ -516,7 +517,7 @@
 	<stdio.h>
 	<windows.h>
 
-1502482060 source:c:\users\axiom\github projects\walkinthedark\world.c
+1503440820 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
@@ -547,7 +548,7 @@
 	"EnemyMoveData.h"
 	"Point.h"
 
-1502482524 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
+1502484561 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
 	"Definitions.h"
 	"ArrayOperations.h"
 	"LevelManagement.h"
@@ -583,7 +584,7 @@
 
 1501627951 c:\users\axiom\github projects\walkinthedark\switch.h
 
-1502484396 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
+1503440822 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
 	"EnemyManagement.h"
 	"Definitions.h"
 	"EnemyMoveData.h"
@@ -619,13 +620,14 @@
 	"EnemyMoveData.h"
 	"EnemyProcedure.h"
 
-1502381045 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
+1503439552 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
 	"FlashlightManagement.h"
 	"Definitions.h"
 	"ArrayOperations.h"
 	"Switch.h"
 	"Player.h"
 	"Boolean.h"
+	"Player.h"
 	<stdio.h>
 
 1502380747 c:\users\axiom\github projects\walkinthedark\flashlightmanagement.h
@@ -664,4 +666,32 @@
 	"StrategyCheck.h"
 	"DarkMovement.h"
 	<stdlib.h>
+
+1503440802 source:c:\users\axiom\github projects\walkinthedark\inventorycontrols.c
+	"InventoryControls.h"
+	"InventoryManagement.h"
+	"Definitions.h"
+	<stdio.h>
+	<stdlib.h>
+
+1503440743 c:\users\axiom\github projects\walkinthedark\inventorycontrols.h
+
+1503435829 c:\users\axiom\github projects\walkinthedark\inventorymanagement.h
+	"Flashlight.h"
+
+1503441217 source:c:\users\axiom\github projects\walkinthedark\inventorymanagement.c
+	"InventoryManagement.h"
+	"Definitions.h"
+	"ArrayOperations.h"
+	"Switch.h"
+	"Flashlight.h"
+	"Boolean.h"
+	"InventoryControls.h"
+	"HealthPack.h"
+	"Battery.h"
+	"Flashlight.h"
+	"Player.h"
+	<stdio.h>
+	<conio.h>
+	<windows.h>
 

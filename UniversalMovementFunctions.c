@@ -11,8 +11,11 @@
 #include <windows.h>
 #include <stdio.h>
 
+/// Set up typedef for functions
 typedef int (*Tests)(EMData *pData, Point *pDesiredEnemyPos);
+/// Array for functions.
 Tests CoordinateTests[MAX_TESTS];
+/// Initialization boolean.
 static int s_initCoordTestsArr = FALSE;
 
 /// Return true if indeed out of bounds or return false if not.
@@ -141,6 +144,7 @@ static int CheckForItemPositions(EMData *pData, Point *pDesiredEnemyPos)
             }
         }
     }
+
     return FALSE;
 }
 
@@ -151,6 +155,7 @@ static int CheckForDoor(EMData *pData, Point *pDesiredEnemyPos)
     {
         return TRUE;
     }
+
     return FALSE;
 }
 
@@ -166,24 +171,37 @@ static void InitializeCoordinateTestsArray()
     s_initCoordTestsArr = TRUE;
 }
 
+int PlayerCollision(Point playerPos, Point enemyPos)
+{
+    /// Obviously if this is true, enemy should do damage to player. Therefore I should put Player Health in pData.
+    if(playerPos.y == enemyPos.x
+       && playerPos.x == enemyPos.y)
+    {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+/// Enemies can move only if their delay has reached 0. This determines speed.
 int RunMovementDelayTest(EMData *pData)
 {
-    /// Enemies are only allowed to move only if their delay has reached 0.
     switch(*pData->m_pEnemyMovementDelay == 0 ? TRUE : FALSE)
     {
     case TRUE:
         *pData->m_pEnemyMovementDelay = pData->m_enemyDefaultMovementDelay;
         return TRUE;
-        break;
     case FALSE:
         *pData->m_pEnemyMovementDelay -= 1;
         break;
     default:
         break;
     }
+
     return FALSE;
 }
 
+/// Begin proper tests for position.
 int RunPositionTests(EMData *pData, Point *pDesiredEnemyPos)
 {
     /// Step 1. Initialize the array of function pointers and assign each index to a different test.
@@ -201,18 +219,6 @@ int RunPositionTests(EMData *pData, Point *pDesiredEnemyPos)
             /// If ANY of the tests return the desired position for the enemy cannot be given.
             return TRUE;
         }
-    }
-
-    return FALSE;
-}
-
-int PlayerCollision(Point playerPos, Point enemyPos)
-{
-    /// Obviously if this is true, enemy should do damage to player. Therefore I should put Player Health in pData.
-    if(playerPos.y == enemyPos.x
-       && playerPos.x == enemyPos.y)
-    {
-        return TRUE;
     }
 
     return FALSE;

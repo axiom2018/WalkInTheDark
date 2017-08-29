@@ -1,15 +1,12 @@
-/**
+/** Name: Walk in the Dark. (Version 2)
+    Author: Omar Moodie.
+    Date:
 
-Name: Walk in the Dark. (Version 2)
-Author: Omar Moodie.
-Date:
-
-Website: https://omarscode.wordpress.com/
-*/
+    Website: https://omarscode.wordpress.com/ */
 
 #include <stdlib.h>
 #include <time.h>
-#include <conio.h>
+/// #include <conio.h>
 #include "World.h"
 
 int main()
@@ -22,6 +19,6 @@ int main()
 
     WorldCleanMemory();
 
-    getch();
+    /// getch();
     return 0;
 }

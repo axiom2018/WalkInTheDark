@@ -22,22 +22,35 @@ typedef enum
 /// Static Level variable for re-use.
 static Levels s_level = ERROR_INDICATOR;
 
-/// Initialization.
-void InitLevelManagement()
+/// Check if game is over.
+int IsGameOver()
 {
-    if(s_level != One)
-        s_level = One;
-}
+    if(UseSwitch(s_level, GameOver))
+    {
+        system("cls");
+        printf("You survived and escaped! Congratulations!\n");
+        return TRUE;
+    }
 
-/// Return level to clients.
-int GetCurrentLevel()
-{
-    return (int)s_level;
+    return FALSE;
 }
 
 /// Advance game level when the following function is called.
 void NextLevel()
 {
+    /// Step 1. Save the current variable in integer format.
+    int curLevel = (int)s_level;
+    printf("Current level in integer format: %d\n", curLevel);
+
+    /// Step 2. Increment previously made integer.
+    ++curLevel;
+    printf("Increment integer: %d\n", curLevel);
+
+    /// Step 3. Convert back to enumeration.
+    s_level = (Levels)curLevel;
+    printf("New level: %d\n", (int)s_level);
+
+    /**
     switch(s_level)
     {
     case One:
@@ -62,17 +75,18 @@ void NextLevel()
         printf("Error! File: LevelManagement.c. Function: NextLevel().\n");
         break;
     }
+    */
 }
 
-/// Check if game is over.
-int IsGameOver()
+/// Return level to clients.
+int GetCurrentLevel()
 {
-    if(UseSwitch(s_level, GameOver))
-    {
-        system("cls");
-        printf("You survived and escaped! Congratulations!\n");
-        return TRUE;
-    }
+    return (int)s_level;
+}
 
-    return FALSE;
+/// Initialization.
+void InitLevelManagement()
+{
+    if(s_level != One)
+        s_level = One;
 }

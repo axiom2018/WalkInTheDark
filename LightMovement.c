@@ -1,7 +1,6 @@
 /// LightMovement.c
 #include "LightMovement.h"
 #include "Definitions.h"
-#include "LightMovementEnums.h"
 #include "LightMovementDirections.h"
 #include "UniversalMovementFunctions.h"
 #include "Boolean.h"
@@ -11,6 +10,7 @@
 
 /// Use of function pointers for running the direction calculation tests.
 typedef Directions (*DirectionCalculations)(Point playerPos, Point *pEnemyPos);
+/// Array for tests.
 static DirectionCalculations EnemyDirectionCalculations[DIRECTION_CALCULATIONS];
 /// Initialization variable.
 static int s_initLightMovement = FALSE;

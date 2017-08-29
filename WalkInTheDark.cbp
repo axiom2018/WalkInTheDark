@@ -80,6 +80,10 @@
 		</Unit>
 		<Unit filename="FlashlightManagement.h" />
 		<Unit filename="HealthPack.h" />
+		<Unit filename="InventoryControls.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="InventoryControls.h" />
 		<Unit filename="InventoryManagement.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -103,7 +107,6 @@
 		</Unit>
 		<Unit filename="LightMovement.h" />
 		<Unit filename="LightMovementDirections.h" />
-		<Unit filename="LightMovementEnums.h" />
 		<Unit filename="Player.c">
 			<Option compilerVar="CC" />
 		</Unit>
