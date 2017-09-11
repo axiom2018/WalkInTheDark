@@ -416,12 +416,14 @@ void InitItemManagement()
     s_pItemManager->m_itemGeneration = ITEMS_PER_LEVEL;
     s_pItemManager->m_itemGenerationAssistance = 0;
 
+    /// Step 3. Set level items and types.
     int i;
     for(i = 0; i < MAX_ITEMS; ++i)
     {
         s_pItemManager->m_pLevelItems[i] = NULL;
         s_pItemManager->m_levelItemTypes[i] = ERROR_INDICATOR;
-        s_pItemManager->m_generatedItemPoints[i].x = ERROR_INDICATOR;
-        s_pItemManager->m_generatedItemPoints[i].y = ERROR_INDICATOR;
     }
+
+    /// Step4. Set the generated points to ERROR_INDICATOR.
+    ResetPointArray(s_pItemManager->m_generatedItemPoints, MAX_ITEMS);
 }

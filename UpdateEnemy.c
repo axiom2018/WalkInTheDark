@@ -5,10 +5,10 @@
 #include "World.h"
 #include "Player.h"
 #include "LevelManagement.h"
-#include "StrategyCheck.h"
 #include "Werewolf.h"
 #include "Banshee.h"
 #include "Witch.h"
+#include "EnemySelectStrategy.h"
 #include <stdio.h>
 #include <windows.h>
 
@@ -46,9 +46,14 @@ static void ResolveBansheeUpdate(EMData *pData, Banshee *pBanshee, EnemyUpdatePr
 
     /// Step 6. Depending on where the enemy is, a certain type of strategy will be selected.
     if(updateType == UpdateStrategy)
-        pBanshee->m_info.m_selectMovementStrategy(pData, &pBanshee->m_info.m_moveStrategy);
+    {
+        SelectStrategy(pData, &pBanshee->m_info.m_moveStrategy);
+    }
+
     else if(updateType == UpdateMovement)
+    {
         pBanshee->m_info.m_moveStrategy(pData);
+    }
 }
 
 static void ResolveWitchUpdate(EMData *pData, Witch *pWitch, EnemyUpdateProcedure updateType)
@@ -66,9 +71,14 @@ static void ResolveWitchUpdate(EMData *pData, Witch *pWitch, EnemyUpdateProcedur
 
     /// Step 6. Depending on where the enemy is, a certain type of strategy will be selected.
     if(updateType == UpdateStrategy)
-        pWitch->m_info.m_selectMovementStrategy(pData, &pWitch->m_info.m_moveStrategy);
+    {
+        SelectStrategy(pData, &pWitch->m_info.m_moveStrategy);
+    }
+
     else if(updateType == UpdateMovement)
+    {
         pWitch->m_info.m_moveStrategy(pData);
+    }
 }
 
 static void ResolveWerewolfUpdate(EMData *pData, Werewolf *pWerewolf, EnemyUpdateProcedure updateType)
@@ -86,9 +96,14 @@ static void ResolveWerewolfUpdate(EMData *pData, Werewolf *pWerewolf, EnemyUpdat
 
     /// Step 6. Depending on where the enemy is, a certain type of strategy will be selected.
     if(updateType == UpdateStrategy)
-        pWerewolf->m_info.m_selectMovementStrategy(pData, &pWerewolf->m_info.m_moveStrategy);
-    else if(updateType == UpdateMovement)
+    {
+        SelectStrategy(pData, &pWerewolf->m_info.m_moveStrategy);
+    }
+
+    else if(updateType == UpdateMovement) /// LightMovement & DarkMovement.
+    {
         pWerewolf->m_info.m_moveStrategy(pData);
+    }
 }
 
 void ResolveEnemyUpdate(EMData *pData, EnemyUpdateProcedure updateType)

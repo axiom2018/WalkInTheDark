@@ -313,16 +313,16 @@
 
 1480522381 c:\users\axiom\documents\c projects\walkinthedark\lightmovementdirections.h
 
-1501109837 source:c:\users\axiom\github projects\walkinthedark\arrayoperations.c
+1504162690 source:c:\users\axiom\github projects\walkinthedark\arrayoperations.c
+	"ArrayOperations.h"
 	"Definitions.h"
-	"Point.h"
 	<windows.h>
 
-1502488396 c:\users\axiom\github projects\walkinthedark\definitions.h
+1504162304 c:\users\axiom\github projects\walkinthedark\definitions.h
 
-1500420765 c:\users\axiom\github projects\walkinthedark\point.h
+1503977913 c:\users\axiom\github projects\walkinthedark\point.h
 
-1480564821 source:c:\users\axiom\github projects\walkinthedark\darkmovement.c
+1504160536 source:c:\users\axiom\github projects\walkinthedark\darkmovement.c
 	"DarkMovement.h"
 	"Definitions.h"
 	"UniversalMovementFunctions.h"
@@ -331,34 +331,35 @@
 	"ArrayOperations.h"
 	<stdlib.h>
 
-1479321010 c:\users\axiom\github projects\walkinthedark\darkmovement.h
+1503978307 c:\users\axiom\github projects\walkinthedark\darkmovement.h
 	"EnemyMoveData.h"
 	<stdio.h>
 
-1501874817 c:\users\axiom\github projects\walkinthedark\enemymovedata.h
+1503724078 c:\users\axiom\github projects\walkinthedark\enemymovedata.h
 	"Definitions.h"
 	"Point.h"
 
-1501179809 c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.h
+1503473105 c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.h
 	"Point.h"
 	"EnemyMoveData.h"
 
-1473405834 c:\users\axiom\github projects\walkinthedark\boolean.h
+1503726042 c:\users\axiom\github projects\walkinthedark\boolean.h
 
-1503440841 c:\users\axiom\github projects\walkinthedark\player.h
+1503971579 c:\users\axiom\github projects\walkinthedark\player.h
 	"Point.h"
 	"Flashlight.h"
 
-1479608121 c:\users\axiom\github projects\walkinthedark\flashlight.h
+1503724765 c:\users\axiom\github projects\walkinthedark\flashlight.h
 	"Items.h"
 
-1480357478 c:\users\axiom\github projects\walkinthedark\items.h
+1503973693 c:\users\axiom\github projects\walkinthedark\items.h
 	"Point.h"
 
-1502400043 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
+1504161911 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
 	"Point.h"
+	"LevelInfo.h"
 
-1502484832 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
+1504161402 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
 	"EnemyFactory.h"
 	"Werewolf.h"
 	"Witch.h"
@@ -367,27 +368,24 @@
 	"Boolean.h"
 	"LevelInfo.h"
 	"DarkMovement.h"
-	"SelectMovementStrategyAssistance.h"
-	"StrategyCheck.h"
 	"Definitions.h"
 	"Switch.h"
 	"EnemyCreation.h"
+	"ArrayOperations.h"
 
-1502471122 c:\users\axiom\github projects\walkinthedark\enemyfactory.h
+1503726948 c:\users\axiom\github projects\walkinthedark\enemyfactory.h
 	"Point.h"
 	<stdio.h>
 	<stdlib.h>
 
-1479319112 c:\users\axiom\github projects\walkinthedark\werewolf.h
+1503696318 c:\users\axiom\github projects\walkinthedark\werewolf.h
 	"EnemyInfo.h"
 
-1480357460 c:\users\axiom\github projects\walkinthedark\enemyinfo.h
+1504126977 c:\users\axiom\github projects\walkinthedark\enemyinfo.h
 	"Point.h"
 	"EnemyMoveStrategy.h"
-	"SelectMovementStrategy.h"
-	"EnemyStrategyCheck.h"
 
-1501875492 c:\users\axiom\github projects\walkinthedark\enemymovestrategy.h
+1504126874 c:\users\axiom\github projects\walkinthedark\enemymovestrategy.h
 	"Point.h"
 	"EnemyMoveData.h"
 
@@ -395,29 +393,29 @@
 	"EnemyMoveStrategy.h"
 	"EnemyMoveData.h"
 
-1479322990 c:\users\axiom\github projects\walkinthedark\enemystrategycheck.h
+1503724460 c:\users\axiom\github projects\walkinthedark\enemystrategycheck.h
 	"EnemyMoveStrategy.h"
 
-1479319091 c:\users\axiom\github projects\walkinthedark\witch.h
+1503696312 c:\users\axiom\github projects\walkinthedark\witch.h
 	"EnemyInfo.h"
 
-1479320585 c:\users\axiom\github projects\walkinthedark\banshee.h
+1504161723 c:\users\axiom\github projects\walkinthedark\banshee.h
 	"EnemyInfo.h"
 
 1502326462 c:\users\axiom\github projects\walkinthedark\mediatorpattern.h
 	"Point.h"
 
-1480356592 c:\users\axiom\github projects\walkinthedark\levelinfo.h
+1503697889 c:\users\axiom\github projects\walkinthedark\levelinfo.h
 	"Point.h"
 
-1479322997 c:\users\axiom\github projects\walkinthedark\selectmovementstrategyassistance.h
+1504034335 c:\users\axiom\github projects\walkinthedark\selectmovementstrategyassistance.h
 	"EnemyMoveStrategy.h"
 	"EnemyMoveData.h"
 
-1479323008 c:\users\axiom\github projects\walkinthedark\strategycheck.h
+1503470822 c:\users\axiom\github projects\walkinthedark\strategycheck.h
 	"EnemyMoveStrategy.h"
 
-1502326933 source:c:\users\axiom\github projects\walkinthedark\levelmanagement.c
+1504162164 source:c:\users\axiom\github projects\walkinthedark\levelmanagement.c
 	"LevelManagement.h"
 	"Definitions.h"
 	"Boolean.h"
@@ -426,12 +424,11 @@
 	<conio.h>
 	<windows.h>
 
-1480092328 c:\users\axiom\github projects\walkinthedark\levelmanagement.h
+1503470509 c:\users\axiom\github projects\walkinthedark\levelmanagement.h
 
-1480563299 source:c:\users\axiom\github projects\walkinthedark\lightmovement.c
+1504161580 source:c:\users\axiom\github projects\walkinthedark\lightmovement.c
 	"LightMovement.h"
 	"Definitions.h"
-	"LightMovementEnums.h"
 	"LightMovementDirections.h"
 	"UniversalMovementFunctions.h"
 	"Boolean.h"
@@ -439,15 +436,15 @@
 	"ArrayOperations.h"
 	<stdlib.h>
 
-1479321024 c:\users\axiom\github projects\walkinthedark\lightmovement.h
+1503978317 c:\users\axiom\github projects\walkinthedark\lightmovement.h
 	"EnemyMoveData.h"
 	<stdio.h>
 
 1480491644 c:\users\axiom\github projects\walkinthedark\lightmovementenums.h
 
-1480525981 c:\users\axiom\github projects\walkinthedark\lightmovementdirections.h
+1503974399 c:\users\axiom\github projects\walkinthedark\lightmovementdirections.h
 
-1503441149 source:c:\users\axiom\github projects\walkinthedark\player.c
+1503471941 source:c:\users\axiom\github projects\walkinthedark\player.c
 	"Player.h"
 	"World.h"
 	"Point.h"
@@ -463,19 +460,19 @@
 	<stdlib.h>
 	<conio.h>
 
-1501103911 c:\users\axiom\github projects\walkinthedark\world.h
+1504126489 c:\users\axiom\github projects\walkinthedark\world.h
 	"Point.h"
 	"Boolean.h"
 	"Door.h"
 	<windows.h>
 
-1479606321 c:\users\axiom\github projects\walkinthedark\battery.h
+1504127285 c:\users\axiom\github projects\walkinthedark\battery.h
 	"Items.h"
 
-1479608770 c:\users\axiom\github projects\walkinthedark\healthpack.h
+1503969487 c:\users\axiom\github projects\walkinthedark\healthpack.h
 	"Items.h"
 
-1480357709 source:c:\users\axiom\github projects\walkinthedark\selectmovementstrategyassistance.c
+1504034350 source:c:\users\axiom\github projects\walkinthedark\selectmovementstrategyassistance.c
 	"SelectMovementStrategyAssistance.h"
 	"Definitions.h"
 	"DarkMovement.h"
@@ -483,12 +480,12 @@
 	"Boolean.h"
 	<stdio.h>
 
-1501782705 source:c:\users\axiom\github projects\walkinthedark\strategycheck.c
+1503470829 source:c:\users\axiom\github projects\walkinthedark\strategycheck.c
 	"Boolean.h"
 	"LightMovement.h"
 	"EnemyMoveStrategy.h"
 
-1502232366 source:c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.c
+1503470614 source:c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.c
 	"UniversalMovementFunctions.h"
 	"Definitions.h"
 	"Boolean.h"
@@ -501,10 +498,9 @@
 	<windows.h>
 	<stdio.h>
 
-1502328341 source:c:\users\axiom\github projects\walkinthedark\main.c
+1503472389 source:c:\users\axiom\github projects\walkinthedark\main.c
 	<stdlib.h>
 	<time.h>
-	<conio.h>
 	"World.h"
 
 1502326473 source:c:\users\axiom\github projects\walkinthedark\mediatorpattern.c
@@ -517,7 +513,7 @@
 	<stdio.h>
 	<windows.h>
 
-1503440820 source:c:\users\axiom\github projects\walkinthedark\world.c
+1504163040 source:c:\users\axiom\github projects\walkinthedark\world.c
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
@@ -539,16 +535,16 @@
 	<stdlib.h>
 	<conio.h>
 
-1478570876 c:\users\axiom\github projects\walkinthedark\door.h
-	"Items.h"
+1503726606 c:\users\axiom\github projects\walkinthedark\door.h
+	"Point.h"
 
-1480356656 c:\users\axiom\github projects\walkinthedark\enemyprocedure.h
+1503724435 c:\users\axiom\github projects\walkinthedark\enemyprocedure.h
 
-1501272469 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
+1503972404 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
 	"EnemyMoveData.h"
 	"Point.h"
 
-1502484561 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
+1504161645 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
 	"Definitions.h"
 	"ArrayOperations.h"
 	"LevelManagement.h"
@@ -563,13 +559,13 @@
 	<stdlib.h>
 	<stdio.h>
 
-1501716306 c:\users\axiom\github projects\walkinthedark\itemcreation.h
+1503972095 c:\users\axiom\github projects\walkinthedark\itemcreation.h
 	"Flashlight.h"
 	"HealthPack.h"
 	"Battery.h"
 	"Point.h"
 
-1502392012 source:c:\users\axiom\github projects\walkinthedark\itemcreation.c
+1504161605 source:c:\users\axiom\github projects\walkinthedark\itemcreation.c
 	"ItemCreation.h"
 	"LevelManagement.h"
 	"Definitions.h"
@@ -584,7 +580,7 @@
 
 1501627951 c:\users\axiom\github projects\walkinthedark\switch.h
 
-1503440822 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
+1504161442 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
 	"EnemyManagement.h"
 	"Definitions.h"
 	"EnemyMoveData.h"
@@ -608,10 +604,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1502330411 c:\users\axiom\github projects\walkinthedark\enemymanagement.h
+1503727027 c:\users\axiom\github projects\walkinthedark\enemymanagement.h
 	"EnemyProcedure.h"
 
-1502481762 c:\users\axiom\github projects\walkinthedark\drawenemy.h
+1504127255 c:\users\axiom\github projects\walkinthedark\drawenemy.h
 	"Werewolf.h"
 	"Banshee.h"
 	"Witch.h"
@@ -620,7 +616,7 @@
 	"EnemyMoveData.h"
 	"EnemyProcedure.h"
 
-1503439552 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
+1504162904 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
 	"FlashlightManagement.h"
 	"Definitions.h"
 	"ArrayOperations.h"
@@ -630,56 +626,55 @@
 	"Player.h"
 	<stdio.h>
 
-1502380747 c:\users\axiom\github projects\walkinthedark\flashlightmanagement.h
+1504126794 c:\users\axiom\github projects\walkinthedark\flashlightmanagement.h
 	"Point.h"
 
-1502391440 source:c:\users\axiom\github projects\walkinthedark\updateenemy.c
+1504128652 source:c:\users\axiom\github projects\walkinthedark\updateenemy.c
 	"UpdateEnemy.h"
 	"Switch.h"
 	"ItemManagement.h"
 	"World.h"
 	"Player.h"
 	"LevelManagement.h"
-	"StrategyCheck.h"
 	"Werewolf.h"
 	"Banshee.h"
 	"Witch.h"
+	"EnemySelectStrategy.h"
 	<stdio.h>
 	<windows.h>
 
-1502481784 source:c:\users\axiom\github projects\walkinthedark\drawenemy.c
+1504160757 source:c:\users\axiom\github projects\walkinthedark\drawenemy.c
 	"DrawEnemy.h"
 	"Point.h"
 	"Boolean.h"
 	"LevelManagement.h"
+	"EnemyCheckMoveStrategy.h"
 	<stdio.h>
 
-1502470097 c:\users\axiom\github projects\walkinthedark\enemycreation.h
+1504126995 c:\users\axiom\github projects\walkinthedark\enemycreation.h
 	"Point.h"
 
-1502470799 source:c:\users\axiom\github projects\walkinthedark\enemycreation.c
+1504161194 source:c:\users\axiom\github projects\walkinthedark\enemycreation.c
 	"EnemyCreation.h"
 	"Werewolf.h"
 	"Witch.h"
 	"Banshee.h"
-	"SelectMovementStrategyAssistance.h"
-	"StrategyCheck.h"
 	"DarkMovement.h"
 	<stdlib.h>
 
-1503440802 source:c:\users\axiom\github projects\walkinthedark\inventorycontrols.c
+1504127015 source:c:\users\axiom\github projects\walkinthedark\inventorycontrols.c
 	"InventoryControls.h"
 	"InventoryManagement.h"
 	"Definitions.h"
 	<stdio.h>
 	<stdlib.h>
 
-1503440743 c:\users\axiom\github projects\walkinthedark\inventorycontrols.h
+1503969748 c:\users\axiom\github projects\walkinthedark\inventorycontrols.h
 
-1503435829 c:\users\axiom\github projects\walkinthedark\inventorymanagement.h
+1503971185 c:\users\axiom\github projects\walkinthedark\inventorymanagement.h
 	"Flashlight.h"
 
-1503441217 source:c:\users\axiom\github projects\walkinthedark\inventorymanagement.c
+1504161590 source:c:\users\axiom\github projects\walkinthedark\inventorymanagement.c
 	"InventoryManagement.h"
 	"Definitions.h"
 	"ArrayOperations.h"
@@ -694,4 +689,25 @@
 	<stdio.h>
 	<conio.h>
 	<windows.h>
+
+1504039848 c:\users\axiom\github projects\walkinthedark\enemyselectstrategy.h
+	"EnemyMoveStrategy.h"
+	"EnemyMoveData.h"
+
+1504064664 source:c:\users\axiom\github projects\walkinthedark\enemyselectstrategy.c
+	"EnemySelectStrategy.h"
+	"Definitions.h"
+	"DarkMovement.h"
+	"LightMovement.h"
+	"Boolean.h"
+	"Switch.h"
+	<stdio.h>
+
+1504127806 c:\users\axiom\github projects\walkinthedark\enemycheckmovestrategy.h
+	"EnemyMoveStrategy.h"
+
+1504160815 source:c:\users\axiom\github projects\walkinthedark\enemycheckmovestrategy.c
+	"EnemyCheckMoveStrategy.h"
+	"Boolean.h"
+	"LightMovement.h"
 

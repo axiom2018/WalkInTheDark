@@ -86,22 +86,22 @@ static void LocateIndex(int *m)
     switch(GetCurrentLevel())
     {
     case 0: /// 0 - 3
-        *m = 0;
+        *m = EM_LEVEL_ONE_INDEX;
         break;
     case 1: /// 4 - 7
-        *m = 4;
+        *m = EM_LEVEL_TWO_INDEX;
         break;
     case 2: /// 8 - 11
-        *m = 8;
+        *m = EM_LEVEL_THREE_INDEX;
         break;
     case 3: /// 12 - 15
-        *m = 12;
+        *m = EM_LEVEL_FOUR_INDEX;
         break;
     case 4: /// 16 - 19
-        *m = 16;
+        *m = EM_LEVEL_FIVE_INDEX;
         break;
     case 5: /// 20 - 23
-        *m = 20;
+        *m = EM_LEVEL_SIX_INDEX;
         break;
     default:
         printf("Error! File: EnemyManagement.c. Function: LocateIndex().\n");
@@ -297,10 +297,6 @@ void InitEnemyManagement()
         s_pEnemyManager->pMessageData->m_pItemsArr[i] = NULL;
     }
 
-    /// Step 5. Set factory points to error indicator.
-    for(i = 0; i < COORDINATES_TO_SEND; ++i)
-    {
-        s_pEnemyManager->m_factoryPoints[i].x = ERROR_INDICATOR;
-        s_pEnemyManager->m_factoryPoints[i].y = ERROR_INDICATOR;
-    }
+    /// Step 5. Set the factory points to ERROR_INDICATOR.
+    ResetPointArray(s_pEnemyManager->m_factoryPoints, COORDINATES_TO_SEND);
 }

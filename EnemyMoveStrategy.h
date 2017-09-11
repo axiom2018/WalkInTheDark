@@ -4,7 +4,7 @@
 #include "Point.h"
 #include "EnemyMoveData.h"
 
-/// Part of strategy pattern.
+/// C style strategy pattern to determine enemy movement. See DarkMovement.h/.c and LightMovement.h/.c.
 
 typedef void (*Move)(EMData *pData);
 

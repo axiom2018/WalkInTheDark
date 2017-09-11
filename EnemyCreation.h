@@ -4,6 +4,7 @@
 #include "Point.h"
 
 /// Delegate the responsibility of creating enemies and assigning their proper values.
+
 void * RequestToCreateEnemy(int type, int levelAssignment, Point pos);
 
 #endif // ENEMYCREATION_H_INCLUDED

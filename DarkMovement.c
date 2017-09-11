@@ -12,17 +12,6 @@ static Point s_vacantSpaces[MAX_SPACES];
 /// Initialization help.
 static int s_initVacantSpaces = FALSE;
 
-/// Reset the vacant spaces to default values to be sure no old values remain.
-static void EmptyVacantSpacesArray()
-{
-    int i;
-    for(i = 0; i < MAX_SPACES; ++i)
-    {
-        s_vacantSpaces[i].x = ERROR_INDICATOR;
-        s_vacantSpaces[i].y = ERROR_INDICATOR;
-    }
-}
-
 /// When doing point calculations, this function will add a point to the desired array.
 static void AddPointToArray(Point pointArr[], Point p)
 {
@@ -197,5 +186,5 @@ void MovementDark(EMData *pData)
     DetectPlayerCollision(pData);
 
     /// Step 7. Dump all elements in arrays in preparation for the next time the function runs.
-    EmptyVacantSpacesArray();
+    ResetPointArray(s_vacantSpaces, MAX_SPACES);
 }

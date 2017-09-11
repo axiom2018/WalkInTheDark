@@ -6,6 +6,8 @@
 #include "Door.h"
 #include <windows.h>
 
+/// The World interface is responsible for initializations and updates.
+
 void WorldInit();
 Door * GetDoor();
 void UpdateGame();

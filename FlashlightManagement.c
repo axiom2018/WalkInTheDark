@@ -69,6 +69,9 @@ static void SetFlashLightPoint(int x, int y)
 /// Empty flashlight points to ensure no values stack. Use in GatherFlashlightPoints() frequently.
 void ClearFlashlightPoints()
 {
+    ResetPointArray(s_flashLightPoints, SIZE_OF_FL_POINTS);
+
+    /**
     int i;
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
@@ -79,6 +82,7 @@ void ClearFlashlightPoints()
             s_flashLightPoints[i].y = ERROR_INDICATOR;
         }
     }
+    */
 }
 
 /// Very important algorithm, key to making the flashlight effect work.
@@ -164,7 +168,7 @@ void GatherFlashlightPoints()
         northEastPoint.x = loop;
         int savePoint = northWestPoint.x;
 
-        SetFlashLightPoint(savePoint, northEastPoint.x); /// UNTESTED
+        SetFlashLightPoint(savePoint, northEastPoint.x);
         ++loop;
     }
 
@@ -176,7 +180,7 @@ void GatherFlashlightPoints()
 
     if(savePlayerPos.x >= (ROWS - 1) - flRange)
     {
-        maxRows = 19;
+        maxRows = RESET_MAX_ROWS;
     }
 
     else
@@ -230,13 +234,7 @@ int DisplayFlashlight(int x, int y)
     return FALSE;
 }
 
-/// Initialize and set all values to -1.
 void InitFlashlightManagement()
 {
-    int i;
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        s_flashLightPoints[i].x = ERROR_INDICATOR;
-        s_flashLightPoints[i].y = ERROR_INDICATOR;
-    }
+    ClearFlashlightPoints();
 }

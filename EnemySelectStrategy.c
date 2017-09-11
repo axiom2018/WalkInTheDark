@@ -1,13 +1,13 @@
-/// SelectMovementStrategyAssistance.c
-#include "SelectMovementStrategyAssistance.h"
+/// EnemySelectStrategy.c
+#include "EnemySelectStrategy.h"
 #include "Definitions.h"
 #include "DarkMovement.h"
 #include "LightMovement.h"
 #include "Boolean.h"
+#include "Switch.h"
 #include <stdio.h>
 
-/// SMSA decides the strategy of movement for all enemies before movement.
-void SelectMovementStrategyAssistance(EMData *pData, Move *pMoveStrategy)
+void SelectStrategy(EMData *pData, Move *pMoveStrategy)
 {
     /// Step 1. Go through points and determine if the enemy's position matches. If so, assign light movement.
     int i;
@@ -26,16 +26,6 @@ void SelectMovementStrategyAssistance(EMData *pData, Move *pMoveStrategy)
     }
 
     /// Step 2. Did we reach the end without assigning light movement? If so, assign dark movement.
-    switch(i == SIZE_OF_FL_POINTS ? TRUE : FALSE)
-    {
-    case TRUE:
-        *pMoveStrategy = MovementDark; /// i has cycled through the array without stopping at a matching position with the enemy coordinates. Set to dark.
-        break;
-    case FALSE:
-        /// Do nothing.
-        break;
-    default:
-        printf("Error! File: SelectMovementStrategyAssistance.c. SelectMovementStrategyAssistance().\n");
-        break;
-    }
+    if(UseSwitch(i, SIZE_OF_FL_POINTS))
+        *pMoveStrategy = MovementDark;
 }

@@ -50,6 +50,10 @@
 		<Unit filename="DrawEnemy.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="EnemyCheckMoveStrategy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyCheckMoveStrategy.h" />
 		<Unit filename="EnemyCreation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -66,14 +70,10 @@
 		<Unit filename="EnemyMoveData.h" />
 		<Unit filename="EnemyMoveStrategy.h" />
 		<Unit filename="EnemyProcedure.h" />
-		<Unit filename="EnemyStrategyCheck.h" />
-		<Unit filename="ErrorIndicationStrategy.c">
+		<Unit filename="EnemySelectStrategy.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="ErrorIndicationStrategy.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="EnemySelectStrategy.h" />
 		<Unit filename="Flashlight.h" />
 		<Unit filename="FlashlightManagement.c">
 			<Option compilerVar="CC" />
@@ -112,15 +112,6 @@
 		</Unit>
 		<Unit filename="Player.h" />
 		<Unit filename="Point.h" />
-		<Unit filename="SelectMovementStrategy.h" />
-		<Unit filename="SelectMovementStrategyAssistance.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="SelectMovementStrategyAssistance.h" />
-		<Unit filename="StrategyCheck.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="StrategyCheck.h" />
 		<Unit filename="Switch.c">
 			<Option compilerVar="CC" />
 		</Unit>

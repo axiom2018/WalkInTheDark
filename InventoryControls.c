@@ -8,7 +8,6 @@
 /// Defined structure that holds all item related variable data needed.
 typedef struct
 {
-    /// char m_symbol;
     char m_selection;
     char m_marker;
     int m_index;

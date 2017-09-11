@@ -4,7 +4,7 @@
 #include "EnemyMoveData.h"
 #include <stdio.h>
 
-/// Assist the enemy in moving in the light, aka the flashlight points.
+/// Look at EnemyMoveStrategy.h for function pointer.
 
 void MovementLight(EMData *pData);
 

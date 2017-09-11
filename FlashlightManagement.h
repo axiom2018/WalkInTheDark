@@ -4,6 +4,7 @@
 #include "Point.h"
 
 /// Delegate the responsibility of the Flashlight functionality to this interface.
+
 void InitFlashlightManagement();
 int DisplayFlashlight(int x, int y);
 Point * GetFlashLightPoints();

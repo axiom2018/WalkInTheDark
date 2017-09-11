@@ -5,8 +5,6 @@
 #include "Werewolf.h"
 #include "Witch.h"
 #include "Banshee.h"
-#include "SelectMovementStrategyAssistance.h"
-#include "StrategyCheck.h"
 #include "DarkMovement.h"
 #include <stdlib.h>
 
@@ -17,15 +15,13 @@ static Banshee * CreateBanshee(int levelAssignment, Point pos)
 
     /// Step 2. Apply all details.
     pBanshee->m_info.m_assignedLevel = levelAssignment;
-    pBanshee->m_info.m_damage = rand() % (45 + 1 - 40) + 40;
+    pBanshee->m_info.m_damage = rand() % (BANSHEE_DAMAGE_HIGH + 1 - BANSHEE_DAMAGE_LOW) + BANSHEE_DAMAGE_LOW;
     pBanshee->m_info.m_Pos.x = pos.x;
     pBanshee->m_info.m_Pos.y = pos.y;
-    pBanshee->m_info.m_symbol = 234;
+    pBanshee->m_info.m_symbol = BANSHEE_SYMBOL;
     pBanshee->m_info.m_moveStrategy = MovementDark;
-    pBanshee->m_info.m_selectMovementStrategy = SelectMovementStrategyAssistance;
-    pBanshee->m_info.m_strategyCheck = StrategyCheck;
-    pBanshee->m_info.m_defaultMovementDelay = 1;
-    pBanshee->m_info.m_movementDelay = 1;
+    pBanshee->m_info.m_defaultMovementDelay = BANSHEE_MOVEMENT_DELAY;
+    pBanshee->m_info.m_movementDelay = BANSHEE_MOVEMENT_DELAY;
 
     /// Step 3. Return the banshee.
     return pBanshee;
@@ -38,15 +34,13 @@ static Witch * CreateWitch(int levelAssignment, Point pos)
 
     /// Step 2. Apply all details.
     pWitch->m_info.m_assignedLevel = levelAssignment;
-    pWitch->m_info.m_damage = rand() % (25 + 1 - 20) + 20;
+    pWitch->m_info.m_damage = rand() % (WITCH_DAMAGE_HIGH + 1 - WITCH_DAMAGE_LOW) + WITCH_DAMAGE_LOW;
     pWitch->m_info.m_Pos.x = pos.x;
     pWitch->m_info.m_Pos.y = pos.y;
-    pWitch->m_info.m_symbol = 237;
+    pWitch->m_info.m_symbol = WITCH_SYMBOL;
     pWitch->m_info.m_moveStrategy = MovementDark;
-    pWitch->m_info.m_selectMovementStrategy = SelectMovementStrategyAssistance;
-    pWitch->m_info.m_strategyCheck = StrategyCheck;
-    pWitch->m_info.m_defaultMovementDelay = 2;
-    pWitch->m_info.m_movementDelay = 2;
+    pWitch->m_info.m_defaultMovementDelay = WITCH_MOVEMENT_DELAY;
+    pWitch->m_info.m_movementDelay = WITCH_MOVEMENT_DELAY;
 
     /// Step 3. Return the witch.
     return pWitch;
@@ -59,15 +53,13 @@ static Werewolf * CreateWerewolf(int levelAssignment, Point pos)
 
     /// Step 2. Apply all details.
     pWerewolf->m_info.m_assignedLevel = levelAssignment;
-    pWerewolf->m_info.m_damage = rand() % (15 + 1 - 10) + 10;
+    pWerewolf->m_info.m_damage = rand() % (WEREWOLF_DAMAGE_HIGH + 1 - WEREWOLF_DAMAGE_LOW) + WEREWOLF_DAMAGE_LOW;
     pWerewolf->m_info.m_Pos.x = pos.x;
     pWerewolf->m_info.m_Pos.y = pos.y;
-    pWerewolf->m_info.m_symbol = '@';
+    pWerewolf->m_info.m_symbol = WEREWOLF_SYMBOL;
     pWerewolf->m_info.m_moveStrategy = MovementDark;
-    pWerewolf->m_info.m_selectMovementStrategy = SelectMovementStrategyAssistance;
-    pWerewolf->m_info.m_strategyCheck = StrategyCheck;
-    pWerewolf->m_info.m_defaultMovementDelay = 3;
-    pWerewolf->m_info.m_movementDelay = 3;
+    pWerewolf->m_info.m_defaultMovementDelay = WEREWOLF_MOVEMENT_DELAY;
+    pWerewolf->m_info.m_movementDelay = WEREWOLF_MOVEMENT_DELAY;
 
     /// Step 3. Return the werewolf.
     return pWerewolf;

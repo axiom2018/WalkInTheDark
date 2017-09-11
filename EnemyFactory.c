@@ -7,11 +7,10 @@
 #include "Boolean.h"
 #include "LevelInfo.h"
 #include "DarkMovement.h"
-#include "SelectMovementStrategyAssistance.h"
-#include "StrategyCheck.h"
 #include "Definitions.h"
 #include "Switch.h"
 #include "EnemyCreation.h"
+#include "ArrayOperations.h"
 
 /// Defined structure that holds all item related variable data needed.
 typedef struct
@@ -39,6 +38,7 @@ static int IsEnemyFactoryInitialized()
     return FALSE;
 }
 
+/// Referenced in EnemyManagement.c.
 void UpdateFactoryData(Point mainCoordinates[], Point flPoints[])
 {
     /// Step 1. Assign values to mainCoordinates.
@@ -60,9 +60,9 @@ void UpdateFactoryData(Point mainCoordinates[], Point flPoints[])
     }
 }
 
+/// Grab empty index of the array.
 static int GetEnemySpecificsPos()
 {
-    /// Grab empty index of the array.
     int i;
     for(i = 0; i < MAX_ENEMIES; ++i)
     {
@@ -73,16 +73,16 @@ static int GetEnemySpecificsPos()
     return ERROR_INDICATOR;
 }
 
+/// In case position enemy desires is taken, toss out a different one.
 static void AdjustDesiredPosition(Point *pPosToAdjust)
 {
-    /// In case position enemy desires is taken, toss out a different one.
     pPosToAdjust->x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
     pPosToAdjust->y = rand() % ((ROWS - 1) + 1 - 0) + 0;
 }
 
+/// Check for player position, door, etc.
 static int MainCoordinateTest(Point *pPos)
 {
-    /// Check for player position, door, etc.
     int i;
     for(i = 0; i < COORDINATES_TO_SEND; ++i)
     {
@@ -95,9 +95,9 @@ static int MainCoordinateTest(Point *pPos)
     return FALSE;
 }
 
+/// The enemy movement will adapt depending on if the enemy's position matches with a flashlight coordinate or not.
 static int FlashlightPointTest(Point *pPos)
 {
-    /// The enemy movement will adapt depending on if the enemy's position matches with a flashlight coordinate or not.
     int i;
     for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
     {
@@ -107,9 +107,11 @@ static int FlashlightPointTest(Point *pPos)
             return TRUE;
         }
     }
+
     return FALSE;
 }
 
+/// Check against other enemies.
 static int EnemyCoordinateTest(Point *pPos)
 {
     /// Step 1. Check for at least 1 other enemy. If not return False. No need to continue because we have nothing to compare too.
@@ -146,7 +148,9 @@ void *CreateEnemy(int type, int levelAssignment)
 {
     /// Step 1. Defensive programming. Be sure the tests are initialized.
     if(!IsEnemyFactoryInitialized())
+    {
         InitializeEnemyFactoryTestsArray();
+    }
 
     /// Step 2. Set up a position for the enemy.
     Point pos;
@@ -187,13 +191,7 @@ void InitEnemyFactory()
     InitializeEnemyFactoryTestsArray();
 
     /// Step 3. Initialize enemy specifics.
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        s_pEnemyFactory->m_enemySpecifics[i].m_assignedLevel = ERROR_INDICATOR;
-        s_pEnemyFactory->m_enemySpecifics[i].m_pos.x = ERROR_INDICATOR;
-        s_pEnemyFactory->m_enemySpecifics[i].m_pos.y = ERROR_INDICATOR;
-    }
+    SetLevelInfoArray(s_pEnemyFactory->m_enemySpecifics, MAX_ENEMIES);
 }
 
 void EnemyFactoryCleanMemory()

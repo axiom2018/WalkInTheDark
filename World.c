@@ -26,7 +26,6 @@ typedef struct
     char m_area[ROWS][COLUMNS];
     int m_gameRunning;
     Door *m_pDoor;
-    Point m_factoryPoints[COORDINATES_TO_SEND];
 } WorldManager;
 
 /// Static manager pointer for re-use.
@@ -82,23 +81,23 @@ static void UpdateScreen()
                 {
                     if(UpdateGeneratedItems(x, y))
                     {
-                        AdjustTextColor(7);
+                        AdjustTextColor(DEFAULT_COLOR);
                     }
 
                     else
                     {
                         if(x == s_pWorld->m_pDoor->m_coord.y && y == s_pWorld->m_pDoor->m_coord.x)
                         {
-                            AdjustTextColor(4);
+                            AdjustTextColor(DOOR_COLOR);
                             printf("%c", s_pWorld->m_pDoor->m_symbol);
-                            AdjustTextColor(7);
+                            AdjustTextColor(DEFAULT_COLOR);
                         }
 
                         else
                         {
-                            AdjustTextColor(15);
+                            AdjustTextColor(FLASHLIGHT_COLOR);
                             printf("%c", s_pWorld->m_area[x][y]);
-                            AdjustTextColor(7);
+                            AdjustTextColor(DEFAULT_COLOR);
                         }
                     }
                 }
@@ -107,16 +106,18 @@ static void UpdateScreen()
                 {
                     AdjustTextColor(0);
                     printf("%c", s_pWorld->m_area[x][y]);
-                    AdjustTextColor(7);
+                    AdjustTextColor(DEFAULT_COLOR);
                 }
             }
         }
+
         printf("\n");
     }
 
     PlayerGUI();
 }
 
+/// Check if player has hit the door and if so, set up the next level.
 static int DoorCollisionDetection()
 {
     /// Step 1. Check if door coordinates match players.
@@ -151,6 +152,8 @@ static int DoorCollisionDetection()
 
         /// h) Clear screen.
         system("cls");
+
+        GatherFlashlightPoints();
 
         /// i) Be sure to give enemies a chance to update their strategies.
         UpdateEnemyStrategy(UpdateStrategy);
@@ -239,6 +242,7 @@ Door * GetDoor()
     return s_pWorld->m_pDoor;
 }
 
+/// Initialize everything needed for the game to function properly.
 void WorldInit()
 {
     /// Step 1. Initialize variables.

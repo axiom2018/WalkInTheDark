@@ -163,7 +163,7 @@ static void AddFlashlight(void *pItem, int index, int type)
     if(s_pInventoryManager->m_pEquippedFlashlight == NULL)
     {
         s_pInventoryManager->m_pEquippedFlashlight = (Flashlight*)s_pInventoryManager->m_pInventory[index];
-        s_pInventoryManager->m_pEquippedFlashlight->m_range = 3;
+        s_pInventoryManager->m_pEquippedFlashlight->m_range = FLASHLIGHT_FIRST_RANGE;
         /// Remove this 300 boost later! It's for testing purposes only.
         s_pInventoryManager->m_pEquippedFlashlight->m_stepsBeforeRecharge = 300;
     }
@@ -349,7 +349,7 @@ void InitInventoryManagement()
     s_pInventoryManager = malloc(sizeof(InventoryManager));
 
     /// Step 2. Allocate space for flashlight and set to NULL.
-    s_pInventoryManager->m_pEquippedFlashlight = malloc(sizeof(Flashlight)); /// Segmentation fault.
+    s_pInventoryManager->m_pEquippedFlashlight = malloc(sizeof(Flashlight));
     s_pInventoryManager->m_pEquippedFlashlight = NULL;
 
     /// Step 3. Set arrays to default value.

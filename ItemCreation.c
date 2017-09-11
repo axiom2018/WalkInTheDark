@@ -1,14 +1,14 @@
 /// ItemCreation.c
 #include "ItemCreation.h"
 #include "LevelManagement.h"
-#include "Definitions.h" /// BATTERY_UPGRADE & HEALTH_UPGRADE
+#include "Definitions.h"
 #include <stdlib.h>
 #include <stdio.h>
 
 void CreateFlashlight(Flashlight *pFlashlight, Point p)
 {
     pFlashlight->m_item.m_name = "Flashlight";
-    pFlashlight->m_item.m_color = 5;
+    pFlashlight->m_item.m_color = FLASHLIGHT_ITEM_COLOR;
     pFlashlight->m_item.m_symbol = 'F';
     pFlashlight->m_item.m_assignedLevel = GetCurrentLevel();
 
@@ -21,7 +21,7 @@ void CreateFlashlight(Flashlight *pFlashlight, Point p)
 void CreateBattery(Battery *pBattery, Point p)
 {
     pBattery->m_item.m_name = "Battery";
-    pBattery->m_item.m_color = 3;
+    pBattery->m_item.m_color = BATTERY_ITEM_COLOR;
     pBattery->m_item.m_symbol = 'B';
     pBattery->m_item.m_assignedLevel = GetCurrentLevel();
 
@@ -34,7 +34,7 @@ void CreateBattery(Battery *pBattery, Point p)
 void CreateHealthPack(HealthPack *pHealthPack, Point p)
 {
     pHealthPack->m_item.m_name = "HealthPack";
-    pHealthPack->m_item.m_color = 12;
+    pHealthPack->m_item.m_color = HEALTH_PACH_ITEM_COLOR;
     pHealthPack->m_item.m_symbol = 'H';
     pHealthPack->m_item.m_assignedLevel = GetCurrentLevel();
 
