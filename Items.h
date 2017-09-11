@@ -3,7 +3,7 @@
 #define ITEMS_H_INCLUDED
 #include "Point.h"
 
-/// All items have certain variables in common. The items structure provides that to all items.
+/// All items have variables in common. The items structure provides that to all items.
 
 typedef struct
 {

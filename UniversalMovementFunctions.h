@@ -4,7 +4,7 @@
 #include "Point.h"
 #include "EnemyMoveData.h"
 
-/** These for helping an enemy with their movement and it does not matter if they are working with light movement or dark movement.
+/** These are for helping an enemy with their movement and it does not matter if they are working with light movement or dark movement.
 There are some functions in which both types of movement will need to have access too. An example would be checking if the desired
 position is in bounds of the maximum rows and columns, aka, not falling off the edge of the world. */
 

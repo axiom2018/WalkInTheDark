@@ -3,7 +3,7 @@
 #define LEVELINFO_H_INCLUDED
 #include "Point.h"
 
-/// Primary used in EnemyFactory.c for saving important enemy info for the sake of only updating the correct enemies.
+/// Primary use in EnemyFactory.c for saving important enemy info for the sake of only updating the correct enemies.
 
 typedef struct
 {

@@ -11,7 +11,7 @@
 #include <windows.h>
 #include <stdio.h>
 
-/// Set up typedef for functions
+/// Set up typedef for functions.
 typedef int (*Tests)(EMData *pData, Point *pDesiredEnemyPos);
 /// Array for functions.
 Tests CoordinateTests[MAX_TESTS];

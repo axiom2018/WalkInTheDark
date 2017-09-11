@@ -2,7 +2,7 @@
 #ifndef POINT_H_INCLUDED
 #define POINT_H_INCLUDED
 
-/// Used for positions of Items, Enemies, etc.
+/// For positions of Items, Enemies, etc.
 
 typedef struct
 {

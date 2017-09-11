@@ -13,7 +13,7 @@ int UseSwitch(int first, int second)
     case 1:
         return TRUE;
     default:
-        printf("Error! File: Switch.c. Function: UseSwitch().\n");
+        printf("Error! File: Switch.c, Function: UseSwitch().\n");
         break;
     }
 

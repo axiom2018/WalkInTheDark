@@ -4,7 +4,7 @@
 #include "Point.h"
 #include "Flashlight.h"
 
-/// Player management interface.
+/// Player interface.
 
 void InitPlayer();
 char GetPlayer();

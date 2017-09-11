@@ -212,6 +212,6 @@ void InitPlayer()
     s_pPlayer->m_playerPosition.y = COLUMNS - 1;
     s_pPlayer->m_symbol = '$';
 
-    /// Step 2. Initialize the actual inventory manager.
+    /// Step 2. Initialize the inventory manager.
     InitInventoryManagement();
 }
