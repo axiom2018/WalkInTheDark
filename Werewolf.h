@@ -3,7 +3,7 @@
 #define WEREWOLF_H_INCLUDED
 #include "EnemyInfo.h"
 
-/// Enemy.
+/// Game enemy.
 
 typedef struct
 {
