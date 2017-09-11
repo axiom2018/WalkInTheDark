@@ -3,6 +3,8 @@
 #define BATTERY_H_INCLUDED
 #include "Items.h"
 
+/// Item.
+
 typedef struct
 {
     Items m_item;

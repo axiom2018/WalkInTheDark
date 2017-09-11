@@ -4,17 +4,20 @@
 #include "Point.h"
 #include "Flashlight.h"
 
-void PlayerInit();
-void PlayerGUI();
+/// Player management interface.
+
+void InitPlayer();
 char GetPlayer();
 Point GetPlayerPosition();
-void ResetPlayerPositionToDefault();
-void AdjustHealth(int x);
 int GetPlayerHealth();
 Flashlight *GetFlashLight();
+void PlayerGUI();
+void ResetPlayerPositionToDefault();
+void AdjustHealth(int x);
 void AddItemToInventory(void *pItem, int itemType);
-int CheckBatteryPower();
 char UpdatePlayer();
+void AddHealth(int amount);
+int CheckBatteryPower();
 void PlayerCleanMemory();
 
 #endif // PLAYER_H_INCLUDED

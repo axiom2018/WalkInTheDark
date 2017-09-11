@@ -5,14 +5,14 @@
 #include "Banshee.h"
 #include "Point.h"
 #include "Boolean.h"
-#include "MediatorPattern.h"
 #include "LevelInfo.h"
 #include "DarkMovement.h"
-#include "SelectMovementStrategyAssistance.h"
-#include "StrategyCheck.h"
 #include "Definitions.h"
+#include "Switch.h"
+#include "EnemyCreation.h"
+#include "ArrayOperations.h"
 
-/// This is a "poor mans" factory pattern I created. Not as good as the C++ version which obviously is capable of OOP but this one gets the job done.
+/// Defined structure that holds all item related variable data needed.
 typedef struct
 {
     int m_initEnemyFactoryTesting;
@@ -20,24 +20,26 @@ typedef struct
     Point m_flPoints[SIZE_OF_FL_POINTS];
     LevelInfo m_enemySpecifics[MAX_ENEMIES];
     int m_levelAssignment;
-    void (*EFReceiveData)(Point mainCoordinates[], Point flPoints[]);
-    void *(*EFCreateEnemy)(int type, int levelAssignment);
 } EnemyFactory;
 
+/// Static EnemyFactory pointer for re-use.
 static EnemyFactory *s_pEnemyFactory;
+/// Enemy tests function pointer.
 typedef int (*EnemyFactoryTests)(Point *pPos);
+/// Defined array for enemy tests.
 EnemyFactoryTests EFTests[MAX_ENEMY_FACTORY_TESTS];
 
+/// Check if initialized before use.
 static int IsEnemyFactoryInitialized()
 {
-    if(s_pEnemyFactory->m_initEnemyFactoryTesting)
-    {
+    if(UseSwitch(s_pEnemyFactory->m_initEnemyFactoryTesting, TRUE))
         return TRUE;
-    }
+
     return FALSE;
 }
 
-static void EnemyFactoryReceiveData(Point mainCoordinates[], Point flPoints[])
+/// Referenced in EnemyManagement.c.
+void UpdateFactoryData(Point mainCoordinates[], Point flPoints[])
 {
     /// Step 1. Assign values to mainCoordinates.
     int r;
@@ -58,25 +60,27 @@ static void EnemyFactoryReceiveData(Point mainCoordinates[], Point flPoints[])
     }
 }
 
+/// Grab empty index of the array.
 static int GetEnemySpecificsPos()
 {
     int i;
     for(i = 0; i < MAX_ENEMIES; ++i)
     {
-        if(s_pEnemyFactory->m_enemySpecifics[i].m_assignedLevel == ERROR_INDICATOR)
-        {
+        if(UseSwitch(s_pEnemyFactory->m_enemySpecifics[i].m_assignedLevel, ERROR_INDICATOR))
             return i;
-        }
     }
+
     return ERROR_INDICATOR;
 }
 
+/// In case position enemy desires is taken, toss out a different one.
 static void AdjustDesiredPosition(Point *pPosToAdjust)
 {
     pPosToAdjust->x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
     pPosToAdjust->y = rand() % ((ROWS - 1) + 1 - 0) + 0;
 }
 
+/// Check for player position, door, etc.
 static int MainCoordinateTest(Point *pPos)
 {
     int i;
@@ -91,6 +95,7 @@ static int MainCoordinateTest(Point *pPos)
     return FALSE;
 }
 
+/// The enemy movement will adapt depending on if the enemy's position matches with a flashlight coordinate or not.
 static int FlashlightPointTest(Point *pPos)
 {
     int i;
@@ -102,23 +107,16 @@ static int FlashlightPointTest(Point *pPos)
             return TRUE;
         }
     }
+
     return FALSE;
 }
 
+/// Check against other enemies.
 static int EnemyCoordinateTest(Point *pPos)
 {
-    /// Step 1. Check for at least 1 other enemy. If we do not have one, return False. No need to continue because we have nothing to compare too.
-    switch(s_pEnemyFactory->m_enemySpecifics[0].m_assignedLevel == ERROR_INDICATOR ? TRUE : FALSE)
-    {
-    case 1:
+    /// Step 1. Check for at least 1 other enemy. If not return False. No need to continue because we have nothing to compare too.
+    if(UseSwitch(s_pEnemyFactory->m_enemySpecifics[0].m_assignedLevel, ERROR_INDICATOR))
         return FALSE;
-        break;
-    case 0:
-        break;
-    default:
-        printf("Error! File: EnemyFactory.c. Function: EnemyCoordinateTest(Point *pPos).\n");
-        break;
-    }
 
     /// Step 2. Begin checking for duplicates.
     int i;
@@ -131,26 +129,24 @@ static int EnemyCoordinateTest(Point *pPos)
             return TRUE;
         }
     }
+
     return FALSE;
 }
 
 static void InitializeEnemyFactoryTestsArray()
 {
+    /// Step 1. Ready each of the tests. Each one helps decide on the enemy position.
     EFTests[0] = MainCoordinateTest;
     EFTests[1] = FlashlightPointTest;
     EFTests[2] = EnemyCoordinateTest;
 
+    /// Step 2. Set initialization to true.
     s_pEnemyFactory->m_initEnemyFactoryTesting = TRUE;
 }
 
-static void *CreateEnemy(int type, int levelAssignment)
+void *CreateEnemy(int type, int levelAssignment)
 {
-    Werewolf *pWerewolf;
-    Witch *pWitch;
-    Banshee *pBanshee;
-    void *pEnemy;
-
-    /// Step 1. Defensive programming. Arrays were already initialized in EnemyFactoryInit().
+    /// Step 1. Defensive programming. Be sure the tests are initialized.
     if(!IsEnemyFactoryInitialized())
     {
         InitializeEnemyFactoryTestsArray();
@@ -161,10 +157,7 @@ static void *CreateEnemy(int type, int levelAssignment)
     pos.x = rand() % ((COLUMNS - 1) + 1 - 0) + 0;
     pos.y = rand() % ((ROWS - 1) + 1 - 0) + 0;
 
-    /// Step 3. Save the assigned level for future use in the last checking function.
-    s_pEnemyFactory->m_levelAssignment = levelAssignment;
-
-    /// Step 4. Begin testing desired position.
+    /// Step 3. Begin testing desired position.
     int i;
     for(i = 0; i < MAX_ENEMY_FACTORY_TESTS; ++i)
     {
@@ -176,100 +169,34 @@ static void *CreateEnemy(int type, int levelAssignment)
         }
     }
 
-    /// Step 5. Begin creating enemy.
-    switch(type)
-    {
-    case 0:
-        pWerewolf = malloc(sizeof(Werewolf));
-        pWerewolf->m_info.m_assignedLevel = levelAssignment;
-        pWerewolf->m_info.m_damage = rand() % (15 + 1 - 10) + 10;
-        pWerewolf->m_info.m_Pos.x = pos.x;
-        pWerewolf->m_info.m_Pos.y = pos.y;
-        pWerewolf->m_info.m_symbol = '@';
-        pWerewolf->m_info.m_moveStrategy = MovementDark;
-        pWerewolf->m_info.m_selectMovementStrategy = SelectMovementStrategyAssistance;
-        pWerewolf->m_info.m_strategyCheck = StrategyCheck;
-        pWerewolf->m_info.m_defaultMovementDelay = 3;
-        pWerewolf->m_info.m_movementDelay = 3;
-        pEnemy = pWerewolf;
-        break;
-    case 1:
-        pWitch = malloc(sizeof(Witch));
-        pWitch->m_info.m_assignedLevel = levelAssignment;
-        pWitch->m_info.m_damage = rand() % (25 + 1 - 20) + 20;
-        pWitch->m_info.m_Pos.x = pos.x;
-        pWitch->m_info.m_Pos.y = pos.y;
-        pWitch->m_info.m_symbol = 237;
-        pWitch->m_info.m_moveStrategy = MovementDark;
-        pWitch->m_info.m_selectMovementStrategy = SelectMovementStrategyAssistance;
-        pWitch->m_info.m_strategyCheck = StrategyCheck;
-        pWitch->m_info.m_defaultMovementDelay = 2;
-        pWitch->m_info.m_movementDelay = 2;
-        pEnemy = pWitch;
-        break;
-    case 2:
-        pBanshee = malloc(sizeof(Banshee));
-        pBanshee->m_info.m_assignedLevel = levelAssignment;
-        pBanshee->m_info.m_damage = rand() % (45 + 1 - 40) + 40;
-        pBanshee->m_info.m_Pos.x = pos.x;
-        pBanshee->m_info.m_Pos.y = pos.y;
-        pBanshee->m_info.m_symbol = 234;
-        pBanshee->m_info.m_moveStrategy = MovementDark;
-        pBanshee->m_info.m_selectMovementStrategy = SelectMovementStrategyAssistance;
-        pBanshee->m_info.m_strategyCheck = StrategyCheck;
-        pBanshee->m_info.m_defaultMovementDelay = 1;
-        pBanshee->m_info.m_movementDelay = 1;
-        pEnemy = pBanshee;
-        break;
-    default:
-        printf("Error! File: EnemyFactory.c Function: *CreateEnemy(int type, int levelAssignment).\n");
-        break;
-    }
+    /// Step 4. Request enemy from EnemyCreation.c.
+    void *requestedEnemy = RequestToCreateEnemy(type, levelAssignment, pos);
 
-    /// Step 6. Save enemy details for future duplicate checks.
+    /// Step 5. Save enemy details for future duplicate checks.
     int vacancy = GetEnemySpecificsPos();
     s_pEnemyFactory->m_enemySpecifics[vacancy].m_assignedLevel = levelAssignment;
     s_pEnemyFactory->m_enemySpecifics[vacancy].m_pos.x = pos.x;
     s_pEnemyFactory->m_enemySpecifics[vacancy].m_pos.y = pos.y;
 
-    /// Step 7. Return the newly created enemy.
-    return pEnemy;
+    /// Step 6. Return the newly created enemy.
+    return requestedEnemy;
 }
 
-void EnemyFactoryInit()
+void InitEnemyFactory()
 {
+    /// Step 1. Allocate space.
     s_pEnemyFactory = malloc(sizeof(EnemyFactory));
 
-    s_pEnemyFactory->EFReceiveData = EnemyFactoryReceiveData;
-
-    s_pEnemyFactory->EFCreateEnemy = CreateEnemy;
-
+    /// Step 2. Set up testing functions.
     InitializeEnemyFactoryTestsArray();
 
-    int i;
-    for(i = 0; i < MAX_ENEMIES; ++i)
-    {
-        s_pEnemyFactory->m_enemySpecifics[i].m_assignedLevel = ERROR_INDICATOR;
-        s_pEnemyFactory->m_enemySpecifics[i].m_pos.x = ERROR_INDICATOR;
-        s_pEnemyFactory->m_enemySpecifics[i].m_pos.y = ERROR_INDICATOR;
-    }
-
-    Register(s_pEnemyFactory, 0);
-}
-
-void *EnemyCreate(int type, int levelAssignment)
-{
-    void *pEnemy = s_pEnemyFactory->EFCreateEnemy(type, levelAssignment);
-    return pEnemy;
-}
-
-void EnemyReceiveData(Point mainCoordinates[], Point flPoints[])
-{
-    s_pEnemyFactory->EFReceiveData(mainCoordinates, flPoints);
+    /// Step 3. Initialize enemy specifics.
+    SetLevelInfoArray(s_pEnemyFactory->m_enemySpecifics, MAX_ENEMIES);
 }
 
 void EnemyFactoryCleanMemory()
 {
+    /// Free memory.
     free(s_pEnemyFactory);
     s_pEnemyFactory = 0;
 }

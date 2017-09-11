@@ -44,17 +44,58 @@
 		<Unit filename="DarkMovement.h" />
 		<Unit filename="Definitions.h" />
 		<Unit filename="Door.h" />
+		<Unit filename="DrawEnemy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="DrawEnemy.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="EnemyCheckMoveStrategy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyCheckMoveStrategy.h" />
+		<Unit filename="EnemyCreation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyCreation.h" />
 		<Unit filename="EnemyFactory.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="EnemyFactory.h" />
 		<Unit filename="EnemyInfo.h" />
+		<Unit filename="EnemyManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemyManagement.h" />
 		<Unit filename="EnemyMoveData.h" />
 		<Unit filename="EnemyMoveStrategy.h" />
 		<Unit filename="EnemyProcedure.h" />
-		<Unit filename="EnemyStrategyCheck.h" />
+		<Unit filename="EnemySelectStrategy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="EnemySelectStrategy.h" />
 		<Unit filename="Flashlight.h" />
+		<Unit filename="FlashlightManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="FlashlightManagement.h" />
 		<Unit filename="HealthPack.h" />
+		<Unit filename="InventoryControls.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="InventoryControls.h" />
+		<Unit filename="InventoryManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="InventoryManagement.h" />
+		<Unit filename="ItemCreation.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ItemCreation.h" />
+		<Unit filename="ItemManagement.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ItemManagement.h" />
 		<Unit filename="Items.h" />
 		<Unit filename="LevelInfo.h" />
 		<Unit filename="LevelManagement.c">
@@ -66,29 +107,23 @@
 		</Unit>
 		<Unit filename="LightMovement.h" />
 		<Unit filename="LightMovementDirections.h" />
-		<Unit filename="LightMovementEnums.h" />
-		<Unit filename="MediatorPattern.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="MediatorPattern.h" />
 		<Unit filename="Player.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Player.h" />
 		<Unit filename="Point.h" />
-		<Unit filename="SelectMovementStrategy.h" />
-		<Unit filename="SelectMovementStrategyAssistance.c">
+		<Unit filename="Switch.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="SelectMovementStrategyAssistance.h" />
-		<Unit filename="StrategyCheck.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="StrategyCheck.h" />
+		<Unit filename="Switch.h" />
 		<Unit filename="UniversalMovementFunctions.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="UniversalMovementFunctions.h" />
+		<Unit filename="UpdateEnemy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="UpdateEnemy.h" />
 		<Unit filename="Werewolf.h" />
 		<Unit filename="Witch.h" />
 		<Unit filename="World.c">

@@ -3,7 +3,8 @@
 #define ITEMS_H_INCLUDED
 #include "Point.h"
 
-/// Each item with have an Items variable.
+/// All items have certain variables in common. The items structure provides that to all items.
+
 typedef struct
 {
     char *m_name;
@@ -12,4 +13,5 @@ typedef struct
     int m_color;
     int m_assignedLevel;
 } Items;
+
 #endif // ITEMS_H_INCLUDED

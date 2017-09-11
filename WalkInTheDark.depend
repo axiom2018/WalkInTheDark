@@ -313,3 +313,401 @@
 
 1480522381 c:\users\axiom\documents\c projects\walkinthedark\lightmovementdirections.h
 
+1504162690 source:c:\users\axiom\github projects\walkinthedark\arrayoperations.c
+	"ArrayOperations.h"
+	"Definitions.h"
+	<windows.h>
+
+1504162304 c:\users\axiom\github projects\walkinthedark\definitions.h
+
+1503977913 c:\users\axiom\github projects\walkinthedark\point.h
+
+1504160536 source:c:\users\axiom\github projects\walkinthedark\darkmovement.c
+	"DarkMovement.h"
+	"Definitions.h"
+	"UniversalMovementFunctions.h"
+	"Boolean.h"
+	"Player.h"
+	"ArrayOperations.h"
+	<stdlib.h>
+
+1503978307 c:\users\axiom\github projects\walkinthedark\darkmovement.h
+	"EnemyMoveData.h"
+	<stdio.h>
+
+1503724078 c:\users\axiom\github projects\walkinthedark\enemymovedata.h
+	"Definitions.h"
+	"Point.h"
+
+1503473105 c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.h
+	"Point.h"
+	"EnemyMoveData.h"
+
+1503726042 c:\users\axiom\github projects\walkinthedark\boolean.h
+
+1503971579 c:\users\axiom\github projects\walkinthedark\player.h
+	"Point.h"
+	"Flashlight.h"
+
+1503724765 c:\users\axiom\github projects\walkinthedark\flashlight.h
+	"Items.h"
+
+1503973693 c:\users\axiom\github projects\walkinthedark\items.h
+	"Point.h"
+
+1504161911 c:\users\axiom\github projects\walkinthedark\arrayoperations.h
+	"Point.h"
+	"LevelInfo.h"
+
+1504161402 source:c:\users\axiom\github projects\walkinthedark\enemyfactory.c
+	"EnemyFactory.h"
+	"Werewolf.h"
+	"Witch.h"
+	"Banshee.h"
+	"Point.h"
+	"Boolean.h"
+	"LevelInfo.h"
+	"DarkMovement.h"
+	"Definitions.h"
+	"Switch.h"
+	"EnemyCreation.h"
+	"ArrayOperations.h"
+
+1503726948 c:\users\axiom\github projects\walkinthedark\enemyfactory.h
+	"Point.h"
+	<stdio.h>
+	<stdlib.h>
+
+1503696318 c:\users\axiom\github projects\walkinthedark\werewolf.h
+	"EnemyInfo.h"
+
+1504126977 c:\users\axiom\github projects\walkinthedark\enemyinfo.h
+	"Point.h"
+	"EnemyMoveStrategy.h"
+
+1504126874 c:\users\axiom\github projects\walkinthedark\enemymovestrategy.h
+	"Point.h"
+	"EnemyMoveData.h"
+
+1480565120 c:\users\axiom\github projects\walkinthedark\selectmovementstrategy.h
+	"EnemyMoveStrategy.h"
+	"EnemyMoveData.h"
+
+1503724460 c:\users\axiom\github projects\walkinthedark\enemystrategycheck.h
+	"EnemyMoveStrategy.h"
+
+1503696312 c:\users\axiom\github projects\walkinthedark\witch.h
+	"EnemyInfo.h"
+
+1504161723 c:\users\axiom\github projects\walkinthedark\banshee.h
+	"EnemyInfo.h"
+
+1502326462 c:\users\axiom\github projects\walkinthedark\mediatorpattern.h
+	"Point.h"
+
+1503697889 c:\users\axiom\github projects\walkinthedark\levelinfo.h
+	"Point.h"
+
+1504034335 c:\users\axiom\github projects\walkinthedark\selectmovementstrategyassistance.h
+	"EnemyMoveStrategy.h"
+	"EnemyMoveData.h"
+
+1503470822 c:\users\axiom\github projects\walkinthedark\strategycheck.h
+	"EnemyMoveStrategy.h"
+
+1504162164 source:c:\users\axiom\github projects\walkinthedark\levelmanagement.c
+	"LevelManagement.h"
+	"Definitions.h"
+	"Boolean.h"
+	"Switch.h"
+	<stdio.h>
+	<conio.h>
+	<windows.h>
+
+1503470509 c:\users\axiom\github projects\walkinthedark\levelmanagement.h
+
+1504161580 source:c:\users\axiom\github projects\walkinthedark\lightmovement.c
+	"LightMovement.h"
+	"Definitions.h"
+	"LightMovementDirections.h"
+	"UniversalMovementFunctions.h"
+	"Boolean.h"
+	"Player.h"
+	"ArrayOperations.h"
+	<stdlib.h>
+
+1503978317 c:\users\axiom\github projects\walkinthedark\lightmovement.h
+	"EnemyMoveData.h"
+	<stdio.h>
+
+1480491644 c:\users\axiom\github projects\walkinthedark\lightmovementenums.h
+
+1503974399 c:\users\axiom\github projects\walkinthedark\lightmovementdirections.h
+
+1503471941 source:c:\users\axiom\github projects\walkinthedark\player.c
+	"Player.h"
+	"World.h"
+	"Point.h"
+	"Battery.h"
+	"Flashlight.h"
+	"HealthPack.h"
+	"Definitions.h"
+	"Boolean.h"
+	"ArrayOperations.h"
+	"Switch.h"
+	"InventoryManagement.h"
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+
+1504126489 c:\users\axiom\github projects\walkinthedark\world.h
+	"Point.h"
+	"Boolean.h"
+	"Door.h"
+	<windows.h>
+
+1504127285 c:\users\axiom\github projects\walkinthedark\battery.h
+	"Items.h"
+
+1503969487 c:\users\axiom\github projects\walkinthedark\healthpack.h
+	"Items.h"
+
+1504034350 source:c:\users\axiom\github projects\walkinthedark\selectmovementstrategyassistance.c
+	"SelectMovementStrategyAssistance.h"
+	"Definitions.h"
+	"DarkMovement.h"
+	"LightMovement.h"
+	"Boolean.h"
+	<stdio.h>
+
+1503470829 source:c:\users\axiom\github projects\walkinthedark\strategycheck.c
+	"Boolean.h"
+	"LightMovement.h"
+	"EnemyMoveStrategy.h"
+
+1503470614 source:c:\users\axiom\github projects\walkinthedark\universalmovementfunctions.c
+	"UniversalMovementFunctions.h"
+	"Definitions.h"
+	"Boolean.h"
+	"Werewolf.h"
+	"Witch.h"
+	"Banshee.h"
+	"Flashlight.h"
+	"Battery.h"
+	"HealthPack.h"
+	<windows.h>
+	<stdio.h>
+
+1503472389 source:c:\users\axiom\github projects\walkinthedark\main.c
+	<stdlib.h>
+	<time.h>
+	"World.h"
+
+1502326473 source:c:\users\axiom\github projects\walkinthedark\mediatorpattern.c
+	"MediatorPattern.h"
+	"World.h"
+	"EnemyFactory.h"
+	"Boolean.h"
+	"Definitions.h"
+	"ArrayOperations.h"
+	<stdio.h>
+	<windows.h>
+
+1504163040 source:c:\users\axiom\github projects\walkinthedark\world.c
+	"World.h"
+	"Player.h"
+	"LevelManagement.h"
+	"ArrayOperations.h"
+	"Flashlight.h"
+	"HealthPack.h"
+	"Battery.h"
+	"Definitions.h"
+	"Werewolf.h"
+	"Witch.h"
+	"Banshee.h"
+	"EnemyMoveData.h"
+	"EnemyProcedure.h"
+	"ItemManagement.h"
+	"EnemyManagement.h"
+	"FlashlightManagement.h"
+	"EnemyFactory.h"
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+
+1503726606 c:\users\axiom\github projects\walkinthedark\door.h
+	"Point.h"
+
+1503724435 c:\users\axiom\github projects\walkinthedark\enemyprocedure.h
+
+1503972404 c:\users\axiom\github projects\walkinthedark\itemmanagement.h
+	"EnemyMoveData.h"
+	"Point.h"
+
+1504161645 source:c:\users\axiom\github projects\walkinthedark\itemmanagement.c
+	"Definitions.h"
+	"ArrayOperations.h"
+	"LevelManagement.h"
+	"Player.h"
+	"LevelManagement.h"
+	"Boolean.h"
+	"World.h"
+	"EnemyMoveData.h"
+	"Door.h"
+	"ItemCreation.h"
+	"Switch.h"
+	<stdlib.h>
+	<stdio.h>
+
+1503972095 c:\users\axiom\github projects\walkinthedark\itemcreation.h
+	"Flashlight.h"
+	"HealthPack.h"
+	"Battery.h"
+	"Point.h"
+
+1504161605 source:c:\users\axiom\github projects\walkinthedark\itemcreation.c
+	"ItemCreation.h"
+	"LevelManagement.h"
+	"Definitions.h"
+	<stdlib.h>
+	<stdio.h>
+
+1501704461 source:c:\users\axiom\github projects\walkinthedark\switch.c
+	"Switch.h"
+	"Boolean.h"
+	"Definitions.h"
+	<stdio.h>
+
+1501627951 c:\users\axiom\github projects\walkinthedark\switch.h
+
+1504161442 source:c:\users\axiom\github projects\walkinthedark\enemymanagement.c
+	"EnemyManagement.h"
+	"Definitions.h"
+	"EnemyMoveData.h"
+	"Point.h"
+	"LevelManagement.h"
+	"ItemManagement.h"
+	"Player.h"
+	"DrawEnemy.h"
+	"EnemyProcedure.h"
+	"Door.h"
+	"Switch.h"
+	"Werewolf.h"
+	"Banshee.h"
+	"Witch.h"
+	"UpdateEnemy.h"
+	"ArrayOperations.h"
+	"DrawEnemy.h"
+	"World.h"
+	"EnemyFactory.h"
+	"FlashlightManagement.h"
+	<stdio.h>
+	<stdlib.h>
+
+1503727027 c:\users\axiom\github projects\walkinthedark\enemymanagement.h
+	"EnemyProcedure.h"
+
+1504127255 c:\users\axiom\github projects\walkinthedark\drawenemy.h
+	"Werewolf.h"
+	"Banshee.h"
+	"Witch.h"
+
+1501879825 c:\users\axiom\github projects\walkinthedark\updateenemy.h
+	"EnemyMoveData.h"
+	"EnemyProcedure.h"
+
+1504162904 source:c:\users\axiom\github projects\walkinthedark\flashlightmanagement.c
+	"FlashlightManagement.h"
+	"Definitions.h"
+	"ArrayOperations.h"
+	"Switch.h"
+	"Player.h"
+	"Boolean.h"
+	"Player.h"
+	<stdio.h>
+
+1504126794 c:\users\axiom\github projects\walkinthedark\flashlightmanagement.h
+	"Point.h"
+
+1504128652 source:c:\users\axiom\github projects\walkinthedark\updateenemy.c
+	"UpdateEnemy.h"
+	"Switch.h"
+	"ItemManagement.h"
+	"World.h"
+	"Player.h"
+	"LevelManagement.h"
+	"Werewolf.h"
+	"Banshee.h"
+	"Witch.h"
+	"EnemySelectStrategy.h"
+	<stdio.h>
+	<windows.h>
+
+1504160757 source:c:\users\axiom\github projects\walkinthedark\drawenemy.c
+	"DrawEnemy.h"
+	"Point.h"
+	"Boolean.h"
+	"LevelManagement.h"
+	"EnemyCheckMoveStrategy.h"
+	<stdio.h>
+
+1504126995 c:\users\axiom\github projects\walkinthedark\enemycreation.h
+	"Point.h"
+
+1504161194 source:c:\users\axiom\github projects\walkinthedark\enemycreation.c
+	"EnemyCreation.h"
+	"Werewolf.h"
+	"Witch.h"
+	"Banshee.h"
+	"DarkMovement.h"
+	<stdlib.h>
+
+1504127015 source:c:\users\axiom\github projects\walkinthedark\inventorycontrols.c
+	"InventoryControls.h"
+	"InventoryManagement.h"
+	"Definitions.h"
+	<stdio.h>
+	<stdlib.h>
+
+1503969748 c:\users\axiom\github projects\walkinthedark\inventorycontrols.h
+
+1503971185 c:\users\axiom\github projects\walkinthedark\inventorymanagement.h
+	"Flashlight.h"
+
+1504161590 source:c:\users\axiom\github projects\walkinthedark\inventorymanagement.c
+	"InventoryManagement.h"
+	"Definitions.h"
+	"ArrayOperations.h"
+	"Switch.h"
+	"Flashlight.h"
+	"Boolean.h"
+	"InventoryControls.h"
+	"HealthPack.h"
+	"Battery.h"
+	"Flashlight.h"
+	"Player.h"
+	<stdio.h>
+	<conio.h>
+	<windows.h>
+
+1504039848 c:\users\axiom\github projects\walkinthedark\enemyselectstrategy.h
+	"EnemyMoveStrategy.h"
+	"EnemyMoveData.h"
+
+1504064664 source:c:\users\axiom\github projects\walkinthedark\enemyselectstrategy.c
+	"EnemySelectStrategy.h"
+	"Definitions.h"
+	"DarkMovement.h"
+	"LightMovement.h"
+	"Boolean.h"
+	"Switch.h"
+	<stdio.h>
+
+1504127806 c:\users\axiom\github projects\walkinthedark\enemycheckmovestrategy.h
+	"EnemyMoveStrategy.h"
+
+1504160815 source:c:\users\axiom\github projects\walkinthedark\enemycheckmovestrategy.c
+	"EnemyCheckMoveStrategy.h"
+	"Boolean.h"
+	"LightMovement.h"
+

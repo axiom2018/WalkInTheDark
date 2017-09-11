@@ -1,7 +1,6 @@
 /// LightMovement.c
 #include "LightMovement.h"
 #include "Definitions.h"
-#include "LightMovementEnums.h"
 #include "LightMovementDirections.h"
 #include "UniversalMovementFunctions.h"
 #include "Boolean.h"
@@ -11,6 +10,7 @@
 
 /// Use of function pointers for running the direction calculation tests.
 typedef Directions (*DirectionCalculations)(Point playerPos, Point *pEnemyPos);
+/// Array for tests.
 static DirectionCalculations EnemyDirectionCalculations[DIRECTION_CALCULATIONS];
 /// Initialization variable.
 static int s_initLightMovement = FALSE;
@@ -39,6 +39,7 @@ static void AddPointToArray(Point pointArr[], Point p)
     pointArr[index].y = p.y;
 }
 
+/**
 static void EmptyPointArray(Point pointArr[])
 {
     int i;
@@ -48,6 +49,7 @@ static void EmptyPointArray(Point pointArr[])
         pointArr[i].y = ERROR_INDICATOR;
     }
 }
+*/
 
 static void EmptyDirectionSystem()
 {
@@ -452,7 +454,8 @@ void MovementLight(EMData *pData)
     DetectPlayerCollision(pData);
 
     /// Step 6. Dump all elements in arrays in preparation for the next time the function runs.
-    EmptyPointArray(s_vacantSpaces);
+    /// EmptyPointArray(s_vacantSpaces);
+    ResetPointArray(s_vacantSpaces, MAX_SPACES);
 
     /// Step 7. Dump all old data with direction system.
     EmptyDirectionSystem();

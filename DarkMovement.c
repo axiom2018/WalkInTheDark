@@ -7,19 +7,12 @@
 #include "ArrayOperations.h"
 #include <stdlib.h>
 
+/// Save vacant spaces found for later use.
 static Point s_vacantSpaces[MAX_SPACES];
+/// Initialization help.
 static int s_initVacantSpaces = FALSE;
 
-static void EmptyVacantSpacesArray()
-{
-    int i;
-    for(i = 0; i < MAX_SPACES; ++i)
-    {
-        s_vacantSpaces[i].x = ERROR_INDICATOR;
-        s_vacantSpaces[i].y = ERROR_INDICATOR;
-    }
-}
-
+/// When doing point calculations, this function will add a point to the desired array.
 static void AddPointToArray(Point pointArr[], Point p)
 {
     /// Step 1. Get vacant position with an array operation.
@@ -36,6 +29,7 @@ static void AddPointToArray(Point pointArr[], Point p)
     s_vacantSpaces[index].y = p.y;
 }
 
+/// Assign the enemy a certain position in the vacant spaces array.
 static void AppointEnemyPosition(EMData *pData)
 {
     /// Step 1. Begin loop.
@@ -60,6 +54,7 @@ static void AppointEnemyPosition(EMData *pData)
     }
 }
 
+/// If enemy shares position with player, damage player.
 static void DetectPlayerCollision(EMData *pData)
 {
     if(PlayerCollision(pData->m_playerPos, *pData->m_pEnemyPos))
@@ -69,7 +64,8 @@ static void DetectPlayerCollision(EMData *pData)
     }
 }
 
-static int CalculateHigh(EMData *pData)
+/// Calculate all possible positions enemy can move, which are above.
+static void CalculateHigh(EMData *pData)
 {
     /// Step 1. Create points and assign values.
     Point topLeft, topMiddle, topRight;
@@ -94,10 +90,10 @@ static int CalculateHigh(EMData *pData)
     {
         AddPointToArray(s_vacantSpaces, HighPoints[i]);
     }
-    return 0;
 }
 
-static int CalculateMid(EMData *pData)
+/// Calculate all possible positions enemy can move, on both sides.
+static void CalculateMid(EMData *pData)
 {
     /// Step 1. Create points and assign values.
     Point leftMid, rightMid;
@@ -118,10 +114,10 @@ static int CalculateMid(EMData *pData)
     {
         AddPointToArray(s_vacantSpaces, MidPoints[i]);
     }
-    return 0;
 }
 
-static int CalculateLow(EMData *pData)
+/// Calculate all possible positions enemy can move, which are below.
+static void CalculateLow(EMData *pData)
 {
     /// Step 1. Create points and assign values.
     Point bottomLeft, bottomMiddle, bottomRight;
@@ -146,9 +142,9 @@ static int CalculateLow(EMData *pData)
     {
         AddPointToArray(s_vacantSpaces, LowPoints[i]);
     }
-    return 0;
 }
 
+/// Set the values of the s_vacantSpaces array ourselves to avoid junk values.
 static void InitializeVacantSpacesArray()
 {
     int i;
@@ -163,7 +159,7 @@ static void InitializeVacantSpacesArray()
 
 void MovementDark(EMData *pData)
 {
-    /// Step 1. Must initialize arrays.
+    /// Step 1. Must initialize array.
     if(!s_initVacantSpaces)
     {
         InitializeVacantSpacesArray();
@@ -190,5 +186,5 @@ void MovementDark(EMData *pData)
     DetectPlayerCollision(pData);
 
     /// Step 7. Dump all elements in arrays in preparation for the next time the function runs.
-    EmptyVacantSpacesArray();
+    ResetPointArray(s_vacantSpaces, MAX_SPACES);
 }
