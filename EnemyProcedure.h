@@ -2,7 +2,7 @@
 #ifndef ENEMYPROCEDURE_H_INCLUDED
 #define ENEMYPROCEDURE_H_INCLUDED
 
-/// While updating enemies it is necessary to distinguish between what should be updated at a certain time.
+/// While updating enemies it is necessary to distinguish between what element to update.
 
 typedef enum
 {

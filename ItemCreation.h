@@ -6,7 +6,7 @@
 #include "Battery.h"
 #include "Point.h"
 
-/// Take a bit of work from ItemManager.c and delegate creating items to ItemCreation.c using this interface.
+/// Delegate creating items to ItemCreation.c using this interface.
 
 void CreateFlashlight(Flashlight *pFlashlight, Point p);
 void CreateBattery(Battery *pBattery, Point p);

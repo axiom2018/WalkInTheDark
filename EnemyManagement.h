@@ -3,7 +3,7 @@
 #define ENEMYMANAGEMENT_H_INCLUDED
 #include "EnemyProcedure.h"
 
-/// Interface for managing enemies.
+/// Interface for managing all enemies.
 
 void InitEnemyManagement();
 void UpdateEnemyFactoryData();

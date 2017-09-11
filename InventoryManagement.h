@@ -3,7 +3,7 @@
 #define INVENTORYMANAGEMENT_H_INCLUDED
 #include "Flashlight.h"
 
-/// Interface to handle the players inventory system.
+/// Interface to manage the players inventory system.
 
 void InitInventoryManagement();
 void AddToInventory(void *pItem, int itemType);

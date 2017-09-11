@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/// Created an unorthodox factory pattern to pump out enemies.
+/// Created an unorthodox C-style factory pattern to pump out enemies.
 
 void InitEnemyFactory();
 void UpdateFactoryData(Point mainCoordinates[], Point flPoints[]);

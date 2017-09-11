@@ -1,1 +1,0 @@
-/// ErrorIndicationStrategy.c

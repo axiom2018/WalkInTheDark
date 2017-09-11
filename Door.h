@@ -3,7 +3,7 @@
 #define DOOR_H_INCLUDED
 #include "Point.h"
 
-/// The door is the target the player must get to in every level.
+/// Player must get the Door to advance the game in every level.
 
 typedef struct
 {

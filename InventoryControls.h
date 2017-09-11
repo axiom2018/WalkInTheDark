@@ -2,7 +2,7 @@
 #ifndef INVENTORYCONTROLS_H_INCLUDED
 #define INVENTORYCONTROLS_H_INCLUDED
 
-/// Delegate responsibility of controlling the Players inventory GUI with keys with this interface.
+/// Delegate responsibility of controlling the Players inventory GUI with keys with this new interface.
 
 void InitInventoryControls();
 char ReturnIndicator(int currentIndex);

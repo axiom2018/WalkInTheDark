@@ -3,7 +3,7 @@
 #define HEALTHPACK_H_INCLUDED
 #include "Items.h"
 
-/// Item.
+/// Game item.
 
 typedef struct
 {
