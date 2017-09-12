@@ -70,19 +70,6 @@ static void SetFlashLightPoint(int x, int y)
 void ClearFlashlightPoints()
 {
     ResetPointArray(s_flashLightPoints, SIZE_OF_FL_POINTS);
-
-    /**
-    int i;
-    for(i = 0; i < SIZE_OF_FL_POINTS; ++i)
-    {
-        if(s_flashLightPoints[i].x != ERROR_INDICATOR &&
-           s_flashLightPoints[i].y != ERROR_INDICATOR)
-        {
-            s_flashLightPoints[i].x = ERROR_INDICATOR;
-            s_flashLightPoints[i].y = ERROR_INDICATOR;
-        }
-    }
-    */
 }
 
 /// Very important algorithm, key to making the flashlight effect work.

@@ -164,8 +164,7 @@ static void AddFlashlight(void *pItem, int index, int type)
     {
         s_pInventoryManager->m_pEquippedFlashlight = (Flashlight*)s_pInventoryManager->m_pInventory[index];
         s_pInventoryManager->m_pEquippedFlashlight->m_range = FLASHLIGHT_FIRST_RANGE;
-        /// Remove this 300 boost later! It's for testing purposes only.
-        s_pInventoryManager->m_pEquippedFlashlight->m_stepsBeforeRecharge = 300;
+        s_pInventoryManager->m_pEquippedFlashlight->m_stepsBeforeRecharge = 150;
     }
 }
 

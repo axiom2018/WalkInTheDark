@@ -196,11 +196,10 @@ void ItemCollisionDetection()
            break;
     }
 
-    printf("i: %d , Max Items: %d\n", i, MAX_ITEMS);
     if(UseSwitch(i, MAX_ITEMS))
         return;
 
-    /// Step 3. Declare variables for future use, and grab the type of item for reverse engineering in the following switch statement.
+    /// Step 2. Declare variables for future use, and grab the type of item for reverse engineering in the following switch statement.
     int itemType = s_pItemManager->m_levelItemTypes[i];
     printf("Item type: %d\n", itemType);
     Flashlight *pFlashlight;
@@ -208,7 +207,7 @@ void ItemCollisionDetection()
     HealthPack *pHealthPack;
     int assignedLevel;
 
-    /// Step 4. Grab the item from the level and save the assigned level. It's all we need.
+    /// Step 3. Grab the item from the level and save the assigned level. It's all we need.
     switch(itemType)
     {
     case 0:
@@ -228,11 +227,11 @@ void ItemCollisionDetection()
         break;
     }
 
-    /// Step 5. Crucial step, check if the item found was assigned to this level, if so, continue. If not, return.
+    /// Step 4. Crucial step, check if the item found was assigned to this level, if so, continue. If not, return.
     if(!CheckItemLevel(&assignedLevel))
         return;
 
-    /// Step 6. Give player item.
+    /// Step 5. Give player item.
     switch(itemType)
     {
     case 0:
@@ -249,7 +248,7 @@ void ItemCollisionDetection()
         break;
     }
 
-    /// Step 7. Remove item entry from arrays.
+    /// Step 6. Remove item entry from arrays.
     s_pItemManager->m_pLevelItems[i] = NULL;
     s_pItemManager->m_levelItemTypes[i] = ERROR_INDICATOR;
     s_pItemManager->m_generatedItemPoints[i].x = ERROR_INDICATOR;
